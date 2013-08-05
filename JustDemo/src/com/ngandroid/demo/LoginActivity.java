@@ -6,6 +6,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 
 import com.ngandroid.demo.content.LoginEntry;
+import com.ngandroid.demo.content.RegistEntry;
 import com.ngandroid.demo.util.HttpUtil;
 
 import android.app.Activity;
@@ -47,19 +48,16 @@ public class LoginActivity extends Activity {
 			@Override
 			public void run() {
 				LoginEntry entry = new LoginEntry();
-				entry.email = "jiang4920@163.com";
-				entry.password = "jiangyuchen";
-				try {
-					new HttpUtil().doPost(HttpUtil.uriAPI, entry.getMap());
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				entry.setEmail("jiang4920@163.com");
+				entry.setPassword("jiangyuchen");
+				new HttpUtil().post(LoginEntry.uriAPI, entry.getPostBody());
+				RegistEntry rEntry = new RegistEntry();
+				rEntry.setEmail("jiang156qq.com");
+				rEntry.setNickname("abacaaajsk");
+				rEntry.setPassword("jiangyuchen");
+				rEntry.setPassword2("jiangyuchen");
+				new HttpUtil().post(RegistEntry.uriAPI, rEntry.getPostBody());
 			}
-			
 		};
 		th.start();
 	}

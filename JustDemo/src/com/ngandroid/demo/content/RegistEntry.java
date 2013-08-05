@@ -1,7 +1,7 @@
 /**
  * RigestEntry.java[V 1.0.0]
  * classes : com.ngandroid.demo.content.RigestEntry
- * jiangyuchen Create at 2013-8-1 ÏÂÎç3:54:32
+ * jiangyuchen Create at 2013-8-1 ï¿½ï¿½ï¿½ï¿½3:54:32
  */
 package com.ngandroid.demo.content;
 
@@ -14,65 +14,80 @@ import com.ngandroid.demo.util.MD5Utile;
  * 
  * @author jiangyuchen
  * 
- *         create at 2013-8-1 ÏÂÎç3:54:32
+ *         create at 2013-8-1 ï¿½ï¿½ï¿½ï¿½3:54:32
  */
-public class RegistEntry {
+public class RegistEntry extends BaseEntry {
     private static final String TAG = "JavaDemo RigestEntry";
-
-    /**http://account.178.com/q_account.php?_act=client_register
-     * nickname=test17802&email=test17802@gmail.com&password=abc123&password2=
-     * abc123&question=&answer=&time=1374215552&checksum=¼ÓÃÜÑéÖ¤´®&dayaType=1
+    public static String uriAPI = "http://account.178.com/q_account.php?_act=client_register"; 
+    /**
+     * æ˜µç§°
      */
-    public String nickname = "";
-    public String email = "";
-    public String password = "";
-    public String password2 = "";
-    public String question = "";
-    public String answer = "";
+    private String nickname = "";
+    /**
+     * é‚®ç®±å³ç”¨æˆ·å
+     */
+    private String email = "";
+    /**
+     * å¯†ç 
+     */
+    private String password = "";
+    /**
+     * ç¡®è®¤å¯†ç ï¼Œä¸å¯†ç éœ€è¦ç›¸åŒ
+     */
+    private String password2 = "";
     
-    private String time = "";
-    private String checksum = "";
-    static final String dataType = "1";
+    private String question = "";
     
-    public static final String KEY = "5742c5fe1b15a7dffa4a9d83c4698eb0";
+    private String answer = "";
     
-    public String url = "http://account.178.com/q_account.php?_act=client_register";
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+		
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+		
+	}
+	public String getPassword2() {
+		return password2;
+	}
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+	public String getQuestion() {
+		return question;
+	}
+	public void setQuestion(String question) {
+		this.question = question;
+		
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	@Override
+	protected void formatParamas() {
+		this.addParam("nickname", nickname);
+		this.addParam("email", email);
+		this.addParam("password", password);
+		this.addParam("password2", password2);
+		this.addParam("question", question);
+		this.addParam("answer", answer);
+	}
     
-    public String toString(){
-        StringBuffer sb = new StringBuffer();
-        sb.append("nickname=");
-        sb.append(nickname);
-        sb.append("&email=");
-        sb.append(email);
-        sb.append("&password=");
-        sb.append(password);
-        sb.append("&password2=");
-        sb.append(password2);
-        sb.append("&question=");
-        sb.append(question);
-        sb.append("&answer=");
-        sb.append(answer);
-        sb.append("&time=");
-        sb.append(""+ getTime());
-        String tmp = parse("@", sb.toString());
-        System.out.println("md5 source:"+tmp);
-        checksum = MD5Utile.MD5(tmp+KEY);
-        sb.append("&checksum=");
-        sb.append(checksum);
-        sb.append("&dataType=");
-        sb.append(dataType);
-//      Log.v(TAG, sb.toString());
-//      String tmp2 = parse("@", sb.toString());
-        return sb.toString();
-    }
-    
-    public String parse(String reg, String str){
-        return str.toString().replaceAll(reg, URLEncoder.encode(reg));
-    }
-    
-    public String getTime(){
-        time =  ""+System.currentTimeMillis()/1000;
-        return time;
-    }
     
 }

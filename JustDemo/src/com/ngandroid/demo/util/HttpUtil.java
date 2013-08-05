@@ -26,46 +26,10 @@ import android.util.Log;
 public class HttpUtil {
 
     private static final String TAG = "JustDemo HttpUtil";
-	public static String uriAPI = "http://account.178.com/q_account.php?_act=client_login";  
 	static final String USER_AGENT = "AndroidNga/1.0";
-	/** 
-     * 执行一个HTTP POST请求，返回请求响应的HTML 
-     *  
-     * @param url 
-     *            请求的URL地址 
-     * @param params 
-     *            请求的查询参数,可以为null 
-     * @return 返回请求响应的HTML 
-     * @throws IOException 
-     * @throws IllegalStateException 
-     */  
-    public static String doPost(String url, Map<String, String> params)  
-            throws IllegalStateException, IOException {  
-        String strResult = "";  
-        DefaultHttpClient httpClient = new DefaultHttpClient();  
-        HttpPost post = new HttpPost(url);  
-        List<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();  
-        for (Map.Entry<String, String> entry : params.entrySet()) {  
-            postData.add(new BasicNameValuePair(entry.getKey(), entry  
-                    .getValue()));  
-            Log.v(TAG, entry.getValue());  
-        }  
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(postData,HTTP.UTF_8);  
-        Log.v(TAG, "entity: "+entity.toString());
-        post.setEntity(entity);  
-        HttpResponse response = httpClient.execute(post);  
-  
-        // 若状态码为200 ok   
-        if (response.getStatusLine().getStatusCode() == 200) {  
-            // 取出回应字串   
-            strResult = EntityUtils.toString(response.getEntity());  
-        }  
-        Log.v(TAG, strResult);
-        return strResult;  
-    } 
 	
-    public void post(String postUrl, String body) {
-
+    public String post(String postUrl, String body) {
+    	Log.v(TAG, body);
         try {
             //创建连接
             URL url = new URL(postUrl);
@@ -102,17 +66,15 @@ public class HttpUtil {
             reader.close();
             // 断开连接
             connection.disconnect();
+            return sb.toString();
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        return "";
     }
     
 }

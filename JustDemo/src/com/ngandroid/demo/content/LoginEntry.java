@@ -1,71 +1,30 @@
 package com.ngandroid.demo.content;
 
-import java.net.URLEncoder;
-import java.sql.Date;
-import java.sql.Time;
-import java.util.Calendar;
-import java.util.HashMap;
 
-import com.ngandroid.demo.util.MD5Utile;
-
-public class LoginEntry {
-	private static final String TAG = "JustDemo LoginEntry.java";
+public class LoginEntry extends BaseEntry {
+	private String email;
+	private String password;
 	
-	public String email = "";
-	public String password = "";
-	private String time = "";
-	private String checksum = "";
-	static final String dataType = "1";
-	
-	public static final String KEY = "5742c5fe1b15a7dffa4a9d83c4698eb0";
-	
-	public String toString(){
-		StringBuffer sb = new StringBuffer();
-		sb.append("email=");
-		sb.append(email);
-		sb.append("&password=");
-		sb.append(password);
-		sb.append("&time=");
-		sb.append(""+ getTime());
-		String tmp = parse("@", sb.toString());
-		System.out.println("md5 source:"+tmp);
-		checksum = MD5Utile.MD5(tmp+KEY);
-		sb.append("&checksum=");
-		sb.append(checksum);
-		sb.append("&dataType=");
-		sb.append(dataType);
-//		Log.v(TAG, sb.toString());
-//		String tmp2 = parse("@", sb.toString());
-		return sb.toString();
+	public static final String EMAIL = "email";
+	public static final String PASSWORD = "password";
+	public static String uriAPI = "http://account.178.com/q_account.php?_act=client_login";
+	public String getEmail() {
+		return email;
 	}
-	
-	public String parse(String reg, String str){
-	    return str.toString().replaceAll(reg, URLEncoder.encode(reg));
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	
-	public HashMap<String, String> getMap(){
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("email", email);
-		map.put("password", password);
-		map.put("time", getTime());
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	@Override
+	protected void formatParamas() {
+		this.addParam(EMAIL, email);
+		this.addParam(PASSWORD, password);
 		
-		StringBuffer sb = new StringBuffer();
-		sb.append("email=");
-		sb.append(email);
-		sb.append("&password=");
-		sb.append(password);
-		sb.append("&time=");
-		sb.append(""+ getTime());
-		checksum = MD5Utile.MD5(URLEncoder.encode(sb.toString())+KEY);
-//		Log.v(TAG, "checksum:"+checksum);
-		map.put("checksum", checksum);
-		map.put("dataType", dataType);
-		return map;
-	}
-	
-	public String getTime(){
-		time =  ""+System.currentTimeMillis()/1000;
-		return time;
-	}
+	} 
 	
 }
