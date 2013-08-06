@@ -42,6 +42,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, UserEntry>{
         XMLDomUtil domUtil = new XMLDomUtil();
         UserEntry user = null;
         try {
+            //发送登陆的POST请求
             user = domUtil.getUserEntry(new HttpUtil().post(
                     LoginEntry.uriAPI, params[0].getPostBody()));
         } catch (ParserConfigurationException e) {

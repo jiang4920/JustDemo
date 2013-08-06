@@ -1,9 +1,22 @@
 package com.ngandroid.demo.content;
 
 
+/**
+ * com.ngandroid.demo.content.LoginEntry
+ * @author jiangyuchen
+ *
+ * create at 2013-8-6 下午5:53:04
+ */
 public class LoginEntry extends BaseEntry {
-	private String email;
+	/** 用户名*/
+	private String email;  
+	/** 密码*/
 	private String password;
+	
+	private int type;
+	
+	public static final int TYPE_LOGIN = 0;
+	public static final int TYPE_CHECK_LOGIN = 1;
 	
 	public static final String EMAIL = "email";
 	public static final String PASSWORD = "password";
@@ -26,5 +39,9 @@ public class LoginEntry extends BaseEntry {
 		this.addParam(PASSWORD, password);
 		
 	} 
+	
+	public void setPostType(int type){
+	    
+	}
 	
 }
