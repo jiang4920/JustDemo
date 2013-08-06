@@ -2,64 +2,94 @@ package com.ngandroid.demo;
 
 import java.io.IOException;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
+import javax.xml.parsers.ParserConfigurationException;
 
-import com.ngandroid.demo.content.LoginEntry;
-import com.ngandroid.demo.content.RegistEntry;
-import com.ngandroid.demo.util.HttpUtil;
+import org.xml.sax.SAXException;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.ngandroid.demo.content.LoginEntry;
+import com.ngandroid.demo.content.RegistEntry;
+import com.ngandroid.demo.content.UserEntry;
+import com.ngandroid.demo.task.LoginTask;
+import com.ngandroid.demo.util.HttpUtil;
+import com.ngandroid.demo.util.XMLDomUtil;
 
 public class LoginActivity extends Activity {
 
-	/**
-	 * 登录按钮
-	 */
-	private Button mLoginBut;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_login);
-		
-		mLoginBut = (Button)findViewById(R.id.login_bt_login);
-		mLoginBut.setOnClickListener(clickListener);
-	}
-	OnClickListener clickListener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			switch(v.getId()){
-			case R.id.login_bt_login:
-				testPost();
-				break;
-			}
-		}
-	};
+    /**
+     * 登录按钮
+     */
+    private Button mLoginBut;
 
-	private void testPost(){
-		Thread th = new Thread(){
+    /** 用户名输入框*/
+    private EditText usernameEt;
+    /** 密码*/
+    private EditText passwdEt;
+    
+    private static final String TAG = "LoginActivity";
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_login);
 
-			@Override
-			public void run() {
-				LoginEntry entry = new LoginEntry();
-				entry.setEmail("jiang4920@163.com");
-				entry.setPassword("jiangyuchen");
-				new HttpUtil().post(LoginEntry.uriAPI, entry.getPostBody());
-				RegistEntry rEntry = new RegistEntry();
-				rEntry.setEmail("jiang156qq.com");
-				rEntry.setNickname("abacaaajsk");
-				rEntry.setPassword("jiangyuchen");
-				rEntry.setPassword2("jiangyuchen");
-				new HttpUtil().post(RegistEntry.uriAPI, rEntry.getPostBody());
-			}
-		};
-		th.start();
-	}
-	
+        mLoginBut = (Button) findViewById(R.id.login_bt_login);
+        mLoginBut.setOnClickListener(clickListener);
+        
+        usernameEt = (EditText)findViewById(R.id.login_et_username);
+        passwdEt = (EditText)findViewById(R.id.login_et_password);
+    }
+
+    OnClickListener clickListener = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+            case R.id.login_bt_login:
+                LoginEntry entry = new LoginEntry();
+                entry.setEmail(usernameEt.getText().toString());
+                entry.setPassword(passwdEt.getText().toString());
+                new LoginTask(LoginActivity.this).execute(entry);
+                break;
+            }
+        }
+    };
+
+    private void testPost() {
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                LoginEntry entry = new LoginEntry();
+                entry.setEmail("jiang125@6qq.com");
+                entry.setPassword("jiangyuchen");
+                XMLDomUtil domUtil = new XMLDomUtil();
+                UserEntry user = null;
+                try {
+                    user = domUtil.getUserEntry(new HttpUtil().post(
+                            LoginEntry.uriAPI, entry.getPostBody()));
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                } catch (SAXException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                RegistEntry rEntry = new RegistEntry();
+                rEntry.setEmail("jian234g125@16qq.com");
+                rEntry.setNickname("火1592753柴");
+                rEntry.setPassword("jiangyuchen");
+                rEntry.setPassword2("jiangyuchen");
+                new HttpUtil().post(RegistEntry.uriAPI, rEntry.getPostBody());
+            }
+        };
+        th.start();
+    }
+    
 }

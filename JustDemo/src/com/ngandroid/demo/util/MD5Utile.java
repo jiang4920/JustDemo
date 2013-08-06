@@ -2,11 +2,14 @@ package com.ngandroid.demo.util;
 
 import java.security.MessageDigest;
 
+import android.util.Log;
+
 public class MD5Utile {
 
 	private static final String TAG = "MD5Utile";
 
 	public final static String MD5(String s) {
+	    Log.v(TAG, "MD5 source:"+s);
 		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'a', 'b', 'c', 'd', 'e', 'f' };
 		try {

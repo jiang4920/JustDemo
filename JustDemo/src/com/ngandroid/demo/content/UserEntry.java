@@ -7,5 +7,5 @@ public class UserEntry {
 	public String email;
 	public String nickname;
 	public int expiretime;
-	
+	public boolean hasResult;
 }

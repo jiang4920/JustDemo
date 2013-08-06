@@ -45,7 +45,6 @@ public class RegistEntry extends BaseEntry {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-		
 	}
 	public String getEmail() {
 		return email;

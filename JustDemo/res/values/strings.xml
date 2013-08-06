@@ -6,4 +6,9 @@
     <string name="login_password">密码:</string>
     <string name="login_login_keep_online">保持登录</string>
     <string name="login_login_text">登录</string>
+    <string name="namespace">xxxxxxx</string>
+    <string name="forgot_password">忘记密码</string>
+    <string name="login_waiting">正在登陆...</string>
+    <string name="login_failed">登陆失败</string>
+    
 </resources>

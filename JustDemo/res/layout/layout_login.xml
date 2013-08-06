@@ -3,73 +3,126 @@
     android:id="@+id/login_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/bg_color">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/guide_head" >
+
+        <TextView
+            android:id="@+id/guide_head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/namespace" />
+
+        <ImageView
+            android:id="@+id/login_regist_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/but_regist_selector" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/login_center_parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="40dip"
-        android:layout_marginRight="40dip"
-        android:layout_marginTop="80dip"
-        android:layout_weight="0.43" >
+        android:layout_height="210dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/login_box_bg"
+        android:padding="10dip" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:src="@drawable/text_login" />
 
         <TextView
             android:id="@+id/login_tv_username"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dip"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="52dp"
-            android:text="@string/login_username" />
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/login_username"
+            android:textColor="@color/text_color" />
 
         <EditText
             android:id="@+id/login_et_username"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dip"
             android:layout_alignBottom="@+id/login_tv_username"
             android:layout_marginLeft="18dp"
             android:layout_toRightOf="@+id/login_tv_username"
-            android:ems="10"
-            android:inputType="textPersonName" >
-            <requestFocus />
+            android:background="@drawable/login_edit_box"
+            android:ems="8"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dip" >
         </EditText>
 
         <TextView
             android:id="@+id/login_tv_password"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dip"
             android:layout_below="@+id/login_tv_username"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/login_et_username"
-            android:text="@string/login_password" />
+            android:gravity="center_vertical"
+            android:text="@string/login_password"
+            android:textColor="@color/text_color" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/login_et_password"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dip"
             android:layout_alignBaseline="@+id/login_tv_password"
             android:layout_alignBottom="@+id/login_tv_password"
             android:layout_alignLeft="@+id/login_et_username"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:background="@drawable/login_edit_box"
+            android:ems="8"
+            android:inputType="textPassword"
+            android:paddingLeft="5dip" />
 
         <CheckBox
             android:id="@+id/login_cb_keep_online"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dip"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="@string/login_login_keep_online" />
-
+            android:layout_below="@id/login_et_password"
+            android:text="@string/login_login_keep_online"
+            android:layout_marginLeft="10dip"
+            android:button="@drawable/check_box_selector"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dip"
+            android:textColor="@color/text_color" />
+		<TextView
+		    android:drawableLeft="@drawable/icon_help"
+		    android:id="@+id/login_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/login_et_password"
+            android:text="@string/forgot_password"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="10dip"
+            android:textColor="@color/text_color"
+		    />
         <Button
             android:id="@+id/login_bt_login"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/login_cb_keep_online"
-            android:layout_marginTop="24dp"
-            android:text="@string/login_login_text" />
-
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:layout_alignLeft="@+id/login_cb_keep_online"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/but_login_selector" />
     </RelativeLayout>
 
 </LinearLayout>
