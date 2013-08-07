@@ -14,12 +14,12 @@ import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.XMLDomUtil;
 
-public class LoginTask extends AsyncTask<LoginEntry, String, Response>{
+public class RegistTask extends AsyncTask<LoginEntry, String, Response>{
 
-    private static final String TAG = "LoginTask";
+    private static final String TAG = "RegistTask";
     private Activity mContext;
     ProgressDialog pd;
-    public LoginTask(Activity context){
+    public RegistTask(Activity context){
         mContext = context;
         pd = new ProgressDialog(mContext);
     }

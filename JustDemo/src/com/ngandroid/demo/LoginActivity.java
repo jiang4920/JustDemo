@@ -7,16 +7,18 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.content.RegistEntry;
-import com.ngandroid.demo.content.UserEntry;
+import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.task.LoginTask;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.XMLDomUtil;
@@ -35,6 +37,11 @@ public class LoginActivity extends Activity {
     
     private static final String TAG = "LoginActivity";
     
+    /**
+     * 注册按钮
+     */
+    private ImageView registLinkBut;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,10 @@ public class LoginActivity extends Activity {
         
         usernameEt = (EditText)findViewById(R.id.login_et_username);
         passwdEt = (EditText)findViewById(R.id.login_et_password);
+        
+        registLinkBut = (ImageView)findViewById(R.id.login_regist_link);
+        registLinkBut.setOnClickListener(clickListener);
+        
     }
 
     OnClickListener clickListener = new OnClickListener() {
@@ -55,12 +66,17 @@ public class LoginActivity extends Activity {
             case R.id.login_bt_login:
                 LoginEntry entry = new LoginEntry();
                 entry.setEmail("jiang4920@163.com");
-                entry.setPassword("jiangyuchen");
+                entry.setPassword("jiangychen");
 //                entry.setEmail(usernameEt.getText().toString());
 //                entry.setPassword(passwdEt.getText().toString());
                 new LoginTask(LoginActivity.this).execute(entry);
                 Log.v(TAG, "onclick");
                 break;
+            case R.id.login_regist_link:
+            	Intent intent = new Intent();
+            	intent.setClass(LoginActivity.this, RegistActivity.class);
+            	LoginActivity.this.startActivity(intent);
+            	break;
             }
         }
     };
@@ -74,7 +90,7 @@ public class LoginActivity extends Activity {
                 entry.setEmail("jiang125@6qq.com");
                 entry.setPassword("jiangyuchen");
                 XMLDomUtil domUtil = new XMLDomUtil();
-                UserEntry user = null;
+                UserResponse user = null;
                 try {
                     user = domUtil.getUserEntry(new HttpUtil().post(
                             LoginEntry.uriAPI, entry.getPostBody()));

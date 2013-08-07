@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/regist_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/bg_color">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/guide_head" >
+
+        <TextView
+            android:id="@+id/guide_head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/namespace" />
+
+        <ImageView
+            android:id="@+id/regist_regist_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/but_regist_back_selector" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/regist_center_parent"
+        android:layout_width="match_parent"
+        android:layout_height="300dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/login_box_bg"
+        android:padding="10dip" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:src="@drawable/text_login" />
+
+        <TextView
+            android:id="@+id/regist_tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/login_username"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/regist_et_username"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/regist_tv_username"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/regist_tv_username"
+            android:background="@drawable/login_edit_box"
+            android:ems="8"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dip" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/regist_tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_below="@+id/regist_tv_username"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/login_email"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/regist_et_email"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/regist_tv_email"
+            android:layout_alignLeft="@+id/regist_et_username"
+            android:background="@drawable/login_edit_box"
+            android:ems="8"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="5dip" />
+        <TextView
+            android:id="@+id/regist_tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_below="@+id/regist_tv_email"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/login_password"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/regist_et_password"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/regist_tv_password"
+            android:layout_alignLeft="@+id/regist_et_username"
+            android:background="@drawable/login_edit_box"
+            android:ems="8"
+            android:inputType="textPassword"
+            android:paddingLeft="5dip" />
+        <TextView
+            android:id="@+id/regist_tv_password_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_below="@+id/regist_tv_password"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:text="@string/login_password_confirm"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/regist_et_password_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/regist_tv_password_confirm"
+            android:layout_alignLeft="@+id/regist_et_username"
+            android:background="@drawable/login_edit_box"
+            android:ems="8"
+            android:inputType="textPassword"
+            android:paddingLeft="5dip" />
+
+        <CheckBox
+            android:id="@+id/login_cb_keep_online"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/regist_tv_password_confirm"
+            android:text="@string/regist_agree"
+            android:layout_marginLeft="5dip"
+            android:button="@drawable/check_box_selector"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dip"
+            android:textColor="@color/text_color" />
+		<TextView
+		    android:id="@+id/login_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/regist_tv_password_confirm"
+            android:text="@string/regist_protol"
+            android:gravity="center_vertical"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
+            android:textColor="@color/text_color"
+		    />
+        <Button
+            android:id="@+id/login_bt_commit"
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/but_commit_selector" />
+    </RelativeLayout>
+
+</LinearLayout>

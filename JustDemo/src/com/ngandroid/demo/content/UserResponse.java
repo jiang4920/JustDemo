@@ -1,6 +1,6 @@
 package com.ngandroid.demo.content;
 
-public class UserEntry {
+public class UserResponse extends Response {
 	private static final String TAG = "JustDemo UserEntry.java";
 	
 	public int uid;
