@@ -38,19 +38,14 @@ public abstract class BaseEntry {
      *            是否需要转化为URL编码
      * @return
      */
-    public String getParams(boolean isUrlEncode) {
+    public String getParams() {
         StringBuffer sb = new StringBuffer();
         for (PostParam param : mParams) {
             sb.append(param.key + "=");
-//            if (isUrlEncode || param.hasEncode) {
-                sb.append(urlEncode(param.value) + "&");
-//            } else {
-//                sb.append(param.value + "&");
-//            }
+            sb.append(urlEncode(param.value) + "&");
         }
         String paramsString = sb.toString().substring(0,
                 sb.toString().length() - 1); // 去掉最后一个“&”
-        Log.v(TAG, paramsString);
         return paramsString + getTimeParam().toString();
     }
 
@@ -66,15 +61,25 @@ public abstract class BaseEntry {
 
     protected abstract void formatParamas();
 
+    /**
+     * <p>Title: getPostBody</p>
+     * <p>Description: 将POST参数转化为格式化后的参数</p>
+     * @return
+     */
     public String getPostBody() {
         formatParamas();
-        return getParams(false) + getChecksumParam().toString() + DATA_TYPE;
+        return getParams() + getChecksumParam().toString() + DATA_TYPE;
     }
 
+    /**
+     * <p>Title: getChecksumParam</p>
+     * <p>Description: 获取checksum值，这个值就是把所有的有效参数经过urlencode后再进行MD5加密，checksum就是加密后的数据</p>
+     * @return 经过MD5加密后的checksum数据
+     */
     private PostParam getChecksumParam() {
         PostParam param = new PostParam();
         param.key = "checksum";
-        param.value = MD5Utile.MD5(getParams(true) + KEY);
+        param.value = MD5Utile.MD5(getParams() + KEY);
         return param;
     }
 
@@ -86,7 +91,7 @@ public abstract class BaseEntry {
         PostParam param = new PostParam();
         param.key = key;
         param.value = value;
-        if(key.equals("nickname")){
+        if (key.equals("nickname")) {
             param.hasEncode = true;
         }
         mParams.add(param);

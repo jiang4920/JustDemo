@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -53,9 +54,12 @@ public class LoginActivity extends Activity {
             switch (v.getId()) {
             case R.id.login_bt_login:
                 LoginEntry entry = new LoginEntry();
-                entry.setEmail(usernameEt.getText().toString());
-                entry.setPassword(passwdEt.getText().toString());
+                entry.setEmail("jiang4920@163.com");
+                entry.setPassword("jiangyuchen");
+//                entry.setEmail(usernameEt.getText().toString());
+//                entry.setPassword(passwdEt.getText().toString());
                 new LoginTask(LoginActivity.this).execute(entry);
+                Log.v(TAG, "onclick");
                 break;
             }
         }

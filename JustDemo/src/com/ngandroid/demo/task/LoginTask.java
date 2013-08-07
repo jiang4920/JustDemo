@@ -41,17 +41,10 @@ public class LoginTask extends AsyncTask<LoginEntry, String, UserEntry>{
         this.publishProgress(mContext.getResources().getString(R.string.login_waiting));
         XMLDomUtil domUtil = new XMLDomUtil();
         UserEntry user = null;
-        try {
-            //发送登陆的POST请求
-            user = domUtil.getUserEntry(new HttpUtil().post(
-                    LoginEntry.uriAPI, params[0].getPostBody()));
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //发送登陆的POST请求
+        user = domUtil.parseUserXml(new HttpUtil().post(
+                LoginEntry.uriAPI, params[0].getPostBody()));
+        Log.v(TAG, "parseUserXml");
         return user;
     }
 
@@ -64,10 +57,10 @@ public class LoginTask extends AsyncTask<LoginEntry, String, UserEntry>{
         pd.setMessage(values[0]);
     }
 
-    @Override
+    @Override       
     protected void onPostExecute(UserEntry result) {
         super.onPostExecute(result);
-        Log.v(TAG, result.nickname);
+        Log.v(TAG, "uid:"+result.uid + " email:" + result.email+" expiretime:" + result.expiretime+ " nickname:"+result.nickname);
         pd.dismiss();
         Toast.makeText(mContext, result.nickname+"登陆成功！", Toast.LENGTH_SHORT).show();
     }
