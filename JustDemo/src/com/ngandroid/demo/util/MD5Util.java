@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 
 import android.util.Log;
 
-public class MD5Utile {
+public class MD5Util {
 
 	private static final String TAG = "MD5Utile";
 

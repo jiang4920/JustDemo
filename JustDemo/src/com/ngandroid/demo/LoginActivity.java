@@ -65,10 +65,10 @@ public class LoginActivity extends Activity {
             switch (v.getId()) {
             case R.id.login_bt_login:
                 LoginEntry entry = new LoginEntry();
-                entry.setEmail("jiang4920@163.com");
-                entry.setPassword("jiangychen");
-//                entry.setEmail(usernameEt.getText().toString());
-//                entry.setPassword(passwdEt.getText().toString());
+//                entry.setEmail("jiangzxc@qq.com");
+//                entry.setPassword("123@123");
+                entry.setEmail(usernameEt.getText().toString());
+                entry.setPassword(passwdEt.getText().toString());
                 new LoginTask(LoginActivity.this).execute(entry);
                 Log.v(TAG, "onclick");
                 break;

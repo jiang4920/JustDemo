@@ -14,56 +14,70 @@ import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.XMLDomUtil;
 
-public class LoginTask extends AsyncTask<LoginEntry, String, Response>{
+public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
 
     private static final String TAG = "LoginTask";
     private Activity mContext;
     ProgressDialog pd;
-    public LoginTask(Activity context){
+
+    public LoginTask(Activity context) {
         mContext = context;
         pd = new ProgressDialog(mContext);
     }
 
     /**
-     * <p>Title: doInBackground</p>
-     * <p>Description: </p>
+     * <p>
+     * Title: doInBackground
+     * </p>
+     * <p>
+     * Description:
+     * </p>
+     * 
      * @param params
      * @return
      * @see android.os.AsyncTask#doInBackground(Params[])
      */
     @Override
     protected Response doInBackground(LoginEntry... params) {
-        //显示登陆的进度条
-        this.publishProgress(mContext.getResources().getString(R.string.login_waiting));
+        // 显示登陆的进度条
+        this.publishProgress(mContext.getResources().getString(
+                R.string.login_waiting));
         XMLDomUtil domUtil = new XMLDomUtil();
-        Response response = null;
-        //发送登陆的POST请求
-        response = domUtil.parseUserXml(new HttpUtil().post(
-                LoginEntry.uriAPI, params[0].getPostBody()));
-        Log.v(TAG, "parseUserXml");
-        return response;
+        // 发送登陆的POST请求
+        return domUtil
+                .parseXml(
+                        new UserResponse(),
+                        new HttpUtil().post(LoginEntry.uriAPI,
+                                params[0].getPostBody()));
     }
 
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-        if(!pd.isShowing()){
+        if (!pd.isShowing()) {
             pd.show();
         }
         pd.setMessage(values[0]);
     }
 
-    @Override       
+    @Override
     protected void onPostExecute(Response result) {
         super.onPostExecute(result);
         pd.dismiss();
-        if(result instanceof ErrorResponse){
-        	String reason = ((ErrorResponse) result).getReason();
-        	Toast.makeText(mContext, reason+"登陆失败！", Toast.LENGTH_SHORT).show();
-        }else{
-        	UserResponse userRsp = (UserResponse)result;
-	        Log.v(TAG, "uid:"+userRsp.uid + " email:" + userRsp.email+" expiretime:" + userRsp.expiretime+ " nickname:"+userRsp.nickname);
-	        Toast.makeText(mContext, userRsp.nickname+"登陆成功！", Toast.LENGTH_SHORT).show();
+        if (result == null) {
+            Toast.makeText(mContext, "登陆失败,请检查网络！", Toast.LENGTH_SHORT).show();
+
+        } else if (result instanceof ErrorResponse) {
+            String reason = ((ErrorResponse) result).getReason();
+            Toast.makeText(mContext, reason + "登陆失败！", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            UserResponse userRsp = (UserResponse) result;
+            Log.v(TAG, "uid:" + userRsp.uid + " email:" + userRsp.email
+                    + " expiretime:" + userRsp.expiretime + " nickname:"
+                    + userRsp.nickname);
+            Toast.makeText(mContext, userRsp.nickname + "登陆成功！",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }

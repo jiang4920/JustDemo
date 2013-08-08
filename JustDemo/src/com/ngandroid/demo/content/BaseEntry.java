@@ -6,7 +6,7 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.ngandroid.demo.util.MD5Utile;
+import com.ngandroid.demo.util.MD5Util;
 
 public abstract class BaseEntry {
     protected static final String DATA_TYPE = "&dataType=1";
@@ -79,7 +79,7 @@ public abstract class BaseEntry {
     private PostParam getChecksumParam() {
         PostParam param = new PostParam();
         param.key = "checksum";
-        param.value = MD5Utile.MD5(getParams() + KEY);
+        param.value = MD5Util.MD5(getParams() + KEY);
         return param;
     }
 

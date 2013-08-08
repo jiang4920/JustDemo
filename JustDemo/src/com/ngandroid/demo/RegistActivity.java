@@ -2,11 +2,16 @@ package com.ngandroid.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class RegistActivity extends Activity {
+import com.ngandroid.demo.content.RegistEntry;
+import com.ngandroid.demo.task.RegistTask;
+
+public class RegistActivity extends Activity implements OnClickListener {
 	private static final String TAG = "JustDemo RegistActivity.java";
 
 	private EditText usernameTv;
@@ -28,7 +33,33 @@ public class RegistActivity extends Activity {
 		passwordTv = (EditText)findViewById(R.id.regist_et_password);
 		passwordConfirmTv = (EditText)findViewById(R.id.regist_et_password_confirm);
 		
+		commitBut = (Button)findViewById(R.id.regist_bt_commit);
+		commitBut.setOnClickListener(this);
 	}
+
+    /**
+     * <p>Title: onClick</p>
+     * <p>Description: </p>
+     * @param v
+     * @see android.view.View.OnClickListener#onClick(android.view.View)
+     */
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+        case R.id.regist_bt_commit:
+            RegistEntry rEntry = new RegistEntry();
+//            rEntry.setNickname("爱不持3久死焦点2框");
+//            rEntry.setEmail("jiang78543332@qq.com");
+//            rEntry.setPassword("123567");
+//            rEntry.setPassword2("123567");
+            rEntry.setNickname(usernameTv.getText().toString());
+            rEntry.setEmail(emailTv.getText().toString());
+            rEntry.setPassword(passwordTv.getText().toString());
+            rEntry.setPassword2(passwordConfirmTv.getText().toString());
+            new RegistTask(this).execute(rEntry);
+            break;
+        }
+    }
 	
 	
 	

@@ -159,7 +159,7 @@
             android:textColor="@color/text_color"
 		    />
         <Button
-            android:id="@+id/login_bt_commit"
+            android:id="@+id/regist_bt_commit"
             android:layout_width="match_parent"
             android:layout_height="30dip"
             android:layout_marginLeft="10dip"

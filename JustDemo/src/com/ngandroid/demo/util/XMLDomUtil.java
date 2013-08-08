@@ -77,30 +77,21 @@ public class XMLDomUtil {
 		return user;
 	}
 
-	public Response parseUserXml(InputStream is) {
+	/**
+	 * <p>Title: parseXml</p>
+	 * <p>Description: 解析XML</p>
+	 * @param response 传递进来一个Response，用于接收和处理XML中数据
+	 * @param is 服务器返回的输入流
+	 * @return
+	 */
+	public Response parseXml(Response response, InputStream is) {
 		SAXReader reader = new SAXReader();
 		try {
 			org.dom4j.Document document = reader.read(is);
 			Log.v(TAG, document.asXML());
 			if ("true".equals(document.selectSingleNode("/data/result")
 					.getText())) {
-				List root = document.selectNodes("/data/data");//
-				UserResponse user = new UserResponse();
-				for (Iterator i = root.iterator(); i.hasNext();) {
-					org.dom4j.Element el = (org.dom4j.Element) i.next();
-					Log.v(TAG,
-							""
-									+ (user.uid = Integer.parseInt(el
-											.elementText("uid"))));
-					Log.v(TAG, "" + (user.email = el.elementText("email")));
-					Log.v(TAG,
-							""
-									+ (user.expiretime = Integer.parseInt(el
-											.elementText("expiretime"))));
-					Log.v(TAG, ""
-							+ (user.nickname = el.elementText("nickname")));
-				}
-				return user;
+				return response.parse(document);
 			} else {
 				ErrorResponse error = new ErrorResponse();
 				error.setSeason(document.selectSingleNode("/data/reason/item")

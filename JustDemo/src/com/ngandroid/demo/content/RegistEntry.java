@@ -7,7 +7,7 @@ package com.ngandroid.demo.content;
 
 import java.net.URLEncoder;
 
-import com.ngandroid.demo.util.MD5Utile;
+import com.ngandroid.demo.util.MD5Util;
 
 /**
  * com.ngandroid.demo.content.RigestEntry
