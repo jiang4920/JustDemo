@@ -21,9 +21,13 @@ public class SQLiteUtil extends SQLiteOpenHelper {
     private static String NAME = "nga.db";
     private static final String TAG = "JustDemo SQLiteUtil";
     
-    private String SQL_CREATE_TABLE_USER = "create table if not exists user (uid INTEGER primary key not null, nickname TEXT not null, email TEXT not null)";
+    public static final String TABLE_USER = "USER";
+    
+    private String SQL_CREATE_TABLE_USER = "create table if not exists "+TABLE_USER+" (uid INTEGER primary key not null, nickname TEXT not null, email TEXT not null, expiretime INTEGER, loginTime INTEGER not null)";
     
     private static SQLiteUtil mSQLiteUtil;
+    
+    private static SQLiteDatabase mDb;
     
     /**
      * @param context
@@ -40,11 +44,14 @@ public class SQLiteUtil extends SQLiteOpenHelper {
         this(context, NAME, null, VERSION );
     }
     
-    public SQLiteUtil getInstance(Context context){
+    public static SQLiteDatabase getInstance(Context context){
         if(mSQLiteUtil == null){
             mSQLiteUtil = new SQLiteUtil(context);
         }
-        return mSQLiteUtil;
+        if(mDb == null){
+            mDb = mSQLiteUtil.getWritableDatabase();
+        }
+        return mDb;
     }
     
     public void insert(){

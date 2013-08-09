@@ -1,26 +1,27 @@
 package com.ngandroid.demo.task;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ngandroid.demo.LoginActivity;
 import com.ngandroid.demo.R;
 import com.ngandroid.demo.content.ErrorResponse;
 import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.content.Response;
 import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.util.HttpUtil;
+import com.ngandroid.demo.util.SQLiteUtil;
 import com.ngandroid.demo.util.XMLDomUtil;
 
 public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
 
     private static final String TAG = "LoginTask";
-    private Activity mContext;
+    private LoginActivity mContext;
     ProgressDialog pd;
 
-    public LoginTask(Activity context) {
+    public LoginTask(LoginActivity context) {
         mContext = context;
         pd = new ProgressDialog(mContext);
     }
@@ -78,6 +79,8 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
                     + userRsp.nickname);
             Toast.makeText(mContext, userRsp.nickname + "登陆成功！",
                     Toast.LENGTH_SHORT).show();
+            userRsp.addNewUser(SQLiteUtil.getInstance(mContext));
         }
     }
+    
 }

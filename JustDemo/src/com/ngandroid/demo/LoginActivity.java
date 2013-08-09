@@ -1,13 +1,8 @@
 package com.ngandroid.demo;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ngandroid.demo.content.LoginEntry;
-import com.ngandroid.demo.content.RegistEntry;
-import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.task.LoginTask;
-import com.ngandroid.demo.util.HttpUtil;
-import com.ngandroid.demo.util.XMLDomUtil;
+import com.ngandroid.demo.util.SQLiteUtil;
 
 public class LoginActivity extends Activity {
 
@@ -32,10 +24,13 @@ public class LoginActivity extends Activity {
 
     /** 用户名输入框*/
     private EditText usernameEt;
+    
     /** 密码*/
     private EditText passwdEt;
     
     private static final String TAG = "LoginActivity";
+    
+    private SQLiteDatabase db;
     
     /**
      * 注册按钮
@@ -58,6 +53,11 @@ public class LoginActivity extends Activity {
         
     }
 
+    private void initDb(){
+        db = SQLiteUtil.getInstance(this);
+//        Log.v(TAG, db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy))
+    }
+    
     OnClickListener clickListener = new OnClickListener() {
 
         @Override
@@ -80,36 +80,5 @@ public class LoginActivity extends Activity {
             }
         }
     };
-
-    private void testPost() {
-        Thread th = new Thread() {
-
-            @Override
-            public void run() {
-                LoginEntry entry = new LoginEntry();
-                entry.setEmail("jiang125@6qq.com");
-                entry.setPassword("jiangyuchen");
-                XMLDomUtil domUtil = new XMLDomUtil();
-                UserResponse user = null;
-                try {
-                    user = domUtil.getUserEntry(new HttpUtil().post(
-                            LoginEntry.uriAPI, entry.getPostBody()));
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                } catch (SAXException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                RegistEntry rEntry = new RegistEntry();
-                rEntry.setEmail("jian234g125@16qq.com");
-                rEntry.setNickname("火1592753柴");
-                rEntry.setPassword("jiangyuchen");
-                rEntry.setPassword2("jiangyuchen");
-                new HttpUtil().post(RegistEntry.uriAPI, rEntry.getPostBody());
-            }
-        };
-        th.start();
-    }
     
 }
