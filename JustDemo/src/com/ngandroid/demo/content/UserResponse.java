@@ -7,6 +7,7 @@ import org.dom4j.Node;
 import com.ngandroid.demo.util.SQLiteUtil;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -18,6 +19,7 @@ public class UserResponse extends Response {
     public String nickname;
     public int expiretime;
     public boolean hasResult;
+    public int keepLogin;
 
     /**
      * <p>
@@ -59,6 +61,30 @@ public class UserResponse extends Response {
         cv.put("expiretime", expiretime);
         cv.put("nickname", nickname);
         cv.put("loginTime", System.currentTimeMillis());
-        db.insert(SQLiteUtil.TABLE_USER, null, cv);
+        cv.put("keepLogin", keepLogin);
+        if(check(db, SQLiteUtil.TABLE_USER, uid)){
+        	db.update(SQLiteUtil.TABLE_USER, cv, "uid = "+uid,null);
+        }else{
+        	db.insert(SQLiteUtil.TABLE_USER, null, cv);
+        }
+        
+        Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null, null, null);
+        for(c.moveToFirst(); !c.isAfterLast();c.moveToNext()){
+        	Log.v(TAG, "uid:"+c.getString(c.getColumnIndex("uid")) + " email:"+c.getString(c.getColumnIndex("email"))+" expiretime"+ c.getString(c.getColumnIndex("expiretime"))
+        			+" nickname:"+c.getString(c.getColumnIndex("nickname"))+" loginTime"+ c.getString(c.getColumnIndex("loginTime"))
+        			+ "keepLogin"+c.getString(c.getColumnIndex("keepLogin"))
+        			);
+        }
+        c.close();
     }
+    
+    private boolean check(SQLiteDatabase db, String table,int uid){
+    	Cursor c = db.query(table, null, " uid = " +uid, null, null, null, null);
+    	if(c != null && c.getCount() > 0){
+    		return true;
+    	}
+    	c.close();
+    	return false;
+    }
+    
 }

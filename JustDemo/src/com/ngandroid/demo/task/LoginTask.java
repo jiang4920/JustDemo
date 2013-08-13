@@ -74,6 +74,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
                     .show();
         } else {
             UserResponse userRsp = (UserResponse) result;
+            userRsp.keepLogin = mContext.isKeepLogin();
             Log.v(TAG, "uid:" + userRsp.uid + " email:" + userRsp.email
                     + " expiretime:" + userRsp.expiretime + " nickname:"
                     + userRsp.nickname);

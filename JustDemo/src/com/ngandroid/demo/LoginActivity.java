@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -32,6 +33,8 @@ public class LoginActivity extends Activity {
     
     private SQLiteDatabase db;
     
+    private CheckBox keepLoginCb;
+    
     /**
      * 注册按钮
      */
@@ -51,8 +54,23 @@ public class LoginActivity extends Activity {
         registLinkBut = (ImageView)findViewById(R.id.login_regist_link);
         registLinkBut.setOnClickListener(clickListener);
         
+        keepLoginCb = (CheckBox)findViewById(R.id.login_cb_keep_online);
+        startPlateActivity();
     }
 
+    public void startPlateActivity(){
+    	Intent intent = new Intent();
+    	intent.setClass(this, PlateActivity.class);
+    	this.startActivity(intent);
+    }
+    
+    public int isKeepLogin(){
+    	if(keepLoginCb.isChecked()){
+    		return 1;
+    	}
+    	return 0;
+    }
+    
     private void initDb(){
         db = SQLiteUtil.getInstance(this);
 //        Log.v(TAG, db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy))
