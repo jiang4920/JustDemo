@@ -17,10 +17,20 @@ public class UserResponse extends Response {
     public int uid;
     public String email;
     public String nickname;
+    public String password;
     public int expiretime;
     public boolean hasResult;
     public int keepLogin;
 
+    static UserResponse user;
+    
+    public static UserResponse getInstance(){
+    	if(user == null){
+    		user = new UserResponse();
+    	}
+    	return user;
+    }
+    
     /**
      * <p>
      * Title: parse
@@ -60,6 +70,7 @@ public class UserResponse extends Response {
         cv.put("email", email);
         cv.put("expiretime", expiretime);
         cv.put("nickname", nickname);
+        cv.put("password", password);
         cv.put("loginTime", System.currentTimeMillis());
         cv.put("keepLogin", keepLogin);
         if(check(db, SQLiteUtil.TABLE_USER, uid)){

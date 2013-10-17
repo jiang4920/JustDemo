@@ -2,11 +2,14 @@ package com.ngandroid.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.ngandroid.demo.content.UserResponse;
+import com.ngandroid.demo.task.PlateTask;
 import com.ngandroid.demo.widget.MenuItemView;
 import com.ngandroid.demo.widget.MyAnimations;
 import com.ngandroid.demo.widget.OnItemClickListener;
@@ -18,11 +21,14 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 	
 	private ImageView mMenuHandle;
 	
+	UserResponse user;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_plate);
 		initMenuGroup();
+		new PlateTask().execute(null);
 	}
 
 	public void initMenuGroup(){
@@ -44,6 +50,8 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 		mMenuGroup.addView(imgBtn3);
 		mMenuGroup.addView(imgBtn4);
 		mMenuGroup.addView(imgBtn5);
+		user = UserResponse.getInstance();
+		Log.v(TAG, "user:"+user.uid+"+"+user.nickname);
 	}
 	
 	@Override
@@ -58,7 +66,6 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 
 	@Override
 	public void onItemClick(int item) {
-		// TODO Auto-generated method stub
 		
 	}
 	
