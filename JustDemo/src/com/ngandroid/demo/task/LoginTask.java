@@ -1,11 +1,15 @@
 package com.ngandroid.demo.task;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ngandroid.demo.GuideActivity;
 import com.ngandroid.demo.LoginActivity;
+import com.ngandroid.demo.PlateActivity;
 import com.ngandroid.demo.R;
 import com.ngandroid.demo.content.ErrorResponse;
 import com.ngandroid.demo.content.LoginEntry;
@@ -26,6 +30,8 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
         pd = new ProgressDialog(mContext);
     }
 
+    String passwd;
+    
     /**
      * <p>
      * Title: doInBackground
@@ -40,6 +46,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
      */
     @Override
     protected Response doInBackground(LoginEntry... params) {
+    	passwd = params[0].getPassword();
         // 显示登陆的进度条
         this.publishProgress(mContext.getResources().getString(
                 R.string.login_waiting));
@@ -47,7 +54,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
         // 发送登陆的POST请求
         return domUtil
                 .parseXml(
-                        new UserResponse(),
+                        UserResponse.getInstance(),
                         new HttpUtil().post(LoginEntry.uriAPI,
                                 params[0].getPostBody()));
     }
@@ -74,13 +81,21 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
                     .show();
         } else {
             UserResponse userRsp = (UserResponse) result;
+            userRsp.keepLogin = mContext.isKeepLogin();
+            userRsp.password = passwd;
             Log.v(TAG, "uid:" + userRsp.uid + " email:" + userRsp.email
                     + " expiretime:" + userRsp.expiretime + " nickname:"
                     + userRsp.nickname);
+            mContext.finish();
+            startPlateActivity(mContext);
             Toast.makeText(mContext, userRsp.nickname + "登陆成功！",
                     Toast.LENGTH_SHORT).show();
             userRsp.addNewUser(SQLiteUtil.getInstance(mContext));
         }
     }
-    
+    public void startPlateActivity(Context context){
+    	Intent intent = new Intent();
+    	intent.setClass(context, GuideActivity.class);
+    	context.startActivity(intent);
+    }
 }

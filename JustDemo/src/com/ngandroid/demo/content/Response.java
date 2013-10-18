@@ -6,4 +6,5 @@ public abstract class Response {
 	private static final String TAG = "JustDemo BaseResponse.java";
 	
 	public abstract Response parse(Document doc);
+	
 }

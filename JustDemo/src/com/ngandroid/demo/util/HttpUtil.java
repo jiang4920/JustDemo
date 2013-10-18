@@ -13,31 +13,60 @@ import android.util.Log;
 public class HttpUtil {
 
     private static final String TAG = "JustDemo HttpUtil";
-	static final String USER_AGENT = "AndroidNga/1.0";
+	static final String USER_AGENT = "nga_178_com_app";
+	
+	public static String COOKIE = null;
 	
     public InputStream post(String postUrl, String body) {
-    	Log.v(TAG, body);
+    	Log.v(TAG, "body :"+body);
+    	if(body == null){
+    		body = "";
+    	}
         try {
             //创建连接
             URL url = new URL(postUrl);
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
+            connection.setRequestProperty("Cookie", COOKIE);  
             connection.setInstanceFollowRedirects(true);
-//            connection.setRequestProperty("User-Agent", USER_AGENT);
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty("Content-Length", String.valueOf(body.length()));
-            connection.setRequestProperty("Accept-Charset", "utf-8");
-            connection.setDoOutput(true);
+//            connection.setRequestProperty("Content-Length", String.valueOf(body.length()));
+            connection.setRequestProperty("Accept-Charset", "UTF-8");
+            if(!body.equals("")){
+            	connection.setDoOutput(true);
+            }
             connection.setDoInput(true);
-            connection.setRequestMethod("POST");
+            if(!body.equals("")){
+            	connection.setRequestMethod("POST");
+            }else{
+            	connection.setRequestMethod("GET");
+            }
             connection.setUseCaches(false);
+            connection.setRequestProperty("User-Agent", USER_AGENT);
+            Log.v(TAG, "cookie:"+COOKIE);
             connection.connect();
             //POST请求
-            DataOutputStream out = new DataOutputStream(
-                    connection.getOutputStream());
-            out.writeBytes(body);
-            out.flush();
-            out.close();
+            if(!body.equals("")){
+	            DataOutputStream out = new DataOutputStream(
+	                    connection.getOutputStream());
+	            out.writeBytes(body);
+	            out.flush();
+	            out.close();
+            }
+            if(COOKIE== null){
+	            String sessionId = "";  
+	            String cookieVal = "";  
+	            String key = null;  
+	            //取cookie  
+	            for(int i = 1; (key = connection.getHeaderFieldKey(i)) != null; i++){  
+	                if(key.equalsIgnoreCase("set-cookie")){  
+	                    cookieVal = connection.getHeaderField(i);  
+	                    cookieVal = cookieVal.substring(0, cookieVal.indexOf(";"));  
+	                    sessionId = sessionId + cookieVal + ";";  
+	                }  
+	            }  
+	            COOKIE = sessionId;
+            }
             return connection.getInputStream();
         } catch (MalformedURLException e) {
             e.printStackTrace();

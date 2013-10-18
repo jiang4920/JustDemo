@@ -2,12 +2,14 @@ package com.ngandroid.demo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -28,9 +30,11 @@ public class LoginActivity extends Activity {
     /** 密码*/
     private EditText passwdEt;
     
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "JustDemo LoginActivity";
     
     private SQLiteDatabase db;
+    
+    private CheckBox keepLoginCb;
     
     /**
      * 注册按钮
@@ -51,11 +55,47 @@ public class LoginActivity extends Activity {
         registLinkBut = (ImageView)findViewById(R.id.login_regist_link);
         registLinkBut.setOnClickListener(clickListener);
         
+        keepLoginCb = (CheckBox)findViewById(R.id.login_cb_keep_online);
+        tryLogin();
+//        startPlateActivity();
     }
 
-    private void initDb(){
-        db = SQLiteUtil.getInstance(this);
-//        Log.v(TAG, db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy))
+    public void tryLogin(){
+    	db = SQLiteUtil.getInstance(this);
+    	Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null, null, "loginTime");
+    	if(c!= null && c.getCount()>=1){
+    		c.moveToFirst();
+    		Log.v(TAG, "try uid:"+c.getString(c.getColumnIndex("uid")) + " email:"+c.getString(c.getColumnIndex("email"))+ " password:"+c.getString(c.getColumnIndex("password"))+" expiretime"+ c.getString(c.getColumnIndex("expiretime"))
+        			+" nickname:"+c.getString(c.getColumnIndex("nickname"))+" loginTime"+ c.getString(c.getColumnIndex("loginTime"))
+        			+ "keepLogin"+c.getString(c.getColumnIndex("keepLogin"))
+        			);
+		   usernameEt.setText(c.getString(c.getColumnIndex("email")));
+		   passwdEt.setText(c.getString(c.getColumnIndex("password")));
+		   c.close(); 
+		   login();
+    	}
+    }
+    
+    public void startPlateActivity(){
+		Intent intent = new Intent();
+    	intent.setClass(this, PlateActivity.class);
+    	this.startActivity(intent);
+    }
+    
+    public int isKeepLogin(){
+    	if(keepLoginCb.isChecked()){
+    		return 1;
+    	}
+    	return 0;
+    }
+    
+    private void login(){
+    	LoginEntry entry = new LoginEntry();
+//      entry.setEmail("jiangzxc@qq.com");
+//      entry.setPassword("123@123");
+      entry.setEmail(usernameEt.getText().toString());
+      entry.setPassword(passwdEt.getText().toString());
+      new LoginTask(LoginActivity.this).execute(entry);
     }
     
     OnClickListener clickListener = new OnClickListener() {
@@ -64,12 +104,7 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             switch (v.getId()) {
             case R.id.login_bt_login:
-                LoginEntry entry = new LoginEntry();
-//                entry.setEmail("jiangzxc@qq.com");
-//                entry.setPassword("123@123");
-                entry.setEmail(usernameEt.getText().toString());
-                entry.setPassword(passwdEt.getText().toString());
-                new LoginTask(LoginActivity.this).execute(entry);
+            	login();
                 Log.v(TAG, "onclick");
                 break;
             case R.id.login_regist_link:
