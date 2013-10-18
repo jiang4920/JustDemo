@@ -74,7 +74,6 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
         pd.dismiss();
         if (result == null) {
             Toast.makeText(mContext, "登陆失败,请检查网络！", Toast.LENGTH_SHORT).show();
-
         } else if (result instanceof ErrorResponse) {
             String reason = ((ErrorResponse) result).getReason();
             Toast.makeText(mContext, reason + "登陆失败！", Toast.LENGTH_SHORT)

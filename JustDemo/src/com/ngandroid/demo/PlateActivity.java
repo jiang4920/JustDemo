@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.task.PlateTask;
@@ -23,12 +24,15 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 	
 	UserResponse user;
 	
+	LinearLayout plateLayout;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_plate);
+		plateLayout = (LinearLayout)findViewById(R.id.plate_parent);
 		initMenuGroup();
-		new PlateTask().execute(null);
+		new PlateTask(this, plateLayout).execute(null);
 	}
 
 	public void initMenuGroup(){

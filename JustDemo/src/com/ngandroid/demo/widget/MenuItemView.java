@@ -63,8 +63,8 @@ public class MenuItemView extends ViewGroup {
 				// the position of childview leftTop
 				int x = (iTemWidth - width)/2 + i*iTemWidth;
 				int y = 0 + top;
-				Log.v(TAG, "item:"+width+":"+height);
-				Log.v(TAG, getMeasuredWidth()+":"+getMeasuredHeight());
+//				Log.v(TAG, "item:"+width+":"+height);
+//				Log.v(TAG, getMeasuredWidth()+":"+getMeasuredHeight());
 				int right = getWidth() - width;
 				childView.layout(x, y, x+width,  y + height);
 			}

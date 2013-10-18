@@ -3,4 +3,9 @@
     <color name="text_color">#dbd3b4</color>
     <color name="text_title_color">#FFAF60</color>
     <color name="bg_color">#ffeebb</color>
+    <color name="text_gray">#666666</color>
+    <color name="text_dark_yellow_header">#8B2323</color>
+    <color name="text_dark_yellow_name">#CD6600</color>
+    <color name="green">#00FF99</color>
+    <color name="green_light">#66FF00</color>
 </resources>
