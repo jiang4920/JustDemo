@@ -150,13 +150,11 @@
             android:layout_height="40dip"
             android:layout_alignParentRight="true"
             android:layout_below="@id/regist_tv_password_confirm"
-            android:text="@string/regist_protol"
             android:gravity="center_vertical"
-            android:autoLink="web"
-            android:linksClickable="true"
             android:layout_marginTop="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="0dip"
             android:textColor="@color/text_color"
+            android:text="@string/regist_protol"
 		    />
         <Button
             android:id="@+id/regist_bt_commit"
