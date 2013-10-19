@@ -54,18 +54,27 @@ public class HttpUtil {
 	            out.close();
             }
             if(COOKIE== null){
-	            String sessionId = "";  
 	            String cookieVal = "";  
+	            String uid = "";
+	            String cid = "";
 	            String key = null;  
 	            //取cookie  
 	            for(int i = 1; (key = connection.getHeaderFieldKey(i)) != null; i++){  
 	                if(key.equalsIgnoreCase("set-cookie")){  
 	                    cookieVal = connection.getHeaderField(i);  
 	                    cookieVal = cookieVal.substring(0, cookieVal.indexOf(";"));  
-	                    sessionId = sessionId + cookieVal + ";";  
+	                    if (cookieVal.indexOf("_sid=") == 0) {
+							cid = cookieVal.substring(5);
+						}
+						if (cookieVal.indexOf("_178c=") == 0) {
+							uid = cookieVal
+									.substring(6, cookieVal.indexOf('%'));
+						}
 	                }  
 	            }  
-	            COOKIE = sessionId;
+	            
+	            COOKIE = "ngaPassportUid=" + uid
+	    				+ "; ngaPassportCid=" +cid;
             }
             return connection.getInputStream();
         } catch (MalformedURLException e) {

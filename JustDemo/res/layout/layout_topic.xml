@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:background="@drawable/guide_head" >
-        <TextView
+
+        <TextView
             android:id="@+id/guide_head_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,14 +17,88 @@
             android:text="@string/namespace"
             android:textColor="@color/text_title_color" />
     </RelativeLayout>
-	
-    <ListView 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/bg_tab"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/topic_new_topic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/topic_new_topic" />
+
+        <ImageView
+            android:id="@+id/topic_new_reply"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/topic_new_reply" />
+
+        <ImageView
+            android:id="@+id/topic_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/topic_header" />
+
+        <ImageView
+            android:id="@+id/topic_recommand"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/topic_recommand" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_tab" >
+
+        <Button
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dip"
+            android:id="@+id/topic_arrow_left"
+            android:text="@string/topic_page_pre"
+            android:textColor="@color/text_color"
+            android:background="@drawable/topic_arrow_left_selector" >
+        </Button>
+        <Button
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dip"
+            android:layout_alignParentRight="true"
+            android:id="@+id/topic_arrow_right"
+            android:textColor="@color/text_color"
+            android:text="@string/topic_page_next"
+            android:background="@drawable/topic_arrow_right_selector" >
+        </Button>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/topic_page"
+            android:text="1/1003"
+            />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/topic_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dip"
-        android:id="@+id/topic_list"
-        android:divider="@color/transparent"
+        android:layout_marginBottom="50dip"
+        android:layout_marginTop="100dip"
         android:background="@color/transparent"
-        android:listSelector="@color/transparent"
-        />
+        android:cacheColorHint="#00000000"
+        android:divider="@color/transparent"
+        android:listSelector="@color/transparent" />
+
 </RelativeLayout>

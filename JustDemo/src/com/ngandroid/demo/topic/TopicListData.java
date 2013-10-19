@@ -136,5 +136,9 @@ public class TopicListData {
 	public void setTime(long time) {
 		this.time = time;
 	}
+	
+	public int getTopicPageCount(){
+		return __ROWS/__T__ROWS_PAGE+(__ROWS%__T__ROWS_PAGE==0?0:1);
+	}
 
 }

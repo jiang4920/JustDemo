@@ -14,6 +14,15 @@
     <string name="login_waiting">正在登陆...</string>
     <string name="login_failed">登陆失败</string>
     <string name="regist_agree">我已同意并阅读</string>
+    <string name="topic_page_pre">上一页</string>
+    <string name="topic_page_next">下一页</string>
     <string name="regist_protol"><a href="http://www.google.com">178游戏网站协议</a></string>
 
+    
+    <string name="request_timeout">网络超时</string>
+    <string name="request_dataerror">请求数据错误</string>
+    <string name="request_neterror">网络错误</string>
+    <string name="request_servererror">服务器错误</string>
+    <string name="request_othererror">请求错误</string>
+    <string name="request_forbiddenerror">没有权限访问</string>
 </resources>

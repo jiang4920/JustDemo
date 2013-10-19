@@ -27,9 +27,11 @@ import org.apache.http.protocol.HttpContext;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ngandroid.demo.R;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
 
@@ -66,7 +68,7 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 		httpGet.addHeader("Accept-Charset", "GBK");
 		httpGet.addHeader("Accept-Encoding", "gzip,deflate");
 		httpGet.addHeader("Cookie", HttpUtil.COOKIE);
-
+		Log.v(TAG, "Cookie:"+HttpUtil.COOKIE);
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 15000);
@@ -199,43 +201,47 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 			mDataListener.onPostFinished(mTopicListData);
 		} else {
 			mDataListener.onPostError(status);
-//			if (status == TIMEOUT) {
 //				Toast.makeText(
 //						mContext.getApplicationContext(),
-//						mContext.getResources().getString(
-//								R.string.request_timeout), Toast.LENGTH_SHORT)
+//								"获取数据失败，请检测网络", Toast.LENGTH_SHORT)
 //						.show();
-//			} else if (status == DATAERROR) {
-//				Toast.makeText(
-//						mContext.getApplicationContext(),
-//						mContext.getResources().getString(
-//								R.string.request_dataerror), Toast.LENGTH_SHORT)
-//						.show();
-//			} else if (status == NETERROR) {
-//				Toast.makeText(
-//						mContext.getApplicationContext(),
-//						mContext.getResources().getString(
-//								R.string.request_neterror), Toast.LENGTH_SHORT)
-//						.show();
-//			} else if (status == SERVERERROR) {
-//				Toast.makeText(
-//						mContext.getApplicationContext(),
-//						mContext.getResources().getString(
-//								R.string.request_servererror),
-//						Toast.LENGTH_SHORT).show();
-//			} else if (status == FORBIDDEN) {
-//				Toast.makeText(
-//						mContext.getApplicationContext(),
-//						mContext.getResources().getString(
-//								R.string.request_forbiddenerror),
-//						Toast.LENGTH_SHORT).show();
-//			} else if (status == OTHERERROR) {
-//				Toast.makeText(
-//						mContext.getApplicationContext(),
-//						mContext.getResources().getString(
-//								R.string.request_othererror),
-//						Toast.LENGTH_SHORT).show();
-//			}
+			if (status == TIMEOUT) {
+				Toast.makeText(
+						mContext.getApplicationContext(),
+						mContext.getResources().getString(
+								R.string.request_timeout), Toast.LENGTH_SHORT)
+						.show();
+			} else if (status == DATAERROR) {
+				Toast.makeText(
+						mContext.getApplicationContext(),
+						mContext.getResources().getString(
+								R.string.request_dataerror), Toast.LENGTH_SHORT)
+						.show();
+			} else if (status == NETERROR) {
+				Toast.makeText(
+						mContext.getApplicationContext(),
+						mContext.getResources().getString(
+								R.string.request_neterror), Toast.LENGTH_SHORT)
+						.show();
+			} else if (status == SERVERERROR) {
+				Toast.makeText(
+						mContext.getApplicationContext(),
+						mContext.getResources().getString(
+								R.string.request_servererror),
+						Toast.LENGTH_SHORT).show();
+			} else if (status == FORBIDDEN) {
+				Toast.makeText(
+						mContext.getApplicationContext(),
+						mContext.getResources().getString(
+								R.string.request_forbiddenerror),
+						Toast.LENGTH_SHORT).show();
+			} else if (status == OTHERERROR) {
+				Toast.makeText(
+						mContext.getApplicationContext(),
+						mContext.getResources().getString(
+								R.string.request_othererror),
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
