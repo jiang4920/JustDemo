@@ -8,14 +8,19 @@ package com.ngandroid.demo.content.plate;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ngandroid.demo.R;
+import com.ngandroid.demo.TopicActivity;
 
 /**
  * com.ngandroid.demo.content.plate.PlateGroup
@@ -23,7 +28,7 @@ import com.ngandroid.demo.R;
  *
  * create at 2013-10-18 上午10:06:07
  */
-public class PlateGroup extends ArrayList<Plate> {
+public class PlateGroup extends ArrayList<Plate> implements OnItemClickListener {
     private static final String TAG = "JustDemo PlateGroup";
     
     
@@ -33,10 +38,13 @@ public class PlateGroup extends ArrayList<Plate> {
     public TextView header;
     PlateGroupAdapter adapter;
     View layout;
+    private Context mContext;
     public View getView(Context context){
+    	mContext = context;
         if(layout == null){
             layout = LayoutInflater.from(context).inflate(R.layout.layout_plate_group, null);
             groupGv = (GridView)layout.findViewById(R.id.plate_group_grid);
+            groupGv.setOnItemClickListener(this);
             header = (TextView)layout.findViewById(R.id.plate_group_name);
             adapter = new PlateGroupAdapter(this, context);
             header.setText("：："+name+"：：");
@@ -51,4 +59,13 @@ public class PlateGroup extends ArrayList<Plate> {
     public void notifyRefresh(){
         adapter.notifyDataSetChanged();
     }
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Log.v(TAG, "name:"+adapter.getItem(arg2).name);
+		Intent intent = new Intent();
+		intent.setClass(mContext, TopicActivity.class);
+		intent.putExtra("fid", ""+adapter.getItem(arg2).fid);
+		mContext.startActivity(intent);
+	}
 }

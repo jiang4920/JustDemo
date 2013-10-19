@@ -31,6 +31,12 @@ public class Plate {
     Bitmap icon;
     
     public String getIconUrl(){
+    	if(fid== -7){
+    		return NGAURL.URL_BASE_ICON+354+".png";
+    	}
+    	if(fid== 311){
+    		return NGAURL.URL_BASE_ICON+414+".png";
+    	}
         return NGAURL.URL_BASE_ICON+fid+".png";
     }
 }
