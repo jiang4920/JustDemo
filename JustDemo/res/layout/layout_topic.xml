@@ -18,41 +18,47 @@
             android:textColor="@color/text_title_color" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_marginTop="50dip"
         android:background="@drawable/bg_tab"
+        android:id="@+id/topic_tabs"
         android:orientation="horizontal" >
 
-        <ImageView
+        <RadioButton
             android:id="@+id/topic_new_topic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/topic_new_topic" />
+            android:checked="true"
+            android:button="@color/transparent"
+            android:background="@drawable/topic_new_topic_selector" />
 
-        <ImageView
+        <RadioButton
             android:id="@+id/topic_new_reply"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/topic_new_reply" />
+            android:button="@color/transparent"
+            android:background="@drawable/topic_new_reply_selector" />
 
-        <ImageView
+        <RadioButton
             android:id="@+id/topic_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/topic_header" />
+            android:button="@color/transparent"
+            android:background="@drawable/topic_header_selector" />
 
-        <ImageView
+        <RadioButton
             android:id="@+id/topic_recommand"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/topic_recommand" />
-    </LinearLayout>
+            android:button="@color/transparent"
+            android:background="@drawable/topic_recommand_selector" />
+    </RadioGroup>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:id="@+id/topic_page"
-            android:text="1/1003"
+            android:text="1"
             />
     </RelativeLayout>
 

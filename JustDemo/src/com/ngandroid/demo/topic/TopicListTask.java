@@ -59,7 +59,8 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 	protected Integer doInBackground(String... params) {
 		String fid = params[0];
 		String page = params[1];
-		String url = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&fid=" + fid
+		String param = params[2];
+		String url = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&"+param+"&fid=" + fid
 				+ "&page=" + page;
 
 		HttpGet httpGet = new HttpGet(url);

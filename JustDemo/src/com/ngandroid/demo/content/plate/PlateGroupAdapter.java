@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.ngandroid.demo.R;
 
 public class PlateGroupAdapter extends BaseAdapter {
-    private static final String TAG = "LogCatcher FileAdapter";
+    private static final String TAG = "JustDemo PlateGroupAdapter";
     PlateGroup mGroup;
     Context mContext;
     int itemHeight;
@@ -99,7 +99,6 @@ public class PlateGroupAdapter extends BaseAdapter {
         holder.info.setText(plate.info);
         convertView.setLayoutParams(new GridView.LayoutParams(LayoutParams.MATCH_PARENT, 100));
         itemHeight = convertView.getMeasuredHeight();
-        Log.v(TAG, "itemHeight:"+itemHeight);
         return convertView;
     }
     

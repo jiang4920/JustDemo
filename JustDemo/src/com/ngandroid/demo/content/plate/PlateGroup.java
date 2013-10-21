@@ -62,7 +62,7 @@ public class PlateGroup extends ArrayList<Plate> implements OnItemClickListener 
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Log.v(TAG, "name:"+adapter.getItem(arg2).name);
+//		Log.v(TAG, "name:"+adapter.getItem(arg2).name);
 		Intent intent = new Intent();
 		intent.setClass(mContext, TopicActivity.class);
 		intent.putExtra("fid", ""+adapter.getItem(arg2).fid);

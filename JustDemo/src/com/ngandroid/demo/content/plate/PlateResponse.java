@@ -65,12 +65,12 @@ public class PlateResponse{
                     groupList.add(group);
                 }
             }
-            for(PlateGroup g:groupList){
-                Log.v(TAG, "group="+g.name);
-                for(Plate p:g){
-                    Log.v(TAG, "name="+p.name+"     fid="+p.fid);
-                }
-            }
+//            for(PlateGroup g:groupList){
+//                Log.v(TAG, "group="+g.name);
+//                for(Plate p:g){
+//                    Log.v(TAG, "name="+p.name+"     fid="+p.fid);
+//                }
+//            }
             state = RESULT_STATE_SUCCESS;
             return this;
 		} catch (DocumentException e) {

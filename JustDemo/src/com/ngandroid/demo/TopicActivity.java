@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.ngandroid.demo.topic.IDataLoadedListener;
@@ -14,7 +16,7 @@ import com.ngandroid.demo.topic.TopicListAdapter;
 import com.ngandroid.demo.topic.TopicListData;
 import com.ngandroid.demo.topic.TopicListTask;
 
-public class TopicActivity extends Activity implements OnClickListener {
+public class TopicActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
 	private static final String TAG = "JustDemo TopicActivity.java";
 
 	private ListView topicLv;
@@ -30,6 +32,15 @@ public class TopicActivity extends Activity implements OnClickListener {
 	public Button nextBt;
 	private TextView pageTv;
 	
+	private RadioGroup tabGroup;
+	//http://bbs.ngacn.cc/thread.php?lite=js&order_by=postdatedesc&fid=320&page=1
+	protected static final String POST = "order_by=postdatedesc";
+	protected static final String REPLY = "order_by=lastpostdesc";
+	protected static final String HEADER = "order_by=postdatedesc";
+	protected static final String RECOMMAND = "recommend=1";
+	
+	private String topicParam = POST;
+	
 	TopicListData data;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +52,8 @@ public class TopicActivity extends Activity implements OnClickListener {
 		preBt.setOnClickListener(this);
 		nextBt.setOnClickListener(this);
 		pageTv = (TextView)findViewById(R.id.topic_page);
-		
-		refresh();
+		tabGroup = (RadioGroup)findViewById(R.id.topic_tabs);
+		tabGroup.setOnCheckedChangeListener(this);
 	}
 	int mCurPageIndex = 1;
 	
@@ -68,7 +79,7 @@ public class TopicActivity extends Activity implements OnClickListener {
 			}
 
 		}).execute(this.getIntent().getStringExtra("fid"),
-				mCurPageIndex + "");
+				mCurPageIndex + "", topicParam);
 	}
 
 	@Override
@@ -89,5 +100,32 @@ public class TopicActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
+
+    /**
+     * <p>Title: onCheckedChanged</p>
+     * <p>Description: </p>
+     * @param group
+     * @param checkedId
+     * @see android.widget.RadioGroup.OnCheckedChangeListener#onCheckedChanged(android.widget.RadioGroup, int)
+     */
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch(checkedId){
+        case R.id.topic_new_topic:
+            topicParam = POST;
+            break;
+        case R.id.topic_new_reply:
+            topicParam = REPLY;
+            break;
+        case R.id.topic_header:
+            topicParam = HEADER;
+            break;
+        case R.id.topic_recommand:
+            topicParam = RECOMMAND;
+            break;
+        }
+        Log.v(TAG, "onCheckedChanged:"+topicParam);
+        refresh();
+    }
 	
 }
