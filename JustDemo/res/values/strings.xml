@@ -19,6 +19,7 @@
     <string name="regist_protol"><a href="http://www.google.com">178游戏网站协议</a></string>
 
     
+    <string name="topic_refresh">到头了，点击“上一页”刷新列表</string>
     <string name="request_timeout">网络超时</string>
     <string name="request_dataerror">请求数据错误</string>
     <string name="request_neterror">网络错误</string>

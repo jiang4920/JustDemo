@@ -1,4 +1,4 @@
-package com.ngandroid.demo.topic;
+package com.ngandroid.demo.topic.content;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ngandroid.demo.R;
+import com.ngandroid.demo.util.Utils;
 
 public class TopicListAdapter extends BaseAdapter {
 
@@ -169,6 +170,8 @@ public class TopicListAdapter extends BaseAdapter {
 				holder.tvReplyCount.setTextColor(Color.rgb(replyColor[0],
 						replyColor[1], replyColor[2]));
 			}
+		}else{
+			Log.v(TAG, " position:"+position+" itemdata null");
 		}
 		return convertView;
 	}

@@ -1,4 +1,4 @@
-package com.ngandroid.demo.topic;
+package com.ngandroid.demo.topic.task;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.http.Header;
@@ -25,22 +25,29 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ngandroid.demo.R;
+import com.ngandroid.demo.topic.IDataLoadedListener;
+import com.ngandroid.demo.topic.content.ReplyData;
+import com.ngandroid.demo.topic.content.ReplyListData;
+import com.ngandroid.demo.topic.content.UserInfoData;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
+import com.ngandroid.demo.util.Utils;
 
-public class TopicListTask extends AsyncTask<String, Integer, Integer> {
+public class TopicReadTask extends AsyncTask<String, Integer, Integer> {
 
-	public final static String TAG = "TopicListTask";
+	public static final String TAG = TopicReadTask.class.getSimpleName();
 	private Context mContext = null;
 	private IDataLoadedListener mDataListener = null;
-	private TopicListData mTopicListData = null;
+	private ReplyListData mReplyListData = null;
 
 	private final static Integer SUCCESS = 0;
 	private final static Integer TIMEOUT = 1;
@@ -50,26 +57,26 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 	private final static Integer FORBIDDEN = 5;
 	private final static Integer OTHERERROR = 6;
 
-	public TopicListTask(Context context, IDataLoadedListener dataListener) {
+	public TopicReadTask(Context context, IDataLoadedListener listener) {
 		mContext = context;
-		mDataListener = dataListener;
+		mDataListener = listener;
 	}
-	public static final String USER_AGENT = "AndroidNga/460";
+
 	@Override
 	protected Integer doInBackground(String... params) {
-		String fid = params[0];
-		String page = params[1];
-		String param = params[2];
-		String url = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&"+param+"&fid=" + fid
-				+ "&page=" + page;
+		String tid = params[0];
+		String fid = params[1];
+		String page = params[2];
+		String url = NGAURL.URL_BASE + "/read.php?lite=js&noprefix&tid=" + tid
+				+ "&_ff=" + fid + "&page=" + page;
 
 		HttpGet httpGet = new HttpGet(url);
-		httpGet.addHeader("User-Agent", USER_AGENT);
+		httpGet.addHeader("User-Agent", HttpUtil.USER_AGENT);
 		httpGet.addHeader("Content-Type", "application/x-www-formurlencoded");
 		httpGet.addHeader("Accept-Charset", "GBK");
 		httpGet.addHeader("Accept-Encoding", "gzip,deflate");
 		httpGet.addHeader("Cookie", HttpUtil.COOKIE);
-		Log.v(TAG, "Cookie:"+HttpUtil.COOKIE);
+
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 15000);
@@ -93,10 +100,9 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 
 		});
 		Log.d(TAG, url);
-
 		try {
 			HttpResponse response = httpclient.execute(httpGet);
-			Log.d(TAG, "" + response.getStatusLine().getStatusCode());
+			response.getStatusLine();
 			if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
 
 				InputStream is = response.getEntity().getContent();
@@ -121,56 +127,57 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 				Log.d(TAG, strResult);
 
 				JSONObject jsonRoot = JSON.parseObject(strResult);
-				JSONObject jsonObject = jsonRoot.getJSONObject("data");
+				JSONObject dataObject = jsonRoot.getJSONObject("data");
 
-				SubForumListData subForumListData = new SubForumListData();
+				JSONObject __U = dataObject.getJSONObject("__U");
 
-				JSONObject __F = jsonObject.getJSONObject("__F");
+				mReplyListData = new ReplyListData();
+				Map<String, UserInfoData> userMap = new HashMap<String, UserInfoData>();
+				for (String key : __U.keySet()) {
+					UserInfoData userInfoData = __U.getObject(key,
+							UserInfoData.class);
+					userMap.put(key, userInfoData);
+				}
+				mReplyListData.set__U(userMap);
 
-				subForumListData.set__SELECTED_FORUM(__F
-						.getString("__SELECTED_FORUM"));
-				subForumListData.set__UNION_FORUM(__F
-						.getString("__UNION_FORUM"));
-				subForumListData.set__UNION_FORUM_DEFAULT(__F
-						.getString("__UNION_FORUM_DEFAULT"));
-				subForumListData.setTopped_topic(__F.getString("topped_topic"));
-				subForumListData.setFid(__F.getInteger("fid"));
-				String __UNION_FORUM = subForumListData.get__UNION_FORUM();
+				JSONObject __R = dataObject.getJSONObject("__R");
 
-				if (__UNION_FORUM != null && !"".equals(__UNION_FORUM)) {
-					String[] subForumIDs = __UNION_FORUM.split(",");
-					int subForumListCount = subForumIDs.length;
-					List<SubForumData> subForumList = new ArrayList<SubForumData>();
-					Object subForumObj = __F.get("sub_forums");
-					if (subForumObj instanceof JSONObject) {
-						JSONObject subForumListJson = (JSONObject) subForumObj;
-						for (int i = 0; i < subForumListCount; i++) {
-							subForumList.add((SubForumData) JSONObject
-									.toJavaObject(
-											subForumListJson.getJSONObject(i
-													+ ""), SubForumData.class));
+				Map<String, ReplyData> replyDataMap = new HashMap<String, ReplyData>();
+				for (String key : __R.keySet()) {
+					ReplyData replyData = __R.getObject(key, ReplyData.class);
+					int type = replyData.getType();
+					if (replyData.getType() == 2) {
+						replyData
+								.setHtmlContent("<span style='color:#D00;white-space:nowrap'>[隐藏]</span>");
+
+					} else if (type == 1024) {
+						replyData
+								.setHtmlContent("<span style='color:#D00;white-space:nowrap'>[锁定]</span>");
+
+					} else {
+						boolean loadImg = true;
+						SharedPreferences prefs = PreferenceManager
+								.getDefaultSharedPreferences(mContext);
+						Boolean isLoadImage = prefs.getBoolean("is_load_image",
+								false);
+						if (Utils.getNetworkType(mContext) == Utils.NetworkType.MOBILE
+								&& !isLoadImage) {
+							loadImg = false;
 						}
-						subForumListData.setSub_forums(subForumList);
+						replyData.setHtmlContent(Utils.decodeForumTag(
+								replyData.getContent(), loadImg));
 					}
+					replyDataMap.put(key, replyData);
+				}
+				mReplyListData.set__R(replyDataMap);
 
-				}
-				TopicListData topicListData = new TopicListData();
-				topicListData.set__F(subForumListData);
-				topicListData.set__R__ROWS_PAGE(jsonObject
-						.getInteger("__R__ROWS_PAGE"));
-				topicListData.set__T__ROWS_PAGE(jsonObject
-						.getInteger("__T__ROWS_PAGE"));
-				topicListData.set__T__ROWS(jsonObject.getInteger("__T__ROWS"));
-				topicListData.set__ROWS(jsonObject.getInteger("__ROWS"));
-				topicListData.setTime(jsonRoot.getLong("time"));
-				List<TopicData> topicDataList = new ArrayList<TopicData>();
-				for (int i = 0; i < topicListData.get__T__ROWS(); i++) {
-					topicDataList.add((TopicData) JSONObject.toJavaObject(
-							jsonObject.getJSONObject("__T").getJSONObject(
-									i + ""), TopicData.class));
-				}
-				topicListData.setTopicList(topicDataList);
-				mTopicListData = topicListData;
+				mReplyListData
+						.set__R__ROWS(dataObject.getIntValue("__R__ROWS"));
+				mReplyListData.set__R__ROWS_PAGE(dataObject
+						.getIntValue("__R__ROWS_PAGE"));
+				mReplyListData.set__ROWS(dataObject.getIntValue("__ROWS"));
+				mReplyListData.setTime(jsonRoot.getLongValue("time"));
+
 				return SUCCESS;
 			} else if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
 				return SERVERERROR;
@@ -191,7 +198,6 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 			e.printStackTrace();
 			return DATAERROR;
 		} finally {
-			// 关闭连接,释放资源
 			httpclient.getConnectionManager().shutdown();
 		}
 	}
@@ -199,13 +205,9 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 	@Override
 	protected void onPostExecute(Integer status) {
 		if (status == SUCCESS) {
-			mDataListener.onPostFinished(mTopicListData);
+			mDataListener.onPostFinished(mReplyListData);
 		} else {
 			mDataListener.onPostError(status);
-//				Toast.makeText(
-//						mContext.getApplicationContext(),
-//								"获取数据失败，请检测网络", Toast.LENGTH_SHORT)
-//						.show();
 			if (status == TIMEOUT) {
 				Toast.makeText(
 						mContext.getApplicationContext(),

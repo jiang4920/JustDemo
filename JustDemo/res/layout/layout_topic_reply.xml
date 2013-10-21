@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/guide_head" >
+
+        <TextView
+            android:id="@+id/topic_reply_head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/namespace"
+            android:textColor="@color/text_title_color" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_tab" >
+
+        <Button
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dip"
+            android:id="@+id/topic_reply_arrow_left"
+            android:text="@string/topic_page_pre"
+            android:textColor="@color/text_color"
+            android:background="@drawable/topic_arrow_left_selector" >
+        </Button>
+        <Button
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dip"
+            android:layout_alignParentRight="true"
+            android:id="@+id/topic_reply_arrow_right"
+            android:textColor="@color/text_color"
+            android:text="@string/topic_page_next"
+            android:background="@drawable/topic_arrow_right_selector" >
+        </Button>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/topic_reply_page"
+            android:text="1"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dip"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/topic_reply_progress"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+            android:id="@+id/topic_reply_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dip"
+            android:background="@color/transparent"
+            android:cacheColorHint="#00000000"
+            android:divider="@color/transparent"
+            android:listSelector="@color/transparent" />
+    </LinearLayout>
+
+</RelativeLayout>

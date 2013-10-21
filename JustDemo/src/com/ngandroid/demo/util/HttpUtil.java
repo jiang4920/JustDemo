@@ -13,7 +13,7 @@ import android.util.Log;
 public class HttpUtil {
 
     private static final String TAG = "JustDemo HttpUtil";
-	static final String USER_AGENT = "nga_178_com_app";
+	public static final String USER_AGENT = "nga_178_com_app";
 	
 	public static String COOKIE = null;
 	

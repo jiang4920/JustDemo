@@ -1,6 +1,7 @@
 package com.ngandroid.demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,7 +16,12 @@ import android.widget.ImageView;
 
 import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.task.LoginTask;
+import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.SQLiteUtil;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class LoginActivity extends Activity {
 

@@ -1,4 +1,4 @@
-package com.ngandroid.demo.topic;
+package com.ngandroid.demo.topic.content;
 
 public class SubForumData {
 	

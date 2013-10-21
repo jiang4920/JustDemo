@@ -1,4 +1,4 @@
-package com.ngandroid.demo.topic;
+package com.ngandroid.demo.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.ngandroid.demo.topic.ExtensionEmotionUtil;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

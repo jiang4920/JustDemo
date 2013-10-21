@@ -1,22 +1,27 @@
 package com.ngandroid.demo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ngandroid.demo.topic.IDataLoadedListener;
-import com.ngandroid.demo.topic.TopicListAdapter;
-import com.ngandroid.demo.topic.TopicListData;
-import com.ngandroid.demo.topic.TopicListTask;
+import com.ngandroid.demo.topic.content.TopicListAdapter;
+import com.ngandroid.demo.topic.content.TopicListData;
+import com.ngandroid.demo.topic.task.TopicListTask;
 
-public class TopicActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
+public class TopicActivity extends Activity implements OnClickListener, OnCheckedChangeListener, OnItemClickListener {
 	private static final String TAG = "JustDemo TopicActivity.java";
 
 	private ListView topicLv;
@@ -41,23 +46,29 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	
 	private String topicParam = POST;
 	
+	private ProgressBar progressBar;
+	
 	TopicListData data;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_topic);
 		topicLv = (ListView)findViewById(R.id.topic_list);
+		topicLv.setOnItemClickListener(this);
 		preBt = (Button)findViewById(R.id.topic_arrow_left);
 		nextBt = (Button)findViewById(R.id.topic_arrow_right);
 		preBt.setOnClickListener(this);
 		nextBt.setOnClickListener(this);
 		pageTv = (TextView)findViewById(R.id.topic_page);
 		tabGroup = (RadioGroup)findViewById(R.id.topic_tabs);
+		progressBar = (ProgressBar)findViewById(R.id.topic_progress);
 		tabGroup.setOnCheckedChangeListener(this);
+		refresh();
 	}
 	int mCurPageIndex = 1;
 	
 	public void refresh(){
+		progressBar.setVisibility(View.VISIBLE);
 		new TopicListTask(this, new IDataLoadedListener() {
 
 			@Override
@@ -72,6 +83,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 				}
 				Log.v(TAG, "mCurPageIndex:"+mCurPageIndex);
 				pageTv.setText(""+mCurPageIndex);
+				progressBar.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -88,6 +100,8 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		case R.id.topic_arrow_left:
 			if(mCurPageIndex >1){
 				mCurPageIndex--;
+			}else{
+				Toast.makeText(this, this.getString(R.string.topic_refresh), Toast.LENGTH_SHORT).show();
 			}
 			refresh();
 			break;
@@ -125,7 +139,22 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
             break;
         }
         Log.v(TAG, "onCheckedChanged:"+topicParam);
+        mCurPageIndex = 1;
         refresh();
     }
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Log.v(TAG, "pos:"+arg2);
+		startReplyActivity(data.getTopicList().get(arg2).getTid(), data.getTopicList().get(arg2).getFid());
+	}
+	
+	private void startReplyActivity(int tid, int fid){
+		Intent intent = new Intent();
+		intent.setClass(this, TopicReplyActivity.class);
+		intent.putExtra("tid", tid);
+		intent.putExtra("fid", fid);
+		this.startActivity(intent);
+	}
 	
 }
