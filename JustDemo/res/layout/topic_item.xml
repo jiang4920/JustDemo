@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:background="@color/shit1_2"
             android:gravity="center"
-            android:textColor="#FF8FD7"
+            android:textColor="#EE30A7"
             android:textSize="12sp"
             android:textStyle="bold" />
 

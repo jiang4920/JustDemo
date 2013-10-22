@@ -52,7 +52,7 @@ public class PlateGroup extends ArrayList<Plate> implements OnItemClickListener 
             int height = (adapter.getCount()/2+(adapter.getCount()%2==0?0:1))*100;
             groupGv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
         }
-        new PlateIconTask().execute(this);
+        new PlateIconTask(mContext).execute(this);
         return layout;
     }
     

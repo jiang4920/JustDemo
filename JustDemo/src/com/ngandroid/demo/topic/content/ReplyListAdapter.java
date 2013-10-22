@@ -59,7 +59,11 @@ public class ReplyListAdapter extends BaseAdapter {
 		mViewCache = new SparseArray<SoftReference<View>>();
 	}
 
-	@Override
+	public void setReplyListData(ReplyListData replyListData) {
+        this.mReplyListData = replyListData;
+    }
+
+    @Override
 	public int getCount() {
 		return mReplyListData.get__R__ROWS();
 	}

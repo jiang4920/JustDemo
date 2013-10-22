@@ -52,8 +52,8 @@ public class TopicListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return null;
+	public TopicData getItem(int position) {
+		return mTopicListData.getTopicList().get(position);
 	}
 
 	@Override
@@ -139,37 +139,12 @@ public class TopicListAdapter extends BaseAdapter {
 			if (position % 2 == 0) {
 				holder.tvReplyCount.setBackgroundResource(R.color.shit1_2);
 				holder.llTopicTitleBg.setBackgroundResource(R.color.shit1_1);
-
-				if (topicData.getType() == 1024) {
-					int color = mContext.getResources().getColor(
-							R.color.replycount_1024);
-					holder.tvReplyCount.setTextColor(color);
-				} else {
-					int c = mContext.getResources().getColor(R.color.shit1_2);
-					int[] replyColor = Utils.genReplyColor(
-							Utils.rgbToHsv(Color.red(c), Color.green(c),
-									Color.blue(c)), topicData.getReplies());
-
-					Log.d(TAG, replyColor[0] + "," + replyColor[1] + ","
-							+ replyColor[2]);
-					holder.tvReplyCount.setTextColor(Color.rgb(replyColor[0],
-							replyColor[1], replyColor[2]));
-				}
-
 			} else {
 				holder.tvReplyCount.setBackgroundResource(R.color.shit2_2);
 				holder.llTopicTitleBg.setBackgroundResource(R.color.shit2_1);
-
-				int c = mContext.getResources().getColor(R.color.shit2_2);
-
-				int[] replyColor = Utils.genReplyColor(
-						Utils.rgbToHsv(Color.red(c), Color.green(c),
-								Color.blue(c)), topicData.getReplies());
-				Log.d(TAG, replyColor[0] + "," + replyColor[1] + ","
-						+ replyColor[2]);
-				holder.tvReplyCount.setTextColor(Color.rgb(replyColor[0],
-						replyColor[1], replyColor[2]));
 			}
+			holder.tvReplyCount.setTextColor(mContext.getResources().getColor(
+			        R.color.replycount_1024));
 		}else{
 			Log.v(TAG, " position:"+position+" itemdata null");
 		}

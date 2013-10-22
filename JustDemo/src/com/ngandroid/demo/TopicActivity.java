@@ -146,7 +146,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Log.v(TAG, "pos:"+arg2);
-		startReplyActivity(data.getTopicList().get(arg2).getTid(), data.getTopicList().get(arg2).getFid());
+		startReplyActivity(mTopicListAdapter.getItem(arg2).getTid(), mTopicListAdapter.getItem(arg2).getFid());
 	}
 	
 	private void startReplyActivity(int tid, int fid){
