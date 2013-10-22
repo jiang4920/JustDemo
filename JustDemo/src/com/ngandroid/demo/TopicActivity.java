@@ -35,6 +35,11 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	 * 下一页
 	 */
 	public Button nextBt;
+	
+	/**
+	 * 发帖按钮
+	 */
+	private Button postBt;
 	private TextView pageTv;
 	
 	private RadioGroup tabGroup;
@@ -57,6 +62,9 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		topicLv.setOnItemClickListener(this);
 		preBt = (Button)findViewById(R.id.topic_arrow_left);
 		nextBt = (Button)findViewById(R.id.topic_arrow_right);
+		postBt = (Button)findViewById(R.id.topic_post);
+		
+		postBt.setOnClickListener(this);
 		preBt.setOnClickListener(this);
 		nextBt.setOnClickListener(this);
 		pageTv = (TextView)findViewById(R.id.topic_page);
@@ -111,6 +119,10 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 				mCurPageIndex++;
 			}
 			refresh();
+			break;
+		case R.id.topic_post:
+			
+			
 			break;
 		}
 	}
