@@ -4,6 +4,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 
+import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.SQLiteUtil;
 
 import android.content.ContentValues;
@@ -21,6 +22,7 @@ public class UserResponse extends Response {
     public int expiretime;
     public boolean hasResult;
     public int keepLogin;
+    public String cookie;
 
     static UserResponse user;
     
@@ -73,6 +75,7 @@ public class UserResponse extends Response {
         cv.put("password", password);
         cv.put("loginTime", System.currentTimeMillis());
         cv.put("keepLogin", keepLogin);
+        cv.put("cookie", cookie);
         if(check(db, SQLiteUtil.TABLE_USER, uid)){
         	db.update(SQLiteUtil.TABLE_USER, cv, "uid = "+uid,null);
         }else{
@@ -82,8 +85,8 @@ public class UserResponse extends Response {
         Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null, null, null);
         for(c.moveToFirst(); !c.isAfterLast();c.moveToNext()){
         	Log.v(TAG, "uid:"+c.getString(c.getColumnIndex("uid")) + " email:"+c.getString(c.getColumnIndex("email"))+" expiretime"+ c.getString(c.getColumnIndex("expiretime"))
-        			+" nickname:"+c.getString(c.getColumnIndex("nickname"))+" loginTime"+ c.getString(c.getColumnIndex("loginTime"))
-        			+ "keepLogin"+c.getString(c.getColumnIndex("keepLogin"))
+        			+" nickname:"+c.getString(c.getColumnIndex("nickname"))+" loginTime:"+ c.getString(c.getColumnIndex("loginTime"))
+        			+ " keepLogin:"+c.getString(c.getColumnIndex("keepLogin"))+" cookie:"+c.getString(c.getColumnIndex("cookie"))
         			);
         }
         c.close();

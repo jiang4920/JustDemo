@@ -27,6 +27,9 @@
 		<activity android:name=".TopicReplyActivity" 
 			android:theme="@android:style/Theme.NoTitleBar"
 			android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".PostActivity" 
+			android:theme="@android:style/Theme.NoTitleBar"
+			android:configChanges="orientation|keyboardHidden" />
 
 	</application>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>

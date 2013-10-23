@@ -28,7 +28,10 @@ public abstract class BaseEntry {
      * @return
      */
     String urlEncode(String source) {
-        return URLEncoder.encode(source);
+        if(source== null || source.length() ==0){
+            return null;
+        }
+        return URLEncoder.encode(""+source);
     }
 
     /**
@@ -42,7 +45,12 @@ public abstract class BaseEntry {
         StringBuffer sb = new StringBuffer();
         for (PostParam param : mParams) {
             sb.append(param.key + "=");
-            sb.append(urlEncode(param.value) + "&");
+            String v = urlEncode(param.value);
+            if(v== null || v.length()==0){
+                sb.append("&");
+            }else{
+                sb.append(urlEncode(param.value) + "&");
+            }
         }
         String paramsString = sb.toString().substring(0,
                 sb.toString().length() - 1); // 去掉最后一个“&”

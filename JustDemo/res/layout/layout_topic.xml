@@ -22,10 +22,9 @@
             android:layout_centerVertical="true"
             android:id="@+id/topic_post"
             android:textColor="@color/text_color"
-            
             android:layout_alignParentRight="true"
             android:text="@string/topic_post"
-            android:background="@drawable/topic_arrow_right_selector" 
+            android:background="@drawable/bt_selector" 
             />
     </RelativeLayout>
 

@@ -54,6 +54,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	private ProgressBar progressBar;
 	
 	TopicListData data;
+	String mFid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		tabGroup = (RadioGroup)findViewById(R.id.topic_tabs);
 		progressBar = (ProgressBar)findViewById(R.id.topic_progress);
 		tabGroup.setOnCheckedChangeListener(this);
+		mFid = this.getIntent().getStringExtra("fid");
 		refresh();
 	}
 	int mCurPageIndex = 1;
@@ -98,7 +100,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 			public void onPostError(Integer status) {
 			}
 
-		}).execute(this.getIntent().getStringExtra("fid"),
+		}).execute(mFid,
 				mCurPageIndex + "", topicParam);
 	}
 
@@ -121,8 +123,10 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 			refresh();
 			break;
 		case R.id.topic_post:
-			
-			
+		    Intent intent = new Intent();
+	        intent.setClass(this, PostActivity.class);
+	        intent.putExtra("fid", mFid);
+	        this.startActivity(intent);
 			break;
 		}
 	}
@@ -158,6 +162,9 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Log.v(TAG, "pos:"+arg2);
+		if(mTopicListAdapter.getItem(arg2) == null){
+		    Log.v(TAG, "topic item is NULL, i do not know why!");
+		}
 		startReplyActivity(mTopicListAdapter.getItem(arg2).getTid(), mTopicListAdapter.getItem(arg2).getFid());
 	}
 	

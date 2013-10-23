@@ -23,6 +23,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
 
     private static final String TAG = "LoginTask";
     private LoginActivity mContext;
+    private String mCookie;
     ProgressDialog pd;
 
     public LoginTask(LoginActivity context) {
@@ -52,11 +53,14 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
                 R.string.login_waiting));
         XMLDomUtil domUtil = new XMLDomUtil();
         // 发送登陆的POST请求
-        return domUtil
+        HttpUtil util = new HttpUtil();
+        Response resp = domUtil
                 .parseXml(
                         UserResponse.getInstance(),
-                        new HttpUtil().post(LoginEntry.uriAPI,
-                                params[0].getPostBody()));
+                        util.post(LoginEntry.uriAPI,
+                                params[0].getPostBody(), mCookie));
+        mCookie = util.getCookie();
+        return resp;
     }
 
     @Override
@@ -82,9 +86,10 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
             UserResponse userRsp = (UserResponse) result;
             userRsp.keepLogin = mContext.isKeepLogin();
             userRsp.password = passwd;
+            userRsp.cookie = mCookie;
             Log.v(TAG, "uid:" + userRsp.uid + " email:" + userRsp.email
                     + " expiretime:" + userRsp.expiretime + " nickname:"
-                    + userRsp.nickname);
+                    + userRsp.nickname+" cookie:"+userRsp.cookie);
             mContext.finish();
             startPlateActivity(mContext);
             Toast.makeText(mContext, userRsp.nickname + "登陆成功！",

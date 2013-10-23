@@ -14,10 +14,8 @@ public class HttpUtil {
 
     private static final String TAG = "JustDemo HttpUtil";
 	public static final String USER_AGENT = "nga_178_com_app";
-	
-	public static String COOKIE = null;
-	
-    public InputStream post(String postUrl, String body) {
+	private String mCookie;
+    public InputStream post(String postUrl, String body, String cookie) {
     	Log.v(TAG, "body :"+body);
     	if(body == null){
     		body = "";
@@ -27,7 +25,7 @@ public class HttpUtil {
             URL url = new URL(postUrl);
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
-            connection.setRequestProperty("Cookie", COOKIE);  
+            connection.setRequestProperty("Cookie", cookie);  
             connection.setInstanceFollowRedirects(true);
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 //            connection.setRequestProperty("Content-Length", String.valueOf(body.length()));
@@ -43,7 +41,7 @@ public class HttpUtil {
             }
             connection.setUseCaches(false);
             connection.setRequestProperty("User-Agent", USER_AGENT);
-            Log.v(TAG, "cookie:"+COOKIE);
+            Log.v(TAG, "cookie:"+cookie);
             connection.connect();
             //POST请求
             if(!body.equals("")){
@@ -53,7 +51,7 @@ public class HttpUtil {
 	            out.flush();
 	            out.close();
             }
-            if(COOKIE== null){
+            if(cookie== null){
 	            String cookieVal = "";  
 	            String uid = "";
 	            String cid = "";
@@ -73,8 +71,10 @@ public class HttpUtil {
 	                }  
 	            }  
 	            
-	            COOKIE = "ngaPassportUid=" + uid
+	            cookie = "ngaPassportUid=" + uid
 	    				+ "; ngaPassportCid=" +cid;
+	            Log.v(TAG, "COOKIE:"+cookie);
+	            mCookie = cookie;
             }
             return connection.getInputStream();
         } catch (MalformedURLException e) {
@@ -85,6 +85,20 @@ public class HttpUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * <p>Title: getCookie</p>
+     * <p>Description: </p>
+     * @return
+     */
+    /**
+     * <p>Title: getCookie</p>
+     * <p>Description: Cookie的存储之前没考虑，现在加上显得很乱，将就了</p>
+     * @return
+     */
+    public String getCookie() {
+        return mCookie;
     }
     
 }

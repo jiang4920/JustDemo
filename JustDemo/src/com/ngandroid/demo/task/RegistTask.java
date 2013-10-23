@@ -12,6 +12,7 @@ import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.content.RegistEntry;
 import com.ngandroid.demo.content.Response;
 import com.ngandroid.demo.content.UserResponse;
+import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.XMLDomUtil;
 
@@ -41,7 +42,7 @@ public class RegistTask extends AsyncTask<RegistEntry, String, Response>{
         
         Log.v(TAG, "parseUserXml");
         return domUtil.parseXml(new UserResponse(), new HttpUtil().post(
-                RegistEntry.uriAPI, params[0].getPostBody()));
+                RegistEntry.uriAPI, params[0].getPostBody(), Configs.getCookie(mContext)));
     }
 
     @Override

@@ -38,6 +38,7 @@ import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.ReplyData;
 import com.ngandroid.demo.topic.content.ReplyListData;
 import com.ngandroid.demo.topic.content.UserInfoData;
+import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
 import com.ngandroid.demo.util.Utils;
@@ -75,7 +76,7 @@ public class TopicReadTask extends AsyncTask<String, Integer, Integer> {
 		httpGet.addHeader("Content-Type", "application/x-www-formurlencoded");
 		httpGet.addHeader("Accept-Charset", "GBK");
 		httpGet.addHeader("Accept-Encoding", "gzip,deflate");
-		httpGet.addHeader("Cookie", HttpUtil.COOKIE);
+		httpGet.addHeader("Cookie",  Configs.getCookie(mContext));
 
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);

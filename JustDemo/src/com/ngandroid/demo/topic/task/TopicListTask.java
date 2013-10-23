@@ -37,6 +37,7 @@ import com.ngandroid.demo.topic.content.SubForumData;
 import com.ngandroid.demo.topic.content.SubForumListData;
 import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.content.TopicListData;
+import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
 
@@ -73,8 +74,8 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 		httpGet.addHeader("Content-Type", "application/x-www-formurlencoded");
 		httpGet.addHeader("Accept-Charset", "GBK");
 		httpGet.addHeader("Accept-Encoding", "gzip,deflate");
-		httpGet.addHeader("Cookie", HttpUtil.COOKIE);
-		Log.v(TAG, "Cookie:"+HttpUtil.COOKIE);
+		httpGet.addHeader("Cookie",  Configs.getCookie(mContext));
+		Log.v(TAG, "Cookie:"+ Configs.getCookie(mContext));
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
 		HttpConnectionParams.setSoTimeout(httpParams, 15000);
@@ -163,7 +164,7 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 
 				}
 				TopicListData topicListData = new TopicListData();
-				topicListData.set__F(subForumListData);
+                topicListData.set__F(subForumListData);
 				topicListData.set__R__ROWS_PAGE(jsonObject
 						.getInteger("__R__ROWS_PAGE"));
 				topicListData.set__T__ROWS_PAGE(jsonObject
@@ -173,9 +174,14 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 				topicListData.setTime(jsonRoot.getLong("time"));
 				List<TopicData> topicDataList = new ArrayList<TopicData>();
 				for (int i = 0; i < topicListData.get__T__ROWS(); i++) {
-					topicDataList.add((TopicData) JSONObject.toJavaObject(
-							jsonObject.getJSONObject("__T").getJSONObject(
-									i + ""), TopicData.class));
+				    TopicData dataTmp = (TopicData) JSONObject.toJavaObject(
+                            jsonObject.getJSONObject("__T").getJSONObject(
+                                    i + ""), TopicData.class);
+				    if(dataTmp != null){
+				        topicDataList.add(dataTmp);
+				    }else{
+				        Log.v(TAG, "TopicData item ["+i+"] is NULL");
+				    }
 				}
 				topicListData.setTopicList(topicDataList);
 				mTopicListData = topicListData;

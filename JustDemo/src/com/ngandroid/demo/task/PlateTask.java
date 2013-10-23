@@ -3,6 +3,7 @@ package com.ngandroid.demo.task;
 import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.content.plate.PlateGroup;
 import com.ngandroid.demo.content.plate.PlateResponse;
+import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
 
@@ -26,7 +27,7 @@ public class PlateTask extends AsyncTask<String, String, PlateResponse> {
 	protected PlateResponse doInBackground(String... params) {
 		HttpUtil util = new HttpUtil();
 		PlateResponse response = new PlateResponse();
-		return response.parse(util.post(NGAURL.URL_PLATE+"?uid="+UserResponse.getInstance().uid, null));
+		return response.parse(util.post(NGAURL.URL_PLATE+"?uid="+UserResponse.getInstance().uid, null, Configs.getCookie(mContext)));
 	}
 
 	@Override
