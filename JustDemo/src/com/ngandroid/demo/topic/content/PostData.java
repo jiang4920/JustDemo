@@ -33,6 +33,8 @@ public class PostData {
     /** new/reply*/
     private String action;
     
+    private PostAttachmentEntry attachment;
+    
     public String getFid() {
         return fid;
     }
@@ -93,19 +95,29 @@ public class PostData {
     }
 
 
-    public List<NameValuePair> getEntry(){
+    public PostAttachmentEntry getAttachment() {
+		return attachment;
+	}
+
+
+	public void setAttachment(PostAttachmentEntry attachment) {
+		this.attachment = attachment;
+	}
+
+
+	public List<NameValuePair> getEntry(){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("step", "2"));
-        params.add(new BasicNameValuePair("pid", ""+pid));
-        params.add(new BasicNameValuePair("action", ""+action));
-        params.add(new BasicNameValuePair("fid", ""+fid));
-        params.add(new BasicNameValuePair("tid", ""+tid));
+        params.add(new BasicNameValuePair("pid", pid));
+        params.add(new BasicNameValuePair("action", action));
+        params.add(new BasicNameValuePair("fid",fid));
+        params.add(new BasicNameValuePair("tid", tid));
         params.add(new BasicNameValuePair("_ff", ""));
         params.add(new BasicNameValuePair("attachments", ""));
         params.add(new BasicNameValuePair("attachments_check", ""));
         params.add(new BasicNameValuePair("bit_data", ""));
-        params.add(new BasicNameValuePair("post_subject", ""+post_subject));
-        params.add(new BasicNameValuePair("post_content", ""+post_content));
+        params.add(new BasicNameValuePair("post_subject", post_subject));
+        params.add(new BasicNameValuePair("post_content", post_content));
         return params;
     }
     
