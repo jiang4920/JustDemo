@@ -75,7 +75,7 @@ public class UserResponse extends Response {
         cv.put("password", password);
         cv.put("loginTime", System.currentTimeMillis());
         cv.put("keepLogin", keepLogin);
-        cv.put("cookie", cookie);
+        cv.put("cookie", cookie+";ngacn0comInfoCheckTime="+expiretime);
         if(check(db, SQLiteUtil.TABLE_USER, uid)){
         	db.update(SQLiteUtil.TABLE_USER, cv, "uid = "+uid,null);
         }else{

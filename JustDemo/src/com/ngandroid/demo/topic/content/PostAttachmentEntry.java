@@ -22,7 +22,8 @@ fid:123,//发帖所在的版面id
 func:'upload'
 	 */
 	
-	public static final String URL = NGAURL.URL_BASE + "/attach.php?lite=xml";
+	public static final String URL_POST = NGAURL.URL_BASE+"/post.php?";
+	public static final String URL_ATTACH = "http://img6.ngacn.cc:8080/attach.php?";
 	
 	private String fid;
 	
@@ -61,6 +62,7 @@ func:'upload'
         params.add(new BasicNameValuePair("attachment_file1_url_utf8_name", getAttachementFile().getName()));
         params.add(new BasicNameValuePair("fid", fid));
         params.add(new BasicNameValuePair("func", "upload"));
+        params.add(new BasicNameValuePair("lite", "xml"));
         return params;
     }
 	

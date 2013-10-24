@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.PostAttachmentEntry;
 import com.ngandroid.demo.topic.content.PostData;
+import com.ngandroid.demo.topic.task.FileUploadTask;
 import com.ngandroid.demo.topic.task.PostTask;
 
 /**
@@ -86,10 +87,12 @@ public class PostActivity extends Activity implements OnClickListener {
 	}
     
 	private void post(){
-		if(!isTopicFormatOk()){
-			Toast.makeText(this, this.getResources().getString(R.string.post_text_not_ok), Toast.LENGTH_SHORT).show();
-			return;
-		}
+//	    new FileUploadTask(this).execute(attachment.getAttachementFile());
+	    
+//		if(!isTopicFormatOk()){
+//			Toast.makeText(this, this.getResources().getString(R.string.post_text_not_ok), Toast.LENGTH_SHORT).show();
+//			return;
+//		}
 		attachment.setFid(this.getIntent().getStringExtra("fid"));
 		postData.setAttachment(attachment);
         postData.setAction(this.getIntent().getStringExtra("action"));
