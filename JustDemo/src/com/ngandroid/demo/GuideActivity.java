@@ -17,6 +17,7 @@ public class GuideActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_guide);
 		plate = (ImageButton)findViewById(R.id.guide_plate);
+		findViewById(R.id.guide_user_center).setOnClickListener(this);
 		plate.setOnClickListener(this);
 	}
 
@@ -27,6 +28,9 @@ public class GuideActivity extends Activity implements OnClickListener {
 		case R.id.guide_plate:
 			intent.setClass(this, PlateActivity.class);
 			break;
+		case R.id.guide_user_center:
+		    intent.setClass(this, UserCenterActivity.class);
+		    break;
 		}
 		this.startActivity(intent);
 	}

@@ -58,13 +58,9 @@ public class MenuItemView extends ViewGroup {
 				childView.setVisibility(View.GONE);
 				int iTemWidth = getMeasuredWidth()/count;
 				int width = iTemWidth;
-//				int height = (int) MyAnimations.dip2px(context, 70);
 				int height = iTemWidth;
-				// the position of childview leftTop
 				int x = (iTemWidth - width)/2 + i*iTemWidth;
 				int y = 0 + top;
-//				Log.v(TAG, "item:"+width+":"+height);
-//				Log.v(TAG, getMeasuredWidth()+":"+getMeasuredHeight());
 				int right = getWidth() - width;
 				childView.layout(x, y, x+width,  y + height);
 			}

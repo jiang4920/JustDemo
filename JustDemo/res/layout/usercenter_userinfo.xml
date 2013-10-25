@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip">
+
+    <ImageView
+        android:id="@+id/userinfo_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_menu_handle" />
+
+    <TextView
+        android:id="@+id/userinfo_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_dark_yellow_header"
+        android:text="TextView" />
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/topictile_orange"/>
+    
+    <TextView
+        android:id="@+id/userinfo_userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:textColor="@color/text_dark_yellow_header"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/userinfo_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_dark_yellow_header"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/userinfo_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_dark_yellow_header"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/userinfo_regdate"
+        android:layout_width="wrap_content"
+        android:textColor="@color/text_dark_yellow_header"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:textSize="20sp"
+        android:textColor="@color/text_dark_yellow_name"
+        android:text="签名:" />
+    <TextView
+        android:id="@+id/userinfo_sign"
+        android:layout_width="match_parent"
+        android:layout_height="130dip"
+        android:background="@drawable/bg_edit" />
+    
+    <TextView
+        android:id="@+id/userinfo_shengwang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:textSize="20sp"
+        android:textColor="@color/text_dark_yellow_name"
+        android:text="签名:" />
+
+</LinearLayout>

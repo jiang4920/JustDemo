@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/bg_color">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
@@ -17,4 +17,70 @@
             android:textColor="@color/text_title_color" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:background="@drawable/bg_menu"
+        android:layout_width="60dip"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dip"
+        android:gravity="center_horizontal"
+        android:id="@+id/usercenter_menu"
+        >
+        <ImageView
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@drawable/menu_info"
+            android:id="@+id/usercenter_menu_info"
+            android:layout_marginTop="30dip"
+            />
+        <ImageView
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@drawable/menu_fav"
+            android:id="@+id/usercenter_menu_fav"
+            android:layout_marginTop="30dip"
+            />
+        <ImageView
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@drawable/menu_history"
+            android:id="@+id/usercenter_menu_history"
+            android:layout_marginTop="30dip"
+            />
+        <ImageView
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@drawable/menu_msg"
+            android:id="@+id/usercenter_menu_msg"
+            android:layout_marginTop="30dip"
+            />
+        <ImageView
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@drawable/menu_quite"
+            android:id="@+id/usercenter_menu_quite"
+            android:layout_marginTop="30dip"
+            />
+        
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@id/usercenter_menu"
+        android:layout_toLeftOf="@id/usercenter_menu"
+        android:id="@+id/usercenter_layout"
+        >
+        <include layout="@layout/usercenter_userinfo"/>
+        
+    </FrameLayout>
+    <ImageView
+        android:layout_width="15dip"
+        android:layout_height="30dip"
+        android:id="@+id/usercenter_menu_cursor"
+        android:layout_alignTop="@id/usercenter_menu"
+        android:layout_toLeftOf="@id/usercenter_menu"
+        android:layout_marginTop="40dip"
+        android:background="@drawable/menu_cursor"
+        />
 </RelativeLayout>

@@ -7,7 +7,6 @@ public class NGAURL {
 	
 	public static final String URL_GUIDE = URL_BASE+"?lite=xml";
 
-	
 	/**
 	 *板块目录 
 	 */
