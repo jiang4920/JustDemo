@@ -18,9 +18,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ngandroid.demo.R;
 import com.ngandroid.demo.UserCenterActivity;
 import com.ngandroid.demo.content.UserInfoEntity;
 import com.ngandroid.demo.util.Configs;
@@ -81,7 +83,8 @@ public class UserInfoTask extends AsyncTask<String, String, UserInfoEntity> {
     @Override
     protected void onPostExecute(UserInfoEntity result) {
         super.onPostExecute(result);
-//        mAactivity.ml
+        View view = mAactivity.findViewById(R.id.usercenter_favorite);
+        mAactivity.bringToFront(view);
     }
     
     

@@ -71,6 +71,7 @@
         android:layout_toLeftOf="@id/usercenter_menu"
         android:id="@+id/usercenter_layout"
         >
+        <include layout="@layout/usercenter_favorite"/>
         <include layout="@layout/usercenter_userinfo"/>
         
     </FrameLayout>
