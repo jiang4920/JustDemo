@@ -3,7 +3,6 @@ package com.ngandroid.demo.topic.content;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Html;
 import android.text.TextPaint;
 import android.util.Log;
@@ -48,7 +47,7 @@ public class TopicListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return mTopicListData.get__T__ROWS();
+		return mTopicListData.getTopicList().size();
 	}
 
 	@Override
@@ -87,6 +86,7 @@ public class TopicListAdapter extends BaseAdapter {
 
 		TextPaint tp = holder.tvTopicTitle.getPaint();
 		TopicData topicData = mTopicListData.getTopicList().get(position);
+		Log.v(TAG, "topicData:"+topicData.getSubject());
 		tp.setFakeBoldText(false);
 		if (topicData != null) {
 			String titleFont = topicData.getTitlefont();

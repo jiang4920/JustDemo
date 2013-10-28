@@ -87,6 +87,12 @@ public class Utils {
 		return "";
 	}
 
+	public static String dateFormat(long date){
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    Calendar c = Calendar.getInstance();
+	    return sdf.format(new Date(date*1000));
+	}
+	
 	public static String decodeForumTag(String s, boolean showImage) {
 		if (s == null || "".equals(s)) {
 			return "";

@@ -9,7 +9,7 @@
         android:background="@drawable/guide_head" >
 
         <TextView
-            android:id="@+id/user_head_title"
+            android:id="@+id/usercenter_head_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -71,6 +71,7 @@
         android:layout_toLeftOf="@id/usercenter_menu"
         android:id="@+id/usercenter_layout"
         >
+        <include layout="@layout/usercenter_history"/>
         <include layout="@layout/usercenter_favorite"/>
         <include layout="@layout/usercenter_userinfo"/>
         
@@ -83,5 +84,11 @@
         android:layout_toLeftOf="@id/usercenter_menu"
         android:layout_marginTop="40dip"
         android:background="@drawable/menu_cursor"
+        />
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usercenter_progress"
         />
 </RelativeLayout>

@@ -16,10 +16,13 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.ngandroid.demo.topic.IDataLoadedListener;
+import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.content.TopicListAdapter;
 import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.topic.task.TopicListTask;
+import com.ngandroid.demo.util.NGAURL;
 
 public class TopicActivity extends Activity implements OnClickListener, OnCheckedChangeListener, OnItemClickListener {
 	private static final String TAG = "JustDemo TopicActivity.java";
@@ -79,6 +82,11 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	
 	public void refresh(){
 		progressBar.setVisibility(View.VISIBLE);
+		String fid = mFid;
+        String page = mCurPageIndex+"";
+        String param = topicParam;
+		String url = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&"+param+"&fid=" + fid
+        + "&page=" + page;
 		new TopicListTask(this, new IDataLoadedListener() {
 
 			@Override
@@ -100,8 +108,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 			public void onPostError(Integer status) {
 			}
 
-		}).execute(mFid,
-				mCurPageIndex + "", topicParam);
+		}).execute(url);
 	}
 
 	@Override
@@ -165,14 +172,13 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		if(mTopicListAdapter.getItem(arg2) == null){
 		    Log.v(TAG, "topic item is NULL, i do not know why!");
 		}
-		startReplyActivity(mTopicListAdapter.getItem(arg2).getTid(), mTopicListAdapter.getItem(arg2).getFid());
+		startReplyActivity(mTopicListAdapter.getItem(arg2));
 	}
 	
-	private void startReplyActivity(int tid, int fid){
+	private void startReplyActivity(TopicData topic){
 		Intent intent = new Intent();
 		intent.setClass(this, TopicReplyActivity.class);
-		intent.putExtra("tid", tid);
-		intent.putExtra("fid", fid);
+		intent.putExtra("topic", topic);
 		this.startActivity(intent);
 	}
 	

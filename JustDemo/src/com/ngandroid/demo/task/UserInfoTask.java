@@ -19,6 +19,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -28,6 +29,7 @@ import com.ngandroid.demo.content.UserInfoEntity;
 import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
+import com.ngandroid.demo.util.Utils;
 
 /**
  * com.ngandroid.demo.task.UserInfoTask
@@ -83,9 +85,38 @@ public class UserInfoTask extends AsyncTask<String, String, UserInfoEntity> {
     @Override
     protected void onPostExecute(UserInfoEntity result) {
         super.onPostExecute(result);
-        View view = mAactivity.findViewById(R.id.usercenter_favorite);
+        View view = mAactivity.findViewById(R.id.usercenter_userinfo);
         mAactivity.bringToFront(view);
+        if(result == null){
+            return;
+        }
+        UserViews views = new UserViews(view);
+        views.name.setText("用户名:"+result.username);
+        views.userId.setText("用户ID:"+result.uid);
+        views.group.setText("用户组:"+result.group);
+        views.money.setText("金钱:"+result.money);
+        views.regdate.setText("注册日期:"+Utils.dateFormat(Long.parseLong(result.regdate)));
+        views.sign.setText(result.sign);
+        views.rvrc.setText("用户声望:"+result.rvrc);
     }
     
+    private class UserViews{
+        TextView name;
+        TextView userId;
+        TextView group;
+        TextView money;
+        TextView regdate;
+        TextView sign;
+        TextView rvrc;
+        public UserViews(View view){
+            name = (TextView)view.findViewById(R.id.userinfo_name);
+            userId = (TextView)view.findViewById(R.id.userinfo_userid);
+            group = (TextView)view.findViewById(R.id.userinfo_group);
+            money = (TextView)view.findViewById(R.id.userinfo_money);
+            regdate = (TextView)view.findViewById(R.id.userinfo_regdate);
+            sign = (TextView)view.findViewById(R.id.userinfo_sign);
+            rvrc = (TextView)view.findViewById(R.id.userinfo_shengwang);
+        }
+    }
     
 }

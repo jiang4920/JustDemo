@@ -38,8 +38,6 @@ import com.ngandroid.demo.topic.content.SubForumListData;
 import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.util.Configs;
-import com.ngandroid.demo.util.HttpUtil;
-import com.ngandroid.demo.util.NGAURL;
 
 public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 
@@ -63,12 +61,7 @@ public class TopicListTask extends AsyncTask<String, Integer, Integer> {
 	public static final String USER_AGENT = "AndroidNga/460";
 	@Override
 	protected Integer doInBackground(String... params) {
-		String fid = params[0];
-		String page = params[1];
-		String param = params[2];
-		String url = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&"+param+"&fid=" + fid
-				+ "&page=" + page;
-
+		String url = params[0];
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.addHeader("User-Agent", USER_AGENT);
 		httpGet.addHeader("Content-Type", "application/x-www-formurlencoded");

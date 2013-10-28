@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.ReplyListAdapter;
 import com.ngandroid.demo.topic.content.ReplyListData;
+import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.task.TopicReadTask;
 
 public class TopicReplyActivity extends Activity {
@@ -17,7 +18,7 @@ public class TopicReplyActivity extends Activity {
 
 	ProgressBar progressBar;
 	ReplyListData mReplyListData = new ReplyListData();;
-	
+	TopicData mTopicData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,13 +28,14 @@ public class TopicReplyActivity extends Activity {
         mReplyListAdapter = new ReplyListAdapter(TopicReplyActivity.this,
                 mReplyListData);
         mReplyListView.setAdapter(mReplyListAdapter);
+        mTopicData = (TopicData) this.getIntent().getSerializableExtra("topic");
 		refresh();
 	}
 	
 	
 	private ReplyListAdapter mReplyListAdapter;
 	private void refresh(){
-		new TopicReadTask(this, new IDataLoadedListener() {
+		new TopicReadTask(mTopicData, this, new IDataLoadedListener() {
 
 
 			@Override
@@ -48,8 +50,7 @@ public class TopicReplyActivity extends Activity {
 			public void onPostError(Integer status) {
 			    progressBar.setVisibility(View.GONE);
 			}
-		}).execute(this.getIntent().getIntExtra("tid", 0)+"", this.getIntent().getIntExtra("fid",0)+"",
-				"1");
+		}).execute("1");
 	}
 	
 }

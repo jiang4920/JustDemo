@@ -1,7 +1,11 @@
 package com.ngandroid.demo.topic.content;
 
-public class TopicData {
-	private int tid; //主题id 
+import java.io.Serializable;
+
+public class TopicData implements Serializable  {
+	/** serialVersionUID*/
+    private static final long serialVersionUID = 1L;
+    private int tid; //主题id 
     private int fid; //主题所在版面id 
     private int quote_from;//引用自主题 
     private String quote_to;//此主题引用到主题 
@@ -217,4 +221,9 @@ public class TopicData {
 	public void setIspage(String ispage) {
 		this.ispage = ispage;
 	}
+	
+	public void save(){
+	    
+	}
+	
 }
