@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/guide_head" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/message" 
+            android:textColor="@color/text_title_color"/>
+		<ImageView
+            android:id="@+id/sms_read_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/but_regist_back_selector" />
+    </RelativeLayout>
+	
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:id="@+id/sms_read_panel_input"
+        android:layout_alignParentBottom="true"
+        >
+		<Button
+		    android:layout_width="70dip"
+		    android:layout_height="match_parent"
+		    android:id="@+id/sms_read_send"
+		    android:layout_alignParentRight="true"
+		    android:text="@string/confirm"
+		    android:textColor="@color/text_color"
+		    android:background="@drawable/bt_selector"
+		    />
+        <EditText
+            android:id="@+id/sms_read_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/sms_read_send"
+            />
+        
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/sms_read_list"
+        android:layout_above="@id/sms_read_panel_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dip"
+        android:background="@color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/transparent"
+        android:listSelector="@color/transparent" />
+
+</RelativeLayout>

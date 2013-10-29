@@ -17,12 +17,16 @@ import android.view.View.OnClickListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ngandroid.demo.adapter.SMSListAdapter;
+import com.ngandroid.demo.content.SMSMessageList;
+import com.ngandroid.demo.task.MessageListTask;
 import com.ngandroid.demo.task.TopicHistoryTask;
 import com.ngandroid.demo.task.UserInfoTask;
 import com.ngandroid.demo.topic.IDataLoadedListener;
@@ -57,13 +61,19 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
     private String mFid;
     ProgressBar mProgressBar;
 
+    /** 收藏列表*/
     private ListView mTopicFovLv;
+    /** 历史记录列表*/
     private ListView mTopicHistoryLv;
+    /** 短消息列表*/
+    private ListView mSMSLv;
     
     /** 收藏布局*/
     private View mFavLayout;
     /** 历史记录布局*/
     private View mHistoryLayout;
+    /** 短消息布局*/
+    private View mMessageLayout;
     
     /** 标题*/
     private TextView mTitleTv;
@@ -71,6 +81,11 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
     /** 历史记录数据*/
     private TopicListData mTopicListData;
     
+    private SMSMessageList mSMSMessageList;
+    
+    /** header上右边的按钮，按钮功能会根据当前选中的menu项来复用点击事件*/
+    private Button mRightBt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +95,7 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         mProgressBar = (ProgressBar) findViewById(R.id.usercenter_progress);
         mFavLayout = findViewById(R.id.usercenter_favorite);
         mHistoryLayout = findViewById(R.id.usercenter_history);
+        mMessageLayout = findViewById(R.id.usercenter_message);
         
         mTitleTv = (TextView)findViewById(R.id.usercenter_head_title);
         itemList = new ArrayList<ImageView>();
@@ -92,36 +108,64 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         
         mTopicFovLv = (ListView)findViewById(R.id.fav_topic_list);
         mTopicHistoryLv = (ListView)findViewById(R.id.history_topic_list);
+        mSMSLv = (ListView)findViewById(R.id.message_list);
+        mSMSLv.setOnItemClickListener(smsItemClickListener);
         mTopicFovLv.setOnItemClickListener(this);
+        
+        mRightBt = (Button)findViewById(R.id.usercenter_right_but);
+        mRightBt.setOnClickListener(rightOnClick);
+        
         for (ImageView img : itemList) {
             img.setOnClickListener(this);
         }
         mFid = "24545785";
         new UserInfoTask(this).execute(mFid);
     }
+    
+    private OnClickListener rightOnClick = new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+            switch (currentMenuId) {
+            case R.id.usercenter_menu_info:
+                break;
+            case R.id.usercenter_menu_fav:
+                break;
+            case R.id.usercenter_menu_history:
+                break;
+            case R.id.usercenter_menu_msg:
+                break;
+            case R.id.usercenter_menu_quite:
+                break;
+            }
+        }
+    };
+    
+    OnItemClickListener smsItemClickListener = new OnItemClickListener() {
 
-    /**
-     * <p>
-     * Title: onMenuClick
-     * </p>
-     * <p>
-     * Description:
-     * </p>
-     * 
-     * @param viewId
-     * @param postion
-     * @see com.ngandroid.demo.widget.UserMenuClickListener#onMenuClick(int,
-     *      int)
-     */
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                long arg3) {
+            Intent intent = new Intent();
+            intent.putExtra("sms", mSMSListAdapter.getItem(arg2));
+            intent.setClass(UserCenterActivity.this, SMSReadActivity.class);
+            UserCenterActivity.this.startActivity(intent);
+        }
+    };
+
+    private int currentMenuId;
+    
     public void onMenuClick(ImageView view, int postion) {
         if (MARGINTOP == 0) {
             MARGINTOP = itemList.get(0).getTop();// 获取Y轴偏移值
         }
         moveAnimation(mFrom, (view.getHeight() + MARGINTOP) * postion);
-        switch (view.getId()) {
+        currentMenuId = view.getId();
+        switch (currentMenuId) {
         case R.id.usercenter_menu_info:
             new UserInfoTask(this).execute(mFid);
             mTitleTv.setText(this.getResources().getString(R.string.userinfo));
+            mRightBt.setVisibility(View.GONE);
             break;
         case R.id.usercenter_menu_fav:
             showFavList();
@@ -132,8 +176,10 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
             mTitleTv.setText(this.getResources().getString(R.string.history));
             break;
         case R.id.usercenter_menu_msg:
-
+            showMessageList();
             mTitleTv.setText(this.getResources().getString(R.string.message));
+            mRightBt.setVisibility(View.VISIBLE);
+            mRightBt.setText(this.getString(R.string.write_sms));
             break;
         case R.id.usercenter_menu_quite:
 
@@ -143,6 +189,29 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         }
     }
     
+    public void showMessageList(){
+        new MessageListTask(this, new IDataLoadedListener(){
+
+            @Override
+            public void onPostFinished(Object obj) {
+                mSMSMessageList = (SMSMessageList)obj;
+                Log.v(TAG, "subject:"+mSMSMessageList.get(0).getSubject());
+                
+                if(mSMSListAdapter == null){
+                    mSMSListAdapter = new SMSListAdapter(UserCenterActivity.this, mSMSMessageList);
+                    mSMSLv.setAdapter(mSMSListAdapter);
+                }else{
+                    mSMSListAdapter.refresh(mSMSMessageList);
+                }
+                bringToFront(mMessageLayout);
+            }
+
+            @Override
+            public void onPostError(Integer status) {
+                // TODO Auto-generated method stub
+                
+            }}).execute("1");
+    }
     
     public void showHistoryList(){
         new TopicHistoryTask(this, new IDataLoadedListener() {
@@ -168,6 +237,8 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         }).execute();
     }
 
+    /** 短消息的列表adapter*/
+    SMSListAdapter mSMSListAdapter;
     /** 历史记录的帖子列表adapter*/
     TopicListAdapter mTopicHistoryAdapter;
     /** 收藏的帖子列表adapter*/

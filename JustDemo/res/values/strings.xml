@@ -23,6 +23,11 @@
     <string name="history">历史记录</string>
     <string name="message">短消息</string>
     <string name="quite">注销</string>
+    <string name="confirm">确定</string>
+    <string name="write_sms">写信息</string>
+    <string name="progress_sending">正在发送...</string>
+    <string name="progress_loading">正在获取数据...</string>
+    <string name="progress_error">操作失败！</string>
     <string name="post_text_not_ok">格式不正确，标题和内容都不能少于4个字</string>
     <string name="regist_protol"><a href="http://www.google.com">178游戏网站协议</a></string>
 

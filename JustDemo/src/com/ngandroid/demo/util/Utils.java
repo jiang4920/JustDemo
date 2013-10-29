@@ -13,6 +13,7 @@ import com.ngandroid.demo.topic.ExtensionEmotionUtil;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class Utils {
 
@@ -25,6 +26,7 @@ public class Utils {
 	private static final String mCollapseStart = "<div style='border:1px solid #888' >";
 	private static final String mIgnoreCaseTag = "(?i)";
 	private static final String mEndDiv = "</div>";
+    private static final String TAG = "JustDemo Utils";
 
 	public static String timeFormat(Long sec, Long curSec) {
 		Long spentSec = curSec - sec;
