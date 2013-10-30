@@ -1,5 +1,10 @@
 package com.ngandroid.demo.topic.content;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import android.util.Log;
+
 public class UserInfoData {
 
     private int uid; //uid
@@ -22,6 +27,7 @@ public class UserInfoData {
     private String signature; //签名 
     private String nickname; //无用 
 	private int bit_data; // 用户状态bit
+    private static final String TAG = "UserInfoData";
 
 	public int getUid() {
 		return uid;
@@ -80,6 +86,11 @@ public class UserInfoData {
 	}
 
 	public String getAvatar() {
+        Pattern pat = Pattern.compile("http:.*jpg");   
+        Matcher mat = pat.matcher(avatar);   
+        if(mat.find()){
+            avatar = mat.group();
+        }
 		return avatar;
 	}
 

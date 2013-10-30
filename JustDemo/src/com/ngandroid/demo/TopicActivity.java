@@ -17,9 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.ngandroid.demo.adapter.TopicListAdapter;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.TopicData;
-import com.ngandroid.demo.topic.content.TopicListAdapter;
 import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.topic.task.TopicListTask;
 import com.ngandroid.demo.util.NGAURL;

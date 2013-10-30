@@ -32,7 +32,7 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 		setContentView(R.layout.layout_plate);
 		plateLayout = (LinearLayout)findViewById(R.id.plate_parent);
 		initMenuGroup();
-		new PlateTask(this, plateLayout).execute(null);
+		new PlateTask(this, plateLayout).execute();
 	}
 
 	public void initMenuGroup(){

@@ -19,11 +19,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ngandroid.demo.content.SMSMessage;
 import com.ngandroid.demo.content.SMSMessageList;
-import com.ngandroid.demo.content.UserInfoEntity;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;

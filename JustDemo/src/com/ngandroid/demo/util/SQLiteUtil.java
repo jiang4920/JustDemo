@@ -18,7 +18,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *         create at 2013-8-8 下午1:14:41
  */
 public class SQLiteUtil extends SQLiteOpenHelper {
-    private static int VERSION = 9;
+    private static int VERSION = 10;
     private static String NAME = "nga.db";
     private static final String TAG = "JustDemo SQLiteUtil";
 
@@ -27,21 +27,8 @@ public class SQLiteUtil extends SQLiteOpenHelper {
 
     private String SQL_CREATE_TABLE_USER = "create table if not exists "
             + TABLE_USER
-            + " (uid INTEGER primary key not null, nickname TEXT not null, email TEXT not null, password TEXT,expiretime INTEGER, loginTime INTEGER not null, keepLogin INTEGER default(0), cookie TEXT)";
+            + " (uid INTEGER primary key not null, username TEXT not null,nickname TEXT not null, email TEXT not null, password TEXT,expiretime INTEGER, loginTime INTEGER not null, keepLogin INTEGER default(0), cookie TEXT)";
 
-    /*
-     * private int tid; //主题id private int fid; //主题所在版面id private int
-     * quote_from;//引用自主题 private String quote_to;//此主题引用到主题 private int
-     * icon;//图标 private String titlefont;//标题样式 private String author;//作者
-     * private int authorid;//作者uid private String subject;//标题 private int
-     * ifmark; private int type;//主题类型bit private int type_2; private long
-     * postdate;//发帖时间 private long lastpost;//最后回复时间 private String
-     * lastposter;//最后回复人 private int replies;//回复数量 (回复页数=回复数量/__R__ROWS_PAGE
-     * private int locked; private int digest; private int ifupload; private
-     * long lastmodify;//最后修改时间 private int recommend; private int
-     * admin_ui;//用户是否对此主题有权限bit private String tpcurl;//主题地址 private String
-     * ispage;
-     */
     private String SQL_CREATE_TABLE_TOPIC = "create table if not exists "
             + TABLE_TOPIC_HISTORY
             + " (tid INTEGER primary key not null, topic TEXT, content TEXT, page INTEGER, readtime INTEGER)";
@@ -119,8 +106,8 @@ public class SQLiteUtil extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             db.execSQL(SQL_DELETE_TABLE + TABLE_USER);
             db.execSQL(SQL_CREATE_TABLE_USER);
-            db.execSQL(SQL_DELETE_TABLE + TABLE_TOPIC_HISTORY);
-            db.execSQL(SQL_CREATE_TABLE_TOPIC);
+//            db.execSQL(SQL_DELETE_TABLE + TABLE_TOPIC_HISTORY);
+//            db.execSQL(SQL_CREATE_TABLE_TOPIC);
         }
     }
 }

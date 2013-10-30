@@ -1,7 +1,6 @@
 package com.ngandroid.demo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,12 +15,7 @@ import android.widget.ImageView;
 
 import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.task.LoginTask;
-import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.SQLiteUtil;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class LoginActivity extends Activity {
 
@@ -63,7 +57,6 @@ public class LoginActivity extends Activity {
         
         keepLoginCb = (CheckBox)findViewById(R.id.login_cb_keep_online);
         tryLogin();
-//        startPlateActivity();
     }
 
     public void tryLogin(){
@@ -71,11 +64,11 @@ public class LoginActivity extends Activity {
     	Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null, null, "loginTime");
     	if(c!= null && c.getCount()>=1){
     		c.moveToFirst();
-    		Log.v(TAG, "try uid:"+c.getString(c.getColumnIndex("uid")) + " email:"+c.getString(c.getColumnIndex("email"))+ " password:"+c.getString(c.getColumnIndex("password"))+" expiretime"+ c.getString(c.getColumnIndex("expiretime"))
+    		Log.d(TAG, "try uid:"+c.getString(c.getColumnIndex("uid")) +" username:"+c.getString(c.getColumnIndex("username")) + " email:"+c.getString(c.getColumnIndex("email"))+ " password:"+c.getString(c.getColumnIndex("password"))+" expiretime"+ c.getString(c.getColumnIndex("expiretime"))
         			+" nickname:"+c.getString(c.getColumnIndex("nickname"))+" loginTime"+ c.getString(c.getColumnIndex("loginTime"))
         			+ "keepLogin"+c.getString(c.getColumnIndex("keepLogin"))
         			);
-		   usernameEt.setText(c.getString(c.getColumnIndex("email")));
+		   usernameEt.setText(c.getString(c.getColumnIndex("username")));
 		   passwdEt.setText(c.getString(c.getColumnIndex("password")));
 		   c.close(); 
 		   login();

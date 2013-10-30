@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.ngandroid.demo.adapter.ReplyListAdapter;
 import com.ngandroid.demo.topic.IDataLoadedListener;
-import com.ngandroid.demo.topic.content.ReplyListAdapter;
 import com.ngandroid.demo.topic.content.ReplyListData;
 import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.task.TopicReadTask;

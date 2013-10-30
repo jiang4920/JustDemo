@@ -2,6 +2,7 @@ package com.ngandroid.demo.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 
@@ -81,13 +82,13 @@ public class XMLDomUtil {
 	 * <p>Title: parseXml</p>
 	 * <p>Description: 解析XML</p>
 	 * @param response 传递进来一个Response，用于接收和处理XML中数据
-	 * @param is 服务器返回的输入流
+	 * @param inputStream 服务器返回的输入流
 	 * @return
 	 */
-	public Response parseXml(Response response, InputStream is) {
+	public Response parseXml(Response response, InputStream inputStream) {
 		SAXReader reader = new SAXReader();
 		try {
-			org.dom4j.Document document = reader.read(is);
+			org.dom4j.Document document = reader.read(inputStream);
 			Log.v(TAG, document.asXML());
 			if ("true".equals(document.selectSingleNode("/data/result")
 					.getText())) {

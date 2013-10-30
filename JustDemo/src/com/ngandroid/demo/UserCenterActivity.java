@@ -25,16 +25,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ngandroid.demo.adapter.SMSListAdapter;
+import com.ngandroid.demo.adapter.TopicListAdapter;
 import com.ngandroid.demo.content.SMSMessageList;
+import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.task.MessageListTask;
 import com.ngandroid.demo.task.TopicHistoryTask;
 import com.ngandroid.demo.task.UserInfoTask;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.TopicData;
-import com.ngandroid.demo.topic.content.TopicListAdapter;
 import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.topic.task.TopicListTask;
 import com.ngandroid.demo.util.NGAURL;
+import com.ngandroid.demo.util.SQLiteUtil;
 
 /**
  * com.ngandroid.demo.UserCenterActivity
@@ -58,7 +60,7 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
     private int MARGINTOP;
     private FrameLayout mLayout;
 
-    private String mFid;
+    private String mUid;
     ProgressBar mProgressBar;
 
     /** 收藏列表*/
@@ -118,8 +120,9 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         for (ImageView img : itemList) {
             img.setOnClickListener(this);
         }
-        mFid = "24545785";
-        new UserInfoTask(this).execute(mFid);
+        mUid = ""+UserResponse.getUser(SQLiteUtil.getInstance(this)).uid;
+        Log.v(TAG, "uid:"+mUid);
+        new UserInfoTask(this).execute(mUid);
     }
     
     private OnClickListener rightOnClick = new OnClickListener() {
@@ -134,6 +137,9 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
             case R.id.usercenter_menu_history:
                 break;
             case R.id.usercenter_menu_msg:
+                Intent intent = new Intent();
+                intent.setClass(UserCenterActivity.this, SMSWriteActivity.class);
+                UserCenterActivity.this.startActivityForResult(intent, 100);
                 break;
             case R.id.usercenter_menu_quite:
                 break;
@@ -141,6 +147,16 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         }
     };
     
+    
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100 && resultCode == SMSWriteActivity.RESULT_OK){
+            showMessageList();
+        }
+    }
+
     OnItemClickListener smsItemClickListener = new OnItemClickListener() {
 
         @Override
@@ -163,7 +179,7 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         currentMenuId = view.getId();
         switch (currentMenuId) {
         case R.id.usercenter_menu_info:
-            new UserInfoTask(this).execute(mFid);
+            new UserInfoTask(this).execute(mUid);
             mTitleTv.setText(this.getResources().getString(R.string.userinfo));
             mRightBt.setVisibility(View.GONE);
             break;

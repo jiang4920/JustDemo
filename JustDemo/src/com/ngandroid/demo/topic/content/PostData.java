@@ -33,6 +33,11 @@ public class PostData {
     /** new/reply*/
     private String action;
     
+    /** 附件*/
+    private String attachments;
+    /** 附件验证*/
+    private String attachments_check;
+    
     private PostAttachmentEntry attachment;
     
     public String getFid() {
@@ -105,7 +110,26 @@ public class PostData {
 	}
 
 
-	public List<NameValuePair> getEntry(){
+	public String getAttachments() {
+        return attachments;
+    }
+
+
+    public void setAttachments(String attachments) {
+        this.attachments = attachments;
+    }
+
+
+    public String getAttachments_check() {
+        return attachments_check;
+    }
+
+
+    public void setAttachments_check(String attachments_check) {
+        this.attachments_check = attachments_check;
+    }
+
+    public List<NameValuePair> getEntry(){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("step", "2"));
         params.add(new BasicNameValuePair("pid", pid));
@@ -113,8 +137,8 @@ public class PostData {
         params.add(new BasicNameValuePair("fid",fid));
         params.add(new BasicNameValuePair("tid", tid));
         params.add(new BasicNameValuePair("_ff", ""));
-        params.add(new BasicNameValuePair("attachments", ""));
-        params.add(new BasicNameValuePair("attachments_check", ""));
+        params.add(new BasicNameValuePair("attachments", attachments));
+        params.add(new BasicNameValuePair("attachments_check", attachments_check));
         params.add(new BasicNameValuePair("bit_data", ""));
         params.add(new BasicNameValuePair("post_subject", post_subject));
         params.add(new BasicNameValuePair("post_content", post_content));

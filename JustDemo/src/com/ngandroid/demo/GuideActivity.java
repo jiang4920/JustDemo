@@ -1,5 +1,7 @@
 package com.ngandroid.demo;
 
+import com.ngandroid.demo.topic.task.UpdateCookieTask;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ public class GuideActivity extends Activity implements OnClickListener {
 		plate = (ImageButton)findViewById(R.id.guide_plate);
 		findViewById(R.id.guide_user_center).setOnClickListener(this);
 		plate.setOnClickListener(this);
+		new UpdateCookieTask().execute();
 	}
 
 	@Override

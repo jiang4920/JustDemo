@@ -1,4 +1,4 @@
-package com.ngandroid.demo.topic.content;
+package com.ngandroid.demo.adapter;
 
 import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
@@ -28,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ngandroid.demo.R;
+import com.ngandroid.demo.topic.content.ReplyData;
+import com.ngandroid.demo.topic.content.ReplyListData;
+import com.ngandroid.demo.topic.content.UserInfoData;
 import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

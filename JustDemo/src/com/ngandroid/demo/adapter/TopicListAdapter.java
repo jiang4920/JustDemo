@@ -1,4 +1,4 @@
-package com.ngandroid.demo.topic.content;
+package com.ngandroid.demo.adapter;
 
 import java.util.List;
 
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ngandroid.demo.R;
+import com.ngandroid.demo.topic.content.TopicData;
+import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.util.Utils;
 
 public class TopicListAdapter extends BaseAdapter {

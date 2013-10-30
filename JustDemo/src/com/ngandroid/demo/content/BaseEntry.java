@@ -1,8 +1,13 @@
 package com.ngandroid.demo.content;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.util.Log;
 
@@ -57,6 +62,21 @@ public abstract class BaseEntry {
         return paramsString + getTimeParam().toString();
     }
 
+    public UrlEncodedFormEntity getEntiry()
+            throws UnsupportedEncodingException {
+        formatParamas();
+        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+        for (PostParam param : mParams) {
+            parameters.add(new BasicNameValuePair(param.key, param.value));
+        }
+        parameters.add(new BasicNameValuePair(getChecksumParam().key, getChecksumParam().value));
+        parameters.add(new BasicNameValuePair(getTimeParam().key, getTimeParam().value));
+        parameters.add(new BasicNameValuePair("dataType", "1"));
+        UrlEncodedFormEntity formEntiry = new UrlEncodedFormEntity(parameters, "GBK");
+        return formEntiry;
+
+    }
+    
     private PostParam getTimeParam() {
         if (mTimeParam == null) {
             PostParam param = new PostParam();

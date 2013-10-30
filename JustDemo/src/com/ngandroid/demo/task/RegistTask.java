@@ -1,5 +1,12 @@
 package com.ngandroid.demo.task;
 
+import java.io.IOException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -39,10 +46,24 @@ public class RegistTask extends AsyncTask<RegistEntry, String, Response>{
         this.publishProgress(mContext.getResources().getString(R.string.login_waiting));
         XMLDomUtil domUtil = new XMLDomUtil();
         //发送登陆的POST请求
-        
-        Log.v(TAG, "parseUserXml");
-        return domUtil.parseXml(new UserResponse(), new HttpUtil().post(
-                RegistEntry.uriAPI, params[0].getPostBody(), Configs.getCookie(mContext)));
+        try {
+            HttpPost httpPost = new HttpPost(RegistEntry.uriAPI);
+            httpPost.setHeader("Content-Type",
+                    "application/x-www-form-urlencoded");
+            httpPost.setHeader("User-Agent", HttpUtil.USER_AGENT);
+            httpPost.setHeader("Accept-Charset", "UTF-8");
+            httpPost.setEntity(params[0].getEntiry());
+            HttpResponse httpResponse;
+            httpResponse = new DefaultHttpClient().execute(httpPost);
+            Response resp = domUtil.parseXml(UserResponse.getInstance(),
+                    httpResponse.getEntity().getContent());
+            return resp;
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

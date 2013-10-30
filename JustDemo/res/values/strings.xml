@@ -25,9 +25,15 @@
     <string name="quite">注销</string>
     <string name="confirm">确定</string>
     <string name="write_sms">写信息</string>
+    <string name="write_sms_info">发起新的对话，收信人用户名或用户ID多个收信人用空格或英文逗号分隔。</string>
+    <string name="write_sms_receiver">收件人</string>
+    <string name="write_sms_subject">标题:</string>
+    <string name="write_sms_content">内容:</string>
     <string name="progress_sending">正在发送...</string>
     <string name="progress_loading">正在获取数据...</string>
     <string name="progress_error">操作失败！</string>
+    <string name="progress_success">操作成功！</string>
+    <string name="toast_write_sms_error">格式不正确，收件人、标题、内容不能为空！</string>
     <string name="post_text_not_ok">格式不正确，标题和内容都不能少于4个字</string>
     <string name="regist_protol"><a href="http://www.google.com">178游戏网站协议</a></string>
 
