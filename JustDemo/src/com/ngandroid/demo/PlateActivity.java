@@ -54,7 +54,7 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 		mMenuGroup.addView(imgBtn3);
 		mMenuGroup.addView(imgBtn4);
 		mMenuGroup.addView(imgBtn5);
-		user = UserResponse.getInstance();
+		user = UserResponse.getUser(this);
 		Log.v(TAG, "user:"+user.uid+"+"+user.nickname);
 	}
 	

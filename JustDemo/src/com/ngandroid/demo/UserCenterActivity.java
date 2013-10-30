@@ -120,7 +120,7 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         for (ImageView img : itemList) {
             img.setOnClickListener(this);
         }
-        mUid = ""+UserResponse.getUser(SQLiteUtil.getInstance(this)).uid;
+        mUid = ""+UserResponse.getUser(this).uid;
         Log.v(TAG, "uid:"+mUid);
         new UserInfoTask(this).execute(mUid);
     }

@@ -55,7 +55,7 @@ public class RegistTask extends AsyncTask<RegistEntry, String, Response>{
             httpPost.setEntity(params[0].getEntiry());
             HttpResponse httpResponse;
             httpResponse = new DefaultHttpClient().execute(httpPost);
-            Response resp = domUtil.parseXml(UserResponse.getInstance(),
+            Response resp = domUtil.parseXml(new UserResponse(),
                     httpResponse.getEntity().getContent());
             return resp;
         } catch (ClientProtocolException e) {

@@ -5,6 +5,7 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -22,15 +23,6 @@ public class UserResponse extends Response {
     public boolean hasResult;
     public int keepLogin;
     public String cookie;
-
-    static UserResponse user;
-
-    public static UserResponse getInstance() {
-        if (user == null) {
-            user = new UserResponse();
-        }
-        return user;
-    }
 
     @Override
     public Response parse(Document doc) {
@@ -52,12 +44,12 @@ public class UserResponse extends Response {
         return this;
     }
 
-    public static UserResponse getUser(SQLiteDatabase db) {
+    public static UserResponse getUser(Context context) {
         UserResponse user = new UserResponse(); 
-        Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null,
+        Cursor c = SQLiteUtil.getInstance(context).query(SQLiteUtil.TABLE_USER, null, null, null, null,
                 null, "loginTime desc");
         if(c.getCount() <=0 ){
-            return getInstance();
+            return user;
         }
         c.moveToFirst();
         user.uid = c.getInt(c.getColumnIndex("uid"));

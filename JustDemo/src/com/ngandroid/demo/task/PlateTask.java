@@ -38,7 +38,7 @@ public class PlateTask extends AsyncTask<String, String, PlateResponse> {
         String url = LoginEntry.uriAPI;
         Log.v(TAG, "url:" + url);
         try {
-            HttpGet httpGet = new HttpGet(NGAURL.URL_PLATE+"?uid="+UserResponse.getInstance().uid);
+            HttpGet httpGet = new HttpGet(NGAURL.URL_PLATE+"?uid="+UserResponse.getUser(mContext).uid);
             httpGet.setHeader("Content-Type",
                     "application/x-www-form-urlencoded");
             httpGet.setHeader("User-Agent", HttpUtil.USER_AGENT);

@@ -42,6 +42,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
 
     String mPasswd;
     String mUsername;
+    String mCid;
     @Override
     protected Response doInBackground(LoginEntry... params) {
         mPasswd = params[0].getPassword();
@@ -60,7 +61,17 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
             httpPost.setEntity(params[0].getEntiry());
             HttpResponse httpResponse;
             httpResponse = new DefaultHttpClient().execute(httpPost);
-            Response resp = domUtil.parseXml(UserResponse.getInstance(),
+            for(Header header:httpResponse.getAllHeaders()){
+                if(header.getName().equals("Set-Cookie")){
+                    String value = header.getValue();
+                    if(value.startsWith("_sid=")){
+                        Log.v(TAG, "sid:"+value);
+                        mCid = value.substring(value.indexOf("_sid=")+5, value.indexOf(";"));
+                        Log.v(TAG, mCid);
+                    }
+                }
+            }
+            Response resp = domUtil.parseXml(new UserResponse(),
                     httpResponse.getEntity().getContent());
             UserResponse userRsp = (UserResponse) resp;
             mCookie = getCookie(userRsp.uid);
@@ -77,7 +88,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
 
     public String getCookie(int uid) throws ClientProtocolException, IOException{
         HttpGet httpGet = new HttpGet(
-                "http://bbs.ngacn.cc/nuke.php?func=login&uid="+uid+"&cid=76f6f90a46c9c51fa61f15a1ede38ff7b194d774");
+                "http://bbs.ngacn.cc/nuke.php?func=login&uid="+uid+"&cid="+mCid);
         httpGet.setHeader("Content-Type",
                 "application/x-www-form-urlencoded");
         httpGet.setHeader("User-Agent", HttpUtil.USER_AGENT);
