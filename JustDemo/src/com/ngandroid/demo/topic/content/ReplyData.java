@@ -1,11 +1,15 @@
 package com.ngandroid.demo.topic.content;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ReplyData {
-	private String content; // 帖子内容
+public class ReplyData implements Serializable {
+	/** serialVersionUID*/
+    private static final long serialVersionUID = 1L;
+    private String content; // 帖子内容
 	private String alterinfo; // 修改/加分信息
 	private int type; // 帖子状态bit
+	private String author; // 发帖人uid
 	private int authorid; // 发帖人uid
 	private String postdate; // 无用
 	private String subject; // 帖子标题
@@ -43,7 +47,15 @@ public class ReplyData {
 		this.type = type;
 	}
 
-	public int getAuthorid() {
+	public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getAuthorid() {
 		return authorid;
 	}
 
@@ -115,6 +127,30 @@ public class ReplyData {
 		this.attachs = attachs;
 	}
 
+	public String getAttachHtml(){
+	    if(attachs == null || attachs.size() == 0){
+	        return null;
+	    }
+	    StringBuffer sb = new StringBuffer();
+	    String DIV_HEAD = "<div style='color:#333333;border:1px solid #888 ; margin:10px 10px 0px 10px;padding:10px;max-width:100%' >[附件]<br/>";
+	    String DIV_END = "</div>";
+	    String URL = "http://img6.ngacn.cc/attachments/";
+	    String IMG = "<img style='max-width:100%; margin:5px 1px 1px 1px' src=\"IMG\">";
+	    boolean hasImg = false;
+	    sb.append(DIV_HEAD);
+	    for(String k:attachs.keySet()){
+	        if(attachs.get(k).getType().equals("img")){
+	            sb.append(IMG.replaceAll("IMG", URL+attachs.get(k).getAttachurl()));
+	            hasImg = true;
+	        }
+        }
+	    if(!hasImg){
+	        return null;
+	    }
+	    sb.append(DIV_END);
+	    return sb.toString();
+    }
+	
 	public int getLou() {
 		return lou;
 	}

@@ -71,6 +71,7 @@
             android:layout_weight="1"
             android:textColor="@color/reply_date" />
         <ImageView
+            android:id="@+id/reply_reply"
             android:layout_weight="0"
             android:layout_width="50dip"
             android:layout_height="30dip"

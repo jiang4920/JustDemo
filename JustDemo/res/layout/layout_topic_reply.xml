@@ -8,7 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:background="@drawable/guide_head" >
-
+		<Button
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:layout_centerVertical="true"
+            android:id="@+id/topic_reply_post"
+            android:textColor="@color/text_color"
+            android:layout_alignParentRight="true"
+            android:text="@string/topic_reply_post"
+            android:background="@drawable/bt_selector" 
+            />
         <TextView
             android:id="@+id/topic_reply_head_title"
             android:layout_width="wrap_content"
@@ -16,6 +25,13 @@
             android:layout_centerInParent="true"
             android:text="@string/namespace"
             android:textColor="@color/text_title_color" />
+        <ImageView
+            android:id="@+id/topic_reply_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dip"
+            android:src="@drawable/but_regist_back_selector" />
     </RelativeLayout>
 
     <RelativeLayout

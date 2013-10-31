@@ -17,6 +17,8 @@
     <string name="topic_page_pre">上一页</string>
     <string name="topic_page_next">下一页</string>
     <string name="topic_post">发帖</string>
+    <string name="topic_reply_post">回帖</string>
+    <string name="attach">附件</string>
     <string name="usercenter">用户中心</string>
     <string name="userinfo">个人信息</string>
     <string name="favor">收藏</string>

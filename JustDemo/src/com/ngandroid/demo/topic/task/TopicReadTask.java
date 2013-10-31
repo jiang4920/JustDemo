@@ -229,8 +229,22 @@ public class TopicReadTask extends AsyncTask<String, Integer, Integer> {
                         && !isLoadImage) {
                     loadImg = false;
                 }
-                replyData.setHtmlContent(Utils.decodeForumTag(
-                        replyData.getContent(), loadImg));
+                if(loadImg){
+                    
+                }
+                if(replyData.getAttachs()!= null){
+                    for(String k:replyData.getAttachs().keySet()){
+                        Log.v(TAG, "attach:"+replyData.getAttachs().get(k).getAttachurl());
+                    }
+                }
+                if(replyData.getAttachHtml() == null){
+                    replyData.setHtmlContent(Utils.decodeForumTag(
+                            replyData.getContent(), loadImg));
+                }else{
+                    replyData.setHtmlContent(Utils.decodeForumTag(
+                            replyData.getContent(), loadImg)+replyData.getAttachHtml());
+                }
+                Log.v(TAG, "html:"+replyData.getHtmlContent());
             }
             replyDataMap.put(key, replyData);
         }

@@ -2,32 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/post_attachment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <EditText
-        android:id="@+id/post_title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
+        android:layout_height="50dip"
+        android:background="@drawable/guide_head" >
 
-    </EditText>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/message"
+            android:textColor="@color/text_title_color" />
 
-    <EditText
-        android:id="@+id/post_content"
+        <ImageView
+            android:id="@+id/post_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dip"
+            android:src="@drawable/but_regist_back_selector" />
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dip" >
 
-    <Button
-        android:id="@+id/post_sender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发帖" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/write_sms_subject"
+            android:textColor="@color/text_title_color"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/post_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dip" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/write_sms_content"
+            android:textColor="@color/text_title_color"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/post_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dip"
+            android:background="@drawable/bg_edit" />
+
+        <Button
+            android:id="@+id/post_attachment"
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:text="@string/attach"
+            android:textColor="@color/white"
+            android:background="@drawable/bt_selector" />
+
+        <Button
+            android:id="@+id/post_sender"
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:background="@drawable/but_commit_selector" />
+    </LinearLayout>
 
 </LinearLayout>

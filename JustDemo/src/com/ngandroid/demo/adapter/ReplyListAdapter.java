@@ -1,5 +1,6 @@
 package com.ngandroid.demo.adapter;
 
+import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -27,6 +28,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ngandroid.demo.PostActivity;
 import com.ngandroid.demo.R;
 import com.ngandroid.demo.topic.content.ReplyData;
 import com.ngandroid.demo.topic.content.ReplyListData;
@@ -72,8 +74,8 @@ public class ReplyListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return null;
+	public ReplyData getItem(int position) {
+		return mReplyListData.get__R().get(""+position);
 	}
 
 	@Override
@@ -121,7 +123,7 @@ public class ReplyListAdapter extends BaseAdapter {
 		int authorId = replyData.getAuthorid();
 		UserInfoData userInfoData = userInfoList.get(authorId + "");
 		holder.tvUserName.setText(userInfoData.getUsername());
-		holder.tvReplyDate.setText(new SimpleDateFormat("yyyy-MM-dd hh:mm",
+		holder.tvReplyDate.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm",
 				Locale.getDefault()).format(new Date(replyData
 				.getPostdatetimestamp() * 1000)));
 
@@ -153,7 +155,7 @@ public class ReplyListAdapter extends BaseAdapter {
 		} else {
 			mImageLoader.denyNetworkDownloads(false);
 		}
-
+		
 		holder.ivAvatar.setTag(userInfoData.getAvatar());
 		mImageLoader.displayImage(userInfoData.getAvatar(), holder.ivAvatar,
 				options, mAnimateFirstListener);
@@ -166,6 +168,7 @@ public class ReplyListAdapter extends BaseAdapter {
 		public TextView tvFloor;
 		public WebView tvContent;
 		public ImageView ivAvatar;
+		public ImageView replyIcon;
 		public int position;
 
 		public void setViewHolder(View convertView) {
@@ -179,27 +182,28 @@ public class ReplyListAdapter extends BaseAdapter {
 					.findViewById(R.id.reply_content);
 			this.ivAvatar = (ImageView) convertView
 					.findViewById(R.id.reply_user_avatar);
-//			this.ivAvatar.setOnClickListener(new AvatarOnClickListener());
+			this.replyIcon = (ImageView) convertView
+			        .findViewById(R.id.reply_reply);
+			this.replyIcon.setOnClickListener(new ReplyOnClickListener());
 			convertView.setTag(this);
 		}
+		private class ReplyOnClickListener implements OnClickListener {
+		    
+		    
+		    @Override
+		    public void onClick(View v) {
+		        Intent intent = new Intent();
+		        intent.setClass(mContext, PostActivity.class);
+		        intent.putExtra("action", "reply");
+		        intent.putExtra("pid", ""+getItem(position).getPid());
+		        intent.putExtra("tid", ""+getItem(position).getTid());
+		        intent.putExtra("ReplyData", (Serializable)getItem(position));
+		        mContext.startActivity(intent);
+		    }
+		    
+		}
 	}
 
-	private class AvatarOnClickListener implements OnClickListener {
-
-		public AvatarOnClickListener() {
-
-		}
-
-		@Override
-		public void onClick(View v) {
-			String uri = (String) v.getTag();
-			Intent intent = new Intent();
-//			intent.setClass(mContext, ImageViewActivity.class);
-			intent.putExtra("uri", uri);
-			mContext.startActivity(intent);
-		}
-
-	}
 
 	private static class AnimateFirstDisplayListener extends
 			SimpleImageLoadingListener {

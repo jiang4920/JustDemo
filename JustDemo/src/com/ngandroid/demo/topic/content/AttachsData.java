@@ -1,8 +1,12 @@
 package com.ngandroid.demo.topic.content;
 
-public class AttachsData {
+import java.io.Serializable;
 
-	private String aid;
+public class AttachsData implements Serializable {
+
+	/** serialVersionUID*/
+    private static final long serialVersionUID = 1L;
+    private String aid;
     private String url_utf8_org_name; //文件的原名 urlencode的utf8编码 
     private String path;
     private String dscp;

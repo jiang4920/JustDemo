@@ -61,7 +61,7 @@ public class LoginActivity extends Activity {
 
     public void tryLogin(){
     	db = SQLiteUtil.getInstance(this);
-    	Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null, null, "loginTime");
+    	Cursor c = db.query(SQLiteUtil.TABLE_USER, null, null, null, null, null, "loginTime desc");
     	if(c!= null && c.getCount()>=1){
     		c.moveToFirst();
     		Log.d(TAG, "try uid:"+c.getString(c.getColumnIndex("uid")) +" username:"+c.getString(c.getColumnIndex("username")) + " email:"+c.getString(c.getColumnIndex("email"))+ " password:"+c.getString(c.getColumnIndex("password"))+" expiretime"+ c.getString(c.getColumnIndex("expiretime"))
@@ -71,7 +71,7 @@ public class LoginActivity extends Activity {
 		   usernameEt.setText(c.getString(c.getColumnIndex("username")));
 		   passwdEt.setText(c.getString(c.getColumnIndex("password")));
 		   c.close(); 
-		   login();
+//		   login();
     	}
     }
     
