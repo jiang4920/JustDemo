@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.ngandroid.demo.PostActivity;
 import com.ngandroid.demo.R;
+import com.ngandroid.demo.TopicReplyActivity;
 import com.ngandroid.demo.topic.content.ReplyData;
 import com.ngandroid.demo.topic.content.ReplyListData;
 import com.ngandroid.demo.topic.content.UserInfoData;
@@ -44,7 +45,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class ReplyListAdapter extends BaseAdapter {
 
-	private Context mContext = null;
+	private TopicReplyActivity mContext = null;
 	private LayoutInflater mInflater = null;
 	private ReplyListData mReplyListData = null;
 	private ImageLoader mImageLoader = ImageLoader.getInstance();
@@ -56,7 +57,7 @@ public class ReplyListAdapter extends BaseAdapter {
 
 	private final SparseArray<SoftReference<View>> mViewCache;
 
-	public ReplyListAdapter(Context context, ReplyListData replyListData) {
+	public ReplyListAdapter(TopicReplyActivity context, ReplyListData replyListData) {
 		Configs.initImageLoader(context);
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
@@ -122,6 +123,7 @@ public class ReplyListAdapter extends BaseAdapter {
 		ReplyData replyData = replyList.get(position + "");
 		int authorId = replyData.getAuthorid();
 		UserInfoData userInfoData = userInfoList.get(authorId + "");
+		replyData.setAuthor(userInfoData.getUsername());
 		holder.tvUserName.setText(userInfoData.getUsername());
 		holder.tvReplyDate.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm",
 				Locale.getDefault()).format(new Date(replyData
@@ -195,10 +197,11 @@ public class ReplyListAdapter extends BaseAdapter {
 		        Intent intent = new Intent();
 		        intent.setClass(mContext, PostActivity.class);
 		        intent.putExtra("action", "reply");
+		        intent.putExtra("fid", ""+getItem(position).getFid());
 		        intent.putExtra("pid", ""+getItem(position).getPid());
 		        intent.putExtra("tid", ""+getItem(position).getTid());
 		        intent.putExtra("ReplyData", (Serializable)getItem(position));
-		        mContext.startActivity(intent);
+		        mContext.startActivityForResult(intent, 200);
 		    }
 		    
 		}

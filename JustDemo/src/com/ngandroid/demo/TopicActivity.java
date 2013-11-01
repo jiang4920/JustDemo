@@ -14,15 +14,16 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.ngandroid.demo.adapter.TopicListAdapter;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.topic.task.TopicListTask;
 import com.ngandroid.demo.util.NGAURL;
+import com.ngandroid.demo.util.PageUtil;
+import com.ngandroid.demo.widget.PageSelectDialog;
+import com.ngandroid.demo.widget.PageSelectDialog.OnSelectedListener;
 
 public class TopicActivity extends Activity implements OnClickListener, OnCheckedChangeListener, OnItemClickListener {
 	private static final String TAG = "JustDemo TopicActivity.java";
@@ -58,6 +59,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	
 	TopicListData data;
 	String mFid;
+	TextView mTitleTv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +70,8 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		nextBt = (Button)findViewById(R.id.topic_arrow_right);
 		postBt = (Button)findViewById(R.id.topic_post);
 		
+		findViewById(R.id.topic_page).setOnClickListener(this);
+		mTitleTv = (TextView)findViewById(R.id.guide_head_title);
 		postBt.setOnClickListener(this);
 		preBt.setOnClickListener(this);
 		nextBt.setOnClickListener(this);
@@ -76,6 +80,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		progressBar = (ProgressBar)findViewById(R.id.topic_progress);
 		tabGroup.setOnCheckedChangeListener(this);
 		mFid = this.getIntent().getStringExtra("fid");
+		mTitleTv.setText(this.getIntent().getStringExtra("plate"));
 		refresh();
 	}
 	int mCurPageIndex = 1;
@@ -115,36 +120,40 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.topic_arrow_left:
-			if(mCurPageIndex >1){
-				mCurPageIndex--;
-			}else{
-				Toast.makeText(this, this.getString(R.string.topic_refresh), Toast.LENGTH_SHORT).show();
-			}
+		    mCurPageIndex = PageUtil.prePage(mCurPageIndex);
 			refresh();
 			break;
 		case R.id.topic_arrow_right:
 			Log.v(TAG, "data.getTopicPageCount()："+data.getTopicPageCount());
-			if(mCurPageIndex < data.getTopicPageCount()){
-				mCurPageIndex++;
-			}
+			mCurPageIndex = PageUtil.nextPage(mCurPageIndex, data.getTopicPageCount());
 			refresh();
 			break;
 		case R.id.topic_post:
 		    Intent intent = new Intent();
 	        intent.setClass(this, PostActivity.class);
+	        intent.putExtra("action", "new");
 	        intent.putExtra("fid", mFid);
 	        this.startActivity(intent);
 			break;
+		case R.id.topic_page:
+		    if(data!= null){
+		        PageSelectDialog.create(this, data.getTopicPageCount(), listener).show();
+		    }
+		    break;
 		}
 	}
 
-    /**
-     * <p>Title: onCheckedChanged</p>
-     * <p>Description: </p>
-     * @param group
-     * @param checkedId
-     * @see android.widget.RadioGroup.OnCheckedChangeListener#onCheckedChanged(android.widget.RadioGroup, int)
-     */
+	OnSelectedListener listener = new OnSelectedListener() {
+        
+        @Override
+        public void onSelected(boolean isSelected, int page) {
+            if(isSelected){
+                mCurPageIndex = page;
+                refresh();
+            }
+        }
+    };
+
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch(checkedId){

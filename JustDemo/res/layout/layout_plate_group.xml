@@ -17,7 +17,8 @@
 	    android:layout_height="wrap_content"
 	    android:id="@+id/plate_group_grid"
 	    android:numColumns="2"
-	    android:listSelector="@drawable/plate_item_selector"
+	    android:background="@color/transparent"
+	    android:listSelector="@drawable/main_board_bg1_select_style"
 	    android:stretchMode="columnWidth"
 	    />
 </LinearLayout>

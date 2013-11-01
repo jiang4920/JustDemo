@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,7 +37,7 @@ import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.topic.task.TopicListTask;
 import com.ngandroid.demo.util.NGAURL;
-import com.ngandroid.demo.util.SQLiteUtil;
+import com.ngandroid.demo.widget.TopicFavorDelDialog;
 
 /**
  * com.ngandroid.demo.UserCenterActivity
@@ -114,8 +115,12 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         mSMSLv.setOnItemClickListener(smsItemClickListener);
         mTopicFovLv.setOnItemClickListener(this);
         
+        mTopicFovLv.setOnItemLongClickListener(topicFovLongClickListener);
+        
         mRightBt = (Button)findViewById(R.id.usercenter_right_but);
         mRightBt.setOnClickListener(rightOnClick);
+        
+        findViewById(R.id.usercenter_back).setOnClickListener(backListener);
         
         for (ImageView img : itemList) {
             img.setOnClickListener(this);
@@ -124,6 +129,38 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         Log.v(TAG, "uid:"+mUid);
         new UserInfoTask(this).execute(mUid);
     }
+    
+    OnClickListener backListener = new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+            UserCenterActivity.this.finish();
+        }
+    };
+    TopicFavorDelDialog mFavorDelDialog;
+    OnItemLongClickListener topicFovLongClickListener = new OnItemLongClickListener() {
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                int arg2, long arg3) {
+            if(mFavorDelDialog == null){
+                mFavorDelDialog = new TopicFavorDelDialog(UserCenterActivity.this, new IDataLoadedListener() {
+                    
+                    @Override
+                    public void onPostFinished(Object obj) {
+                        showFavList();
+                    }
+                    
+                    @Override
+                    public void onPostError(Integer status) {
+                        
+                    }
+                });
+            }
+            mFavorDelDialog.show(""+mTopicListAdapter.getItem(arg2).getTid());
+            return false;
+        }
+    };
     
     private OnClickListener rightOnClick = new OnClickListener() {
         
@@ -224,7 +261,6 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
 
             @Override
             public void onPostError(Integer status) {
-                // TODO Auto-generated method stub
                 
             }}).execute("1");
     }
@@ -279,6 +315,7 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
 
             @Override
             public void onPostError(Integer status) {
+                bringToFront(mFavLayout);
             }
 
         }).execute(url);
@@ -355,4 +392,5 @@ public class UserCenterActivity extends Activity implements OnClickListener, OnI
         intent.putExtra("topic", topic);
         this.startActivity(intent);
     }
+
 }

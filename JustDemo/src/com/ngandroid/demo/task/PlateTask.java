@@ -11,6 +11,7 @@ import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.content.plate.PlateGroup;
 import com.ngandroid.demo.content.plate.PlateResponse;
+import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.NGAURL;
@@ -26,10 +27,11 @@ public class PlateTask extends AsyncTask<String, String, PlateResponse> {
     private static final String TAG = "JustDemo PlateTask.java";
     Context mContext;
     LinearLayout mPlateLayout;
-
-    public PlateTask(Context context, LinearLayout plateLayout) {
+    IDataLoadedListener mDataLoadedListener;
+    public PlateTask(Context context, LinearLayout plateLayout, IDataLoadedListener iDataLoadedListener) {
         mContext = context;
         mPlateLayout = plateLayout;
+        mDataLoadedListener = iDataLoadedListener;
     }
 
     @Override
@@ -57,14 +59,16 @@ public class PlateTask extends AsyncTask<String, String, PlateResponse> {
 
     @Override
     protected void onPostExecute(PlateResponse result) {
+        
         if (result != null) {
+            mDataLoadedListener.onPostFinished(null);
             for (PlateGroup group : result.getResult()) {
                 mPlateLayout.addView(group.getView(mContext), new LayoutParams(
                         LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                Log.v(TAG, "group:" + group.name);
+//                Log.v(TAG, "group:" + group.name);
             }
         } else {
-            Toast.makeText(mContext, "登陆失败,请检查网络！", Toast.LENGTH_SHORT).show();
+            mDataLoadedListener.onPostError(-1);
         }
     }
 

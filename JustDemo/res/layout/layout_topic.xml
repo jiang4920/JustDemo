@@ -14,18 +14,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/namespace"
+            android:textSize="20sp"
             android:textColor="@color/text_title_color" />
+
         <Button
+            android:id="@+id/topic_post"
             android:layout_width="70dip"
             android:layout_height="40dip"
-            android:layout_centerVertical="true"
-            android:id="@+id/topic_post"
-            android:textColor="@color/text_color"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bt_selector"
             android:text="@string/topic_post"
-            android:background="@drawable/bt_selector" 
-            />
+            android:textColor="@color/text_color" />
+
         <ImageView
             android:id="@+id/topic_back"
             android:layout_width="wrap_content"
@@ -36,11 +37,11 @@
     </RelativeLayout>
 
     <RadioGroup
+        android:id="@+id/topic_tabs"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_marginTop="50dip"
         android:background="@drawable/bg_tab"
-        android:id="@+id/topic_tabs"
         android:orientation="horizontal" >
 
         <RadioButton
@@ -48,33 +49,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:checked="true"
+            android:background="@drawable/topic_new_topic_selector"
             android:button="@color/transparent"
-            android:background="@drawable/topic_new_topic_selector" />
+            android:checked="true" />
 
         <RadioButton
             android:id="@+id/topic_new_reply"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="@color/transparent"
-            android:background="@drawable/topic_new_reply_selector" />
+            android:background="@drawable/topic_new_reply_selector"
+            android:button="@color/transparent" />
 
         <RadioButton
             android:id="@+id/topic_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="@color/transparent"
-            android:background="@drawable/topic_header_selector" />
+            android:background="@drawable/topic_header_selector"
+            android:button="@color/transparent" />
 
         <RadioButton
             android:id="@+id/topic_recommand"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="@color/transparent"
-            android:background="@drawable/topic_recommand_selector" />
+            android:background="@drawable/topic_recommand_selector"
+            android:button="@color/transparent" />
     </RadioGroup>
 
     <RelativeLayout
@@ -84,55 +85,60 @@
         android:background="@drawable/bg_tab" >
 
         <Button
+            android:id="@+id/topic_arrow_left"
             android:layout_width="70dip"
             android:layout_height="40dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dip"
-            android:id="@+id/topic_arrow_left"
+            android:background="@drawable/topic_arrow_left_selector"
             android:text="@string/topic_page_pre"
-            android:textColor="@color/text_color"
-            android:background="@drawable/topic_arrow_left_selector" >
+            android:textColor="@color/text_color" >
         </Button>
+
         <Button
+            android:id="@+id/topic_arrow_right"
             android:layout_width="70dip"
             android:layout_height="40dip"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dip"
-            android:layout_alignParentRight="true"
-            android:id="@+id/topic_arrow_right"
-            android:textColor="@color/text_color"
+            android:background="@drawable/topic_arrow_right_selector"
             android:text="@string/topic_page_next"
-            android:background="@drawable/topic_arrow_right_selector" >
+            android:textColor="@color/text_color" >
         </Button>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:id="@+id/topic_page"
-            android:text="1"
-            />
+            android:layout_width="100dip"
+            android:gravity="center"
+            android:background="@drawable/main_board_bg1_select_style"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="1" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginTop="100dip"
-        >
-	<ProgressBar
-	    android:layout_gravity="center_horizontal"
-	    android:id="@+id/topic_progress"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    style="@android:style/Widget.ProgressBar.Small"
-	    />
-    <ListView
-        android:id="@+id/topic_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="50dip"
-        android:background="@color/transparent"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/transparent"
-        android:listSelector="@color/transparent" />
-</LinearLayout>
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/topic_progress"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+            android:id="@+id/topic_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dip"
+            android:background="@color/transparent"
+            android:cacheColorHint="#00000000"
+            android:divider="@color/transparent"
+            android:listSelector="@color/transparent" />
+    </LinearLayout>
+
 </RelativeLayout>

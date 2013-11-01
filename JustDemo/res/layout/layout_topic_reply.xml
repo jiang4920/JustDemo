@@ -62,9 +62,11 @@
             android:background="@drawable/topic_arrow_right_selector" >
         </Button>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:layout_width="100dip"
+            android:gravity="center"
+            android:background="@drawable/main_board_bg1_select_style"
             android:id="@+id/topic_reply_page"
             android:text="1"
             />

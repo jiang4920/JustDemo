@@ -60,6 +60,12 @@ public class PostActivity extends Activity implements OnClickListener {
     private PostAttachmentEntry attachment;
     PostData postData;
 
+    private String mAction;
+
+    private String mFid;
+    private String mTid;
+    private String mPid;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +77,21 @@ public class PostActivity extends Activity implements OnClickListener {
         attachmentBt = (Button) findViewById(R.id.post_attachment);
         sendBt.setOnClickListener(this);
         attachmentBt.setOnClickListener(this);
-
+        mAction = this.getIntent().getStringExtra("action");
+        mFid = this.getIntent().getStringExtra("fid");
+        mTid = this.getIntent().getStringExtra("tid");
+        mPid = this.getIntent().getStringExtra("pid");
+        if(isNewPost()){
+            this.findViewById(R.id.post_title_text).setVisibility(View.VISIBLE);
+            subjectEt.setVisibility(View.VISIBLE);
+        }else{
+            this.findViewById(R.id.post_title_text).setVisibility(View.GONE);
+            subjectEt.setVisibility(View.GONE);
+        }
+    }
+    
+    private boolean isNewPost(){
+        return mAction != null && mAction.equals("new");
     }
 
     @Override
@@ -96,26 +116,29 @@ public class PostActivity extends Activity implements OnClickListener {
                     Toast.LENGTH_SHORT).show();
             return;
         }
+        String content = contentEt.getText().toString().trim();
+        String subject = subjectEt.getText().toString().trim();
         final ProgressDialog dialog = ProgressDialog.show(this, null,
                 this.getString(R.string.progress_sending));
         if(attachment!= null){
-            attachment.setFid(this.getIntent().getStringExtra("fid"));
+            attachment.setFid(mFid);
             postData.setAttachment(attachment);
         }
-        postData.setAction(this.getIntent().getStringExtra("action"));
-        postData.setFid(this.getIntent().getStringExtra("fid"));
-        postData.setTid(this.getIntent().getStringExtra("tid"));
-        postData.setPid(this.getIntent().getStringExtra("pid"));
-        postData.setPost_subject(subjectEt.getText().toString().trim());
-        String content = contentEt.getText().toString().trim();
-        postData.setPost_content(content);
-        String pid = this.getIntent().getStringExtra("pid");
-        if(pid!=null || pid.length()>0){
+        postData.setAction(mAction);
+        if(isNewPost()){
+            postData.setFid(mFid);
+        }else{
             ReplyData replyData = (ReplyData)this.getIntent().getSerializableExtra("ReplyData");
-            if(replyData != null){
-                postData.setPost_content(formatReplyContent(replyData, content));
+            postData.setFid(mFid);
+            postData.setTid(mTid);
+            postData.setPid(mPid);
+            if(replyData!= null){
+                content = formatReplyContent(replyData, content);
             }
         }
+        postData.setPost_subject(subject);
+        postData.setPost_content(content);
+        
         PostTask task = new PostTask(this, new IDataLoadedListener() {
 
             @Override
@@ -124,7 +147,8 @@ public class PostActivity extends Activity implements OnClickListener {
                 Toast.makeText(PostActivity.this,
                         PostActivity.this.getString(R.string.progress_success),
                         Toast.LENGTH_SHORT).show();
-                PostActivity.this.finishActivity(200);
+                PostActivity.this.setResult(200);
+                PostActivity.this.finish();
             }
 
             @Override
@@ -144,7 +168,7 @@ public class PostActivity extends Activity implements OnClickListener {
         String REPLACE_PID = ""+replyData.getPid();
         String REPLACE_TID = ""+replyData.getTid();
         String REPLACE_LOU = ""+replyData.getLou();
-        String REPLACE_POSTER_NAME = ""+replyData.getAuthorid();
+        String REPLACE_POSTER_NAME = ""+replyData.getAuthor();
         String REPLACE_POST_TIME = ""+replyData.getPostdate();
         FORMAT = FORMAT.replace("PID", REPLACE_PID);
         FORMAT = FORMAT.replace("TID", REPLACE_TID);
@@ -160,6 +184,10 @@ public class PostActivity extends Activity implements OnClickListener {
      * @return
      */
     private boolean isTopicFormatOk() {
+        
+        if(!isNewPost()){
+            return contentEt.getText().toString().trim().length() >= 4;
+        }
         return subjectEt.getText().toString().trim().length() >= 4
                 && contentEt.getText().toString().trim().length() >= 4;
     }

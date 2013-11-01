@@ -73,8 +73,10 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
             }
             Response resp = domUtil.parseXml(new UserResponse(),
                     httpResponse.getEntity().getContent());
-            UserResponse userRsp = (UserResponse) resp;
-            mCookie = getCookie(userRsp.uid);
+            if(resp instanceof UserResponse){
+                UserResponse userRsp = (UserResponse) resp;
+                mCookie = getCookie(userRsp.uid);
+            }
             return resp;
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block

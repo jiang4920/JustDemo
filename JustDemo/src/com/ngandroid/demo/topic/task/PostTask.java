@@ -84,6 +84,7 @@ public class PostTask extends AsyncTask<PostData, Integer, Integer> {
         try {
             SAXReader reader = new SAXReader();
             Document doc = reader.read(input);
+            Log.v(TAG, "initAttachment:"+doc.asXML());
             postData.setAttachments(doc.selectSingleNode("root/attachments")
                     .getText());
             postData.setAttachments_check(doc.selectSingleNode(
@@ -210,8 +211,10 @@ public class PostTask extends AsyncTask<PostData, Integer, Integer> {
      * @return
      */
     public String getAttachUrl() {
-        HttpGet httpGet = new HttpGet(PostAttachmentEntry.URL_POST + "fid="
-                + mPostData.getAttachment().getFid() + "&lite=xml");
+        String url = PostAttachmentEntry.URL_POST + "fid="
+                + mPostData.getAttachment().getFid() + "&lite=xml";
+        Log.v(TAG, "attach url:"+url);
+        HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("Content-Type", "application/x-www-form-urlencoded");
         httpGet.setHeader("User-Agent", HttpUtil.USER_AGENT);
         httpGet.setHeader("Accept-Charset", "GBK");
@@ -227,8 +230,8 @@ public class PostTask extends AsyncTask<PostData, Integer, Integer> {
             if (urlNode == null) {
                 return null;
             }
-            String url = urlNode.getText();
-            return url;
+            String atUrl = urlNode.getText();
+            return atUrl;
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -260,6 +263,9 @@ public class PostTask extends AsyncTask<PostData, Integer, Integer> {
             httpPost.setHeader("User-Agent", HttpUtil.USER_AGENT);
             httpPost.setHeader("Accept-Charset", "GBK");
             httpPost.setHeader("Cookie", Configs.getCookie(mContext));
+            for(NameValuePair p:params){
+                Log.v(TAG, "params:"+p.getName()+" "+p.getValue());
+            }
             httpPost.setEntity(new UrlEncodedFormEntity(params, "GBK"));
             HttpResponse httpResponse = new DefaultHttpClient()
                     .execute(httpPost);

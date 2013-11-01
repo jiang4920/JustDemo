@@ -5,6 +5,7 @@
  */
 package com.ngandroid.demo.content.plate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -66,6 +67,7 @@ public class PlateGroup extends ArrayList<Plate> implements OnItemClickListener 
 		Intent intent = new Intent();
 		intent.setClass(mContext, TopicActivity.class);
 		intent.putExtra("fid", ""+adapter.getItem(arg2).fid);
+		intent.putExtra("plate", adapter.getItem(arg2).name);
 		mContext.startActivity(intent);
 	}
 }

@@ -8,9 +8,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.task.PlateTask;
+import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.widget.MenuItemView;
 import com.ngandroid.demo.widget.MyAnimations;
 import com.ngandroid.demo.widget.OnItemClickListener;
@@ -26,13 +29,28 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 	
 	LinearLayout plateLayout;
 	
+	private ProgressBar progressBar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_plate);
 		plateLayout = (LinearLayout)findViewById(R.id.plate_parent);
+		progressBar = (ProgressBar)findViewById(R.id.plate_progress);
 		initMenuGroup();
-		new PlateTask(this, plateLayout).execute();
+		new PlateTask(this, plateLayout, new IDataLoadedListener() {
+            
+            @Override
+            public void onPostFinished(Object obj) {
+                progressBar.setVisibility(View.GONE);
+            }
+            
+            @Override
+            public void onPostError(Integer status) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(PlateActivity.this, "登陆失败,请检查网络！", Toast.LENGTH_SHORT).show();
+            }
+        }).execute();
 	}
 
 	public void initMenuGroup(){

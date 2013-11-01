@@ -5,6 +5,7 @@ import java.io.Serializable;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.ReplyListData;
 import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.task.TopicReadTask;
+import com.ngandroid.demo.util.PageUtil;
 
 public class TopicReplyActivity extends Activity implements OnClickListener {
 	private static final String TAG = "JustDemo TopicReplyActivity.java";
@@ -23,6 +25,10 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 	ProgressBar progressBar;
 	ReplyListData mReplyListData = new ReplyListData();;
 	TopicData mTopicData;
+	
+	/** 当前页数，初始第一页*/
+	private int mCurPage = 1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,12 +42,14 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
         
         findViewById(R.id.topic_reply_back).setOnClickListener(this);
         findViewById(R.id.topic_reply_post).setOnClickListener(this);
-		refresh();
+        findViewById(R.id.topic_reply_arrow_left).setOnClickListener(this);
+        findViewById(R.id.topic_reply_arrow_right).setOnClickListener(this);
+		refresh(mCurPage);
 	}
 	
 	
 	private ReplyListAdapter mReplyListAdapter;
-	private void refresh(){
+	private void refresh(int page){
 		new TopicReadTask(mTopicData, this, new IDataLoadedListener() {
 
 
@@ -58,7 +66,7 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 			public void onPostError(Integer status) {
 			    progressBar.setVisibility(View.GONE);
 			}
-		}).execute("1");
+		}).execute(""+page);
 	}
 	
     @Override
@@ -72,7 +80,14 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
             intent.setClass(this, PostActivity.class);
             intent.putExtra("action", "reply");
             intent.putExtra("tid", ""+mTopicData.getTid());
+            intent.putExtra("fid", ""+mTopicData.getFid());
             this.startActivityForResult(intent, 200);
+            break;
+        case R.id.topic_reply_arrow_left:
+            refresh(PageUtil.prePage(mCurPage));
+            break;
+        case R.id.topic_reply_arrow_right:
+            refresh(PageUtil.nextPage(mCurPage, mReplyListData.get__R__ROWS()));
             break;
         }
     }
@@ -81,7 +96,8 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==200&& resultCode ==200){
-            refresh();
+            refresh(mCurPage);
+            Log.v(TAG, "topicreply refresh");
         }
     }
 	
