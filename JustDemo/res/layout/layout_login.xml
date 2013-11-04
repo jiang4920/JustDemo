@@ -31,7 +31,7 @@
     <RelativeLayout
         android:id="@+id/login_center_parent"
         android:layout_width="match_parent"
-        android:layout_height="210dip"
+        android:layout_height="220dip"
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
         android:layout_marginTop="20dip"
@@ -120,9 +120,11 @@
         <Button
             android:id="@+id/login_bt_login"
             android:layout_width="match_parent"
-            android:layout_height="30dip"
-            android:layout_alignLeft="@+id/login_cb_keep_online"
+            android:layout_height="35dip"
+            android:layout_alignLeft="@id/login_cb_keep_online"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="5dip"
             android:background="@drawable/but_login_selector" />
     </RelativeLayout>
 

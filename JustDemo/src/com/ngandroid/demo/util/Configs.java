@@ -22,6 +22,9 @@ public class Configs {
 	}
 	
 	private static String mCookie = "";
+	public static void resetCookie(Context context){
+	    mCookie = UserResponse.getUser(context).cookie;
+	}
 	public static String getCookie(Context context){
 	    if(mCookie == null||mCookie.length()==0){
 	        mCookie = UserResponse.getUser(context).cookie;

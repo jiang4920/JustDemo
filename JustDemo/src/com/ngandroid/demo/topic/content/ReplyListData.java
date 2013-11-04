@@ -1,5 +1,6 @@
 package com.ngandroid.demo.topic.content;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ReplyListData {
@@ -11,7 +12,8 @@ public class ReplyListData {
 	private int __R__ROWS_PAGE; // 每页的帖子数
 	private long time; // 当前时间
 
-	public Map<String, UserInfoData> get__U() {
+	
+    public Map<String, UserInfoData> get__U() {
 		return __U;
 	}
 

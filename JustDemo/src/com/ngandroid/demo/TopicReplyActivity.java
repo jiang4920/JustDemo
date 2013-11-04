@@ -1,17 +1,19 @@
 package com.ngandroid.demo;
 
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ngandroid.demo.adapter.ReplyListAdapter;
+import com.ngandroid.demo.content.TopicFavorEntity;
+import com.ngandroid.demo.task.TopicFavorTask;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.ReplyListData;
 import com.ngandroid.demo.topic.content.TopicData;
@@ -26,6 +28,8 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 	ReplyListData mReplyListData = new ReplyListData();;
 	TopicData mTopicData;
 	
+	LinearLayout mMoreLayout;
+	
 	/** 当前页数，初始第一页*/
 	private int mCurPage = 1;
 	
@@ -35,13 +39,16 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.layout_topic_reply);
 		mReplyListView = (ListView)findViewById(R.id.topic_reply_list);
 		progressBar = (ProgressBar)findViewById(R.id.topic_reply_progress);
+		mMoreLayout = (LinearLayout)findViewById(R.id.topic_reply_more_layout);
         mReplyListAdapter = new ReplyListAdapter(TopicReplyActivity.this,
                 mReplyListData);
         mReplyListView.setAdapter(mReplyListAdapter);
         mTopicData = (TopicData) this.getIntent().getSerializableExtra("topic");
         
         findViewById(R.id.topic_reply_back).setOnClickListener(this);
+        findViewById(R.id.topic_reply_more).setOnClickListener(this);
         findViewById(R.id.topic_reply_post).setOnClickListener(this);
+        findViewById(R.id.topic_reply_favor).setOnClickListener(this);
         findViewById(R.id.topic_reply_arrow_left).setOnClickListener(this);
         findViewById(R.id.topic_reply_arrow_right).setOnClickListener(this);
 		refresh(mCurPage);
@@ -82,12 +89,34 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
             intent.putExtra("tid", ""+mTopicData.getTid());
             intent.putExtra("fid", ""+mTopicData.getFid());
             this.startActivityForResult(intent, 200);
+            mMoreLayout.setVisibility(View.GONE);
             break;
         case R.id.topic_reply_arrow_left:
             refresh(PageUtil.prePage(mCurPage));
             break;
         case R.id.topic_reply_arrow_right:
             refresh(PageUtil.nextPage(mCurPage, mReplyListData.get__R__ROWS()));
+            break;
+        case R.id.topic_reply_more:
+            mMoreLayout.setVisibility(mMoreLayout.getVisibility()==View.GONE?View.VISIBLE:View.GONE);
+            break;
+        case R.id.topic_reply_favor:
+            mMoreLayout.setVisibility(View.GONE);
+            TopicFavorEntity entity = new TopicFavorEntity();
+            entity.setAction("add");
+            entity.setTid(""+mTopicData.getTid());
+            new TopicFavorTask(this, entity, new IDataLoadedListener() {
+                
+                @Override
+                public void onPostFinished(Object obj) {
+                    Toast.makeText(TopicReplyActivity.this, R.string.progress_success, Toast.LENGTH_SHORT).show();
+                }
+                
+                @Override
+                public void onPostError(Integer status) {
+                    Toast.makeText(TopicReplyActivity.this, R.string.progress_error, Toast.LENGTH_SHORT).show();
+                }
+            }).execute();
             break;
         }
     }

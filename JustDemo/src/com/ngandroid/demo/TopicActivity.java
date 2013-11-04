@@ -124,9 +124,11 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 			refresh();
 			break;
 		case R.id.topic_arrow_right:
-			Log.v(TAG, "data.getTopicPageCount()："+data.getTopicPageCount());
-			mCurPageIndex = PageUtil.nextPage(mCurPageIndex, data.getTopicPageCount());
-			refresh();
+		    if(data != null){
+    			Log.v(TAG, "data.getTopicPageCount()："+data.getTopicPageCount());
+    			mCurPageIndex = PageUtil.nextPage(mCurPageIndex, data.getTopicPageCount());
+    			refresh();
+		    }
 			break;
 		case R.id.topic_post:
 		    Intent intent = new Intent();

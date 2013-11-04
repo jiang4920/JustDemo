@@ -65,7 +65,7 @@ public class PostActivity extends Activity implements OnClickListener {
     private String mFid;
     private String mTid;
     private String mPid;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,16 +81,16 @@ public class PostActivity extends Activity implements OnClickListener {
         mFid = this.getIntent().getStringExtra("fid");
         mTid = this.getIntent().getStringExtra("tid");
         mPid = this.getIntent().getStringExtra("pid");
-        if(isNewPost()){
+        if (isNewPost()) {
             this.findViewById(R.id.post_title_text).setVisibility(View.VISIBLE);
             subjectEt.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             this.findViewById(R.id.post_title_text).setVisibility(View.GONE);
             subjectEt.setVisibility(View.GONE);
         }
     }
-    
-    private boolean isNewPost(){
+
+    private boolean isNewPost() {
         return mAction != null && mAction.equals("new");
     }
 
@@ -120,25 +120,26 @@ public class PostActivity extends Activity implements OnClickListener {
         String subject = subjectEt.getText().toString().trim();
         final ProgressDialog dialog = ProgressDialog.show(this, null,
                 this.getString(R.string.progress_sending));
-        if(attachment!= null){
+        if (attachment != null) {
             attachment.setFid(mFid);
             postData.setAttachment(attachment);
         }
         postData.setAction(mAction);
-        if(isNewPost()){
+        if (isNewPost()) {
             postData.setFid(mFid);
-        }else{
-            ReplyData replyData = (ReplyData)this.getIntent().getSerializableExtra("ReplyData");
+        } else {
+            ReplyData replyData = (ReplyData) this.getIntent()
+                    .getSerializableExtra("ReplyData");
             postData.setFid(mFid);
             postData.setTid(mTid);
             postData.setPid(mPid);
-            if(replyData!= null){
+            if (replyData != null) {
                 content = formatReplyContent(replyData, content);
             }
         }
         postData.setPost_subject(subject);
         postData.setPost_content(content);
-        
+
         PostTask task = new PostTask(this, new IDataLoadedListener() {
 
             @Override
@@ -162,20 +163,20 @@ public class PostActivity extends Activity implements OnClickListener {
 
         task.execute(postData);
     }
-    
-    public String formatReplyContent(ReplyData replyData, String content){
+
+    public String formatReplyContent(ReplyData replyData, String content) {
         String FORMAT = "[b]Reply to [pid=PID,TID,LOU]Reply[/pid] Post by POSTER_NAME (POST_TIME)[/b]";
-        String REPLACE_PID = ""+replyData.getPid();
-        String REPLACE_TID = ""+replyData.getTid();
-        String REPLACE_LOU = ""+replyData.getLou();
-        String REPLACE_POSTER_NAME = ""+replyData.getAuthor();
-        String REPLACE_POST_TIME = ""+replyData.getPostdate();
+        String REPLACE_PID = "" + replyData.getPid();
+        String REPLACE_TID = "" + replyData.getTid();
+        String REPLACE_LOU = "" + replyData.getLou();
+        String REPLACE_POSTER_NAME = "" + replyData.getAuthor();
+        String REPLACE_POST_TIME = "" + replyData.getPostdate();
         FORMAT = FORMAT.replace("PID", REPLACE_PID);
         FORMAT = FORMAT.replace("TID", REPLACE_TID);
         FORMAT = FORMAT.replace("LOU", REPLACE_LOU);
         FORMAT = FORMAT.replace("POSTER_NAME", REPLACE_POSTER_NAME);
         FORMAT = FORMAT.replace("POST_TIME", REPLACE_POST_TIME);
-        return FORMAT+"\n"+content;
+        return FORMAT + "\n" + content;
     }
 
     /**
@@ -184,8 +185,8 @@ public class PostActivity extends Activity implements OnClickListener {
      * @return
      */
     private boolean isTopicFormatOk() {
-        
-        if(!isNewPost()){
+
+        if (!isNewPost()) {
             return contentEt.getText().toString().trim().length() >= 4;
         }
         return subjectEt.getText().toString().trim().length() >= 4
@@ -195,17 +196,27 @@ public class PostActivity extends Activity implements OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
                 && null != data) {
+            Log.v(TAG, "" + data.toString());
             Uri selectedImage = data.getData();
+            Log.v(TAG, "uri:" + selectedImage.toString());
+            String url = selectedImage.toString();
+            String picturePath = null;
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                picturePath = cursor.getString(columnIndex);
+                cursor.close();
+            } else if (url.startsWith("file:///")) {
+                picturePath = url;
+            }else{
+                Toast.makeText(this, R.string.progress_error, Toast.LENGTH_SHORT).show();
+                return;
+            }
             Log.v(TAG, "picturePath:" + picturePath);
             File file = new File(picturePath);
             if (file.exists()) {

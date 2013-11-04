@@ -207,7 +207,6 @@ public class TopicReadTask extends AsyncTask<String, Integer, Integer> {
         mReplyListData.set__U(userMap);
 
         JSONObject __R = dataObject.getJSONObject("__R");
-
         Map<String, ReplyData> replyDataMap = new HashMap<String, ReplyData>();
         for (String key : __R.keySet()) {
             ReplyData replyData = __R.getObject(key, ReplyData.class);
@@ -248,6 +247,7 @@ public class TopicReadTask extends AsyncTask<String, Integer, Integer> {
             }
             replyDataMap.put(key, replyData);
         }
+        
         mReplyListData.set__R(replyDataMap);
 
         mReplyListData.set__R__ROWS(dataObject.getIntValue("__R__ROWS"));

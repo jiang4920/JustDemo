@@ -8,16 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:background="@drawable/guide_head" >
-		<Button
+
+        <ImageView
+            android:id="@+id/topic_reply_more"
             android:layout_width="70dip"
             android:layout_height="40dip"
-            android:layout_centerVertical="true"
-            android:id="@+id/topic_reply_post"
-            android:textColor="@color/text_color"
             android:layout_alignParentRight="true"
-            android:text="@string/topic_reply_post"
-            android:background="@drawable/bt_selector" 
-            />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/icon_more_selector" />
+
         <TextView
             android:id="@+id/topic_reply_head_title"
             android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
             android:layout_centerInParent="true"
             android:text="@string/namespace"
             android:textColor="@color/text_title_color" />
+
         <ImageView
             android:id="@+id/topic_reply_back"
             android:layout_width="wrap_content"
@@ -41,35 +42,36 @@
         android:background="@drawable/bg_tab" >
 
         <Button
+            android:id="@+id/topic_reply_arrow_left"
             android:layout_width="70dip"
             android:layout_height="40dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dip"
-            android:id="@+id/topic_reply_arrow_left"
+            android:background="@drawable/topic_arrow_left_selector"
             android:text="@string/topic_page_pre"
-            android:textColor="@color/text_color"
-            android:background="@drawable/topic_arrow_left_selector" >
+            android:textColor="@color/text_color" >
         </Button>
+
         <Button
+            android:id="@+id/topic_reply_arrow_right"
             android:layout_width="70dip"
             android:layout_height="40dip"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dip"
-            android:layout_alignParentRight="true"
-            android:id="@+id/topic_reply_arrow_right"
-            android:textColor="@color/text_color"
+            android:background="@drawable/topic_arrow_right_selector"
             android:text="@string/topic_page_next"
-            android:background="@drawable/topic_arrow_right_selector" >
+            android:textColor="@color/text_color" >
         </Button>
+
         <TextView
+            android:id="@+id/topic_reply_page"
+            android:layout_width="100dip"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_width="100dip"
-            android:gravity="center"
             android:background="@drawable/main_board_bg1_select_style"
-            android:id="@+id/topic_reply_page"
-            android:text="1"
-            />
+            android:gravity="center"
+            android:text="1" />
     </RelativeLayout>
 
     <LinearLayout
@@ -94,6 +96,31 @@
             android:cacheColorHint="#00000000"
             android:divider="@color/transparent"
             android:listSelector="@color/transparent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/topic_reply_more_layout"
+        android:layout_width="70dip"
+        android:layout_height="140dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/bg_more"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/topic_reply_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_reply" />
+
+        <ImageView
+            android:id="@+id/topic_reply_favor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_favor" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -18,7 +18,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *         create at 2013-8-8 下午1:14:41
  */
 public class SQLiteUtil extends SQLiteOpenHelper {
-    private static int VERSION = 10;
+    private static int VERSION = 11;
     private static String NAME = "nga.db";
     private static final String TAG = "JustDemo SQLiteUtil";
 
@@ -27,7 +27,7 @@ public class SQLiteUtil extends SQLiteOpenHelper {
 
     private String SQL_CREATE_TABLE_USER = "create table if not exists "
             + TABLE_USER
-            + " (uid INTEGER primary key not null, username TEXT not null,nickname TEXT not null, email TEXT not null, password TEXT,expiretime INTEGER, loginTime INTEGER not null, keepLogin INTEGER default(0), cookie TEXT)";
+            + " (_id INTEGER primary key autoincrement ,uid INTEGER, username TEXT not null,nickname TEXT not null, email TEXT not null, password TEXT,expiretime INTEGER, loginTime INTEGER not null, keepLogin INTEGER default(0), cookie TEXT)";
 
     private String SQL_CREATE_TABLE_TOPIC = "create table if not exists "
             + TABLE_TOPIC_HISTORY
@@ -70,37 +70,12 @@ public class SQLiteUtil extends SQLiteOpenHelper {
         this.getWritableDatabase();
     }
 
-    /**
-     * <p>
-     * Title: onCreate
-     * </p>
-     * <p>
-     * Description:
-     * </p>
-     * 
-     * @param db
-     * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
-     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE_USER);
         db.execSQL(SQL_CREATE_TABLE_TOPIC);
     }
 
-    /**
-     * <p>
-     * Title: onUpgrade
-     * </p>
-     * <p>
-     * Description:
-     * </p>
-     * 
-     * @param db
-     * @param oldVersion
-     * @param newVersion
-     * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase,
-     *      int, int)
-     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {

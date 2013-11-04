@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,8 @@ import com.ngandroid.demo.content.ErrorResponse;
 import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.content.Response;
 import com.ngandroid.demo.content.UserResponse;
+import com.ngandroid.demo.topic.IDataLoadedListener;
+import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 import com.ngandroid.demo.util.SQLiteUtil;
 import com.ngandroid.demo.util.XMLDomUtil;
@@ -31,12 +34,14 @@ import com.ngandroid.demo.util.XMLDomUtil;
 public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
 
     private static final String TAG = "LoginTask";
-    private LoginActivity mContext;
+    private Context mContext;
     private String mCookie;
+    private int mKeepLogin;
     ProgressDialog pd;
-
-    public LoginTask(LoginActivity context) {
+    IDataLoadedListener mDataLoadedListener;
+    public LoginTask(Context context, IDataLoadedListener dataLoadedListener) {
         mContext = context;
+        mDataLoadedListener = dataLoadedListener;
         pd = new ProgressDialog(mContext);
     }
 
@@ -47,6 +52,7 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
     protected Response doInBackground(LoginEntry... params) {
         mPasswd = params[0].getPassword();
         mUsername = params[0].getEmail();
+        mKeepLogin = params[0].getKeepLogin();
         // 显示登陆的进度条
         this.publishProgress(mContext.getResources().getString(
                 R.string.login_waiting));
@@ -79,10 +85,8 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
             }
             return resp;
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -126,24 +130,17 @@ public class LoginTask extends AsyncTask<LoginEntry, String, Response> {
             Toast.makeText(mContext, reason + "登陆失败！", Toast.LENGTH_SHORT)
                     .show();
         } else {
+            mDataLoadedListener.onPostFinished(result);
             UserResponse userRsp = (UserResponse) result;
-            userRsp.keepLogin = mContext.isKeepLogin();
+            userRsp.keepLogin = mKeepLogin;
             userRsp.password = mPasswd;
             userRsp.cookie = mCookie;
             Log.v(TAG, "uid:" + userRsp.uid + " email:" + userRsp.email
                     + " expiretime:" + userRsp.expiretime + " nickname:"
                     + userRsp.nickname + " cookie:" + userRsp.cookie);
-            mContext.finish();
-            startPlateActivity(mContext);
-            Toast.makeText(mContext, userRsp.nickname + "登陆成功！",
-                    Toast.LENGTH_SHORT).show();
             userRsp.addNewUser(SQLiteUtil.getInstance(mContext), mUsername);
+            Configs.resetCookie(mContext);
         }
     }
 
-    public void startPlateActivity(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context, GuideActivity.class);
-        context.startActivity(intent);
-    }
 }

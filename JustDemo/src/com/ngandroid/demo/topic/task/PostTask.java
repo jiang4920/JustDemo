@@ -33,7 +33,6 @@ import com.ngandroid.demo.content.PostEntry;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.topic.content.PostAttachmentEntry;
 import com.ngandroid.demo.topic.content.PostData;
-import com.ngandroid.demo.topic.content.TopicListData;
 import com.ngandroid.demo.util.Configs;
 import com.ngandroid.demo.util.HttpUtil;
 

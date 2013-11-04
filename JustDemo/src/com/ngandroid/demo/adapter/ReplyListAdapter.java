@@ -3,6 +3,7 @@ package com.ngandroid.demo.adapter;
 import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +48,8 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class ReplyListAdapter extends BaseAdapter {
 
-	private TopicReplyActivity mContext = null;
+	private static final String TAG = "ReplyListAdapter";
+    private TopicReplyActivity mContext = null;
 	private LayoutInflater mInflater = null;
 	private ReplyListData mReplyListData = null;
 	private ImageLoader mImageLoader = ImageLoader.getInstance();
@@ -120,6 +124,15 @@ public class ReplyListAdapter extends BaseAdapter {
 				: R.color.shit2_2);
 		Map<String, ReplyData> replyList = mReplyListData.get__R();
 		Map<String, UserInfoData> userInfoList = mReplyListData.get__U();
+		Log.v(TAG, "position:"+position);
+		ArrayList<Integer> keyList = new ArrayList<Integer>();
+		for(String key : replyList.keySet()){
+		    int k = Integer.parseInt(key);
+		    for(int i = 0; i<keyList.size(); i++){
+		        
+		    }
+		}
+		
 		ReplyData replyData = replyList.get(position + "");
 		int authorId = replyData.getAuthorid();
 		UserInfoData userInfoData = userInfoList.get(authorId + "");

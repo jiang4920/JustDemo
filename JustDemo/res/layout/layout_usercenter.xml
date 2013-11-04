@@ -90,6 +90,7 @@
         android:layout_toLeftOf="@id/usercenter_menu"
         android:id="@+id/usercenter_layout"
         >
+        <include layout="@layout/usercenter_account"/>
         <include layout="@layout/usercenter_message"/>
         <include layout="@layout/usercenter_history"/>
         <include layout="@layout/usercenter_favorite"/>

@@ -13,6 +13,8 @@ public class LoginEntry extends BaseEntry {
 	/** 密码*/
 	private String password;
 	
+	private int keepLogin;
+	
 	private int type;
 	
 	public static final int TYPE_LOGIN = 0;
@@ -21,7 +23,15 @@ public class LoginEntry extends BaseEntry {
 	public static final String EMAIL = "email";
 	public static final String PASSWORD = "password";
 	public static String uriAPI = "http://account.178.com/q_account.php?_act=client_login";
-	public String getEmail() {
+	
+	
+	public int getKeepLogin() {
+        return keepLogin;
+    }
+    public void setKeepLogin(int keepLogin) {
+        this.keepLogin = keepLogin;
+    }
+    public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
