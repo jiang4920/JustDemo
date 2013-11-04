@@ -57,6 +57,7 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 	
 	private ReplyListAdapter mReplyListAdapter;
 	private void refresh(int page){
+	    progressBar.setVisibility(View.VISIBLE);
 		new TopicReadTask(mTopicData, this, new IDataLoadedListener() {
 
 
@@ -66,11 +67,14 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 			    mReplyListAdapter.setReplyListData(mReplyListData);
 			    mReplyListAdapter.notifyDataSetChanged();
 			    mReplyListView.setSelection(0);
+			    mReplyListView.postInvalidate();
 				progressBar.setVisibility(View.GONE);
+				Log.v(TAG, "onPostFinished");
 			}
 
 			@Override
 			public void onPostError(Integer status) {
+			    Log.v(TAG, "error:"+status);
 			    progressBar.setVisibility(View.GONE);
 			}
 		}).execute(""+page);

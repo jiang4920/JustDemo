@@ -76,6 +76,7 @@ public class TopicReadTask extends AsyncTask<String, Integer, Integer> {
     @Override
     protected Integer doInBackground(String... params) {
         String page = params[0];
+        Log.v(TAG, "page:"+page);
         String url = NGAURL.URL_BASE + "/read.php?lite=js&noprefix&tid=" + mTopicData.getTid()
                 + "&_ff=" + mTopicData.getFid() + "&page=" + page;
         HttpGet httpGet = new HttpGet(url);

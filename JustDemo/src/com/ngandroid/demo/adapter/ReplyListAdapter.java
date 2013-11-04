@@ -5,6 +5,7 @@ import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +71,7 @@ public class ReplyListAdapter extends BaseAdapter {
 	}
 
 	public void setReplyListData(ReplyListData replyListData) {
+	    mViewCache.clear();
         this.mReplyListData = replyListData;
     }
 
@@ -96,6 +98,7 @@ public class ReplyListAdapter extends BaseAdapter {
 			cacheView = srf.get();
 		}
 		if (cacheView != null) {
+		    Log.v(TAG, "cacheView exist");
 			return cacheView;
 		}
 		ViewHolder holder = null;
@@ -128,22 +131,20 @@ public class ReplyListAdapter extends BaseAdapter {
 		ArrayList<Integer> keyList = new ArrayList<Integer>();
 		for(String key : replyList.keySet()){
 		    int k = Integer.parseInt(key);
-		    for(int i = 0; i<keyList.size(); i++){
-		        
-		    }
+		    keyList.add(k);
 		}
-		
-		ReplyData replyData = replyList.get(position + "");
+		Collections.sort(keyList);
+		ReplyData replyData = replyList.get(keyList.get(position) + "");
 		int authorId = replyData.getAuthorid();
 		UserInfoData userInfoData = userInfoList.get(authorId + "");
 		replyData.setAuthor(userInfoData.getUsername());
 		holder.tvUserName.setText(userInfoData.getUsername());
-		holder.tvReplyDate.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm",
-				Locale.getDefault()).format(new Date(replyData
-				.getPostdatetimestamp() * 1000)));
+		holder.tvReplyDate.setText(Utils.timeFormat(replyData
+                .getPostdatetimestamp(), mReplyListData.getTime()));
+
 
 		String content = replyData.getHtmlContent();
-
+		Log.v(TAG, "content:"+content);
 		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) {
 			holder.tvContent.setLongClickable(false);
 		}
@@ -184,7 +185,7 @@ public class ReplyListAdapter extends BaseAdapter {
 		public WebView tvContent;
 		public ImageView ivAvatar;
 		public ImageView replyIcon;
-		public int position;
+		public int position;//根据position将replydata数据传递到回复界面
 
 		public void setViewHolder(View convertView) {
 			this.tvUserName = (TextView) convertView

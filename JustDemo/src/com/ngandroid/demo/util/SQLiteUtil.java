@@ -18,7 +18,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *         create at 2013-8-8 下午1:14:41
  */
 public class SQLiteUtil extends SQLiteOpenHelper {
-    private static int VERSION = 11;
+    private static int VERSION = 12;
     private static String NAME = "nga.db";
     private static final String TAG = "JustDemo SQLiteUtil";
 
@@ -31,7 +31,7 @@ public class SQLiteUtil extends SQLiteOpenHelper {
 
     private String SQL_CREATE_TABLE_TOPIC = "create table if not exists "
             + TABLE_TOPIC_HISTORY
-            + " (tid INTEGER primary key not null, topic TEXT, content TEXT, page INTEGER, readtime INTEGER)";
+            + " (_id INTEGER primary key autoincrement,tid INTEGER, topic TEXT, content TEXT, page INTEGER, readtime INTEGER)";
 
     private String SQL_DELETE_TABLE = "drop table ";
 
@@ -81,8 +81,8 @@ public class SQLiteUtil extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             db.execSQL(SQL_DELETE_TABLE + TABLE_USER);
             db.execSQL(SQL_CREATE_TABLE_USER);
-//            db.execSQL(SQL_DELETE_TABLE + TABLE_TOPIC_HISTORY);
-//            db.execSQL(SQL_CREATE_TABLE_TOPIC);
+            db.execSQL(SQL_DELETE_TABLE + TABLE_TOPIC_HISTORY);
+            db.execSQL(SQL_CREATE_TABLE_TOPIC);
         }
     }
 }
