@@ -60,4 +60,8 @@ public class ReplyListData {
 	public void setTime(long time) {
 		this.time = time;
 	}
+	
+	public int getTopicPageCount(){
+        return __ROWS/__R__ROWS_PAGE+(__ROWS%__R__ROWS_PAGE==0?0:1);
+    }
 }

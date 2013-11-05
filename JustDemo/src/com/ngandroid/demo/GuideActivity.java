@@ -1,41 +1,42 @@
 package com.ngandroid.demo;
 
-import com.ngandroid.demo.topic.task.UpdateCookieTask;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+
+import com.ngandroid.demo.topic.task.UpdateCookieTask;
 
 public class GuideActivity extends Activity implements OnClickListener {
-	private static final String TAG = "JustDemo GuideActivity.java";
+    private static final String TAG = "JustDemo GuideActivity.java";
 
-	private ImageButton plate;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_guide);
-		plate = (ImageButton)findViewById(R.id.guide_plate);
-		findViewById(R.id.guide_user_center).setOnClickListener(this);
-		plate.setOnClickListener(this);
-		new UpdateCookieTask().execute();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_guide);
+        findViewById(R.id.guide_plate).setOnClickListener(this);
+        findViewById(R.id.guide_user_center).setOnClickListener(this);
+        findViewById(R.id.guide_settings).setOnClickListener(this);
+        new UpdateCookieTask().execute();
+    }
 
-	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent();
-		switch(v.getId()){
-		case R.id.guide_plate:
-			intent.setClass(this, PlateActivity.class);
-			break;
-		case R.id.guide_user_center:
-		    intent.setClass(this, UserCenterActivity.class);
-		    break;
-		}
-		this.startActivity(intent);
-	}
-	
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        switch (v.getId()) {
+        case R.id.guide_plate:
+            intent.setClass(this, PlateActivity.class);
+            break;
+        case R.id.guide_user_center:
+            intent.setClass(this, UserCenterActivity.class);
+            break;
+        case R.id.guide_settings:
+            intent.setClass(this, SettingsActivity.class);
+            break;
+
+        }
+        this.startActivity(intent);
+    }
+
 }

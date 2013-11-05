@@ -37,6 +37,7 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 		setContentView(R.layout.layout_plate);
 		plateLayout = (LinearLayout)findViewById(R.id.plate_parent);
 		progressBar = (ProgressBar)findViewById(R.id.plate_progress);
+		findViewById(R.id.plate_search).setOnClickListener(this);
 		initMenuGroup();
 		new PlateTask(this, plateLayout, new IDataLoadedListener() {
             
@@ -83,6 +84,9 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 			MyAnimations.getRotateAnimation(mMenuHandle, 0f, 270f, 300);
 			MyAnimations.startAnimations(this, mMenuGroup, 300);
 			break;
+		case R.id.plate_search:
+		    
+		    break;
 		}
 	}
 

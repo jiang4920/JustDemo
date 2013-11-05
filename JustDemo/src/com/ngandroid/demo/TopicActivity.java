@@ -104,6 +104,7 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 				} else {
 					mTopicListAdapter.refresh(data);
 				}
+				topicLv.smoothScrollToPosition(0);
 				Log.v(TAG, "mCurPageIndex:"+mCurPageIndex);
 				pageTv.setText(""+mCurPageIndex);
 				progressBar.setVisibility(View.GONE);

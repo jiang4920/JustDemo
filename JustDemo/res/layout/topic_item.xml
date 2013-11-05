@@ -70,6 +70,6 @@
         android:id="@+id/topiclist_item_click"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_board_bg1_select_style" />
+        android:background="@drawable/item_select_style_1" />
 
 </FrameLayout>

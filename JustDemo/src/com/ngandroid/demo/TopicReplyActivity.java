@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ngandroid.demo.adapter.ReplyListAdapter;
@@ -19,14 +20,18 @@ import com.ngandroid.demo.topic.content.ReplyListData;
 import com.ngandroid.demo.topic.content.TopicData;
 import com.ngandroid.demo.topic.task.TopicReadTask;
 import com.ngandroid.demo.util.PageUtil;
+import com.ngandroid.demo.widget.PageSelectDialog;
+import com.ngandroid.demo.widget.PageSelectDialog.OnSelectedListener;
 
 public class TopicReplyActivity extends Activity implements OnClickListener {
 	private static final String TAG = "JustDemo TopicReplyActivity.java";
 	ListView mReplyListView;
 
 	ProgressBar progressBar;
-	ReplyListData mReplyListData = new ReplyListData();;
+	ReplyListData mReplyListData;
 	TopicData mTopicData;
+	
+	TextView mPageTv;
 	
 	LinearLayout mMoreLayout;
 	
@@ -40,9 +45,9 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 		mReplyListView = (ListView)findViewById(R.id.topic_reply_list);
 		progressBar = (ProgressBar)findViewById(R.id.topic_reply_progress);
 		mMoreLayout = (LinearLayout)findViewById(R.id.topic_reply_more_layout);
-        mReplyListAdapter = new ReplyListAdapter(TopicReplyActivity.this,
-                mReplyListData);
-        mReplyListView.setAdapter(mReplyListAdapter);
+        mPageTv = (TextView)findViewById(R.id.topic_reply_page);
+        
+		
         mTopicData = (TopicData) this.getIntent().getSerializableExtra("topic");
         
         findViewById(R.id.topic_reply_back).setOnClickListener(this);
@@ -51,6 +56,7 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
         findViewById(R.id.topic_reply_favor).setOnClickListener(this);
         findViewById(R.id.topic_reply_arrow_left).setOnClickListener(this);
         findViewById(R.id.topic_reply_arrow_right).setOnClickListener(this);
+        mPageTv.setOnClickListener(this);
 		refresh(mCurPage);
 	}
 	
@@ -64,12 +70,17 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
 			@Override
 			public void onPostFinished(Object obj) {
 			    mReplyListData = (ReplyListData)obj;
+			    if(mReplyListAdapter== null){
+    			    mReplyListAdapter = new ReplyListAdapter(TopicReplyActivity.this,
+    		                mReplyListData);
+    		        mReplyListView.setAdapter(mReplyListAdapter);
+			    }
 			    mReplyListAdapter.setReplyListData(mReplyListData);
 			    mReplyListAdapter.notifyDataSetChanged();
-			    mReplyListView.setSelection(0);
-			    mReplyListView.postInvalidate();
+			    mReplyListView.smoothScrollToPosition(0);
 				progressBar.setVisibility(View.GONE);
 				Log.v(TAG, "onPostFinished");
+				mPageTv.setText(""+mCurPage);
 			}
 
 			@Override
@@ -96,10 +107,10 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
             mMoreLayout.setVisibility(View.GONE);
             break;
         case R.id.topic_reply_arrow_left:
-            refresh(PageUtil.prePage(mCurPage));
+            refresh(mCurPage = PageUtil.prePage(mCurPage));
             break;
         case R.id.topic_reply_arrow_right:
-            refresh(PageUtil.nextPage(mCurPage, mReplyListData.get__R__ROWS()));
+            refresh(mCurPage = PageUtil.nextPage(mCurPage, mReplyListData.get__R__ROWS()));
             break;
         case R.id.topic_reply_more:
             mMoreLayout.setVisibility(mMoreLayout.getVisibility()==View.GONE?View.VISIBLE:View.GONE);
@@ -121,6 +132,19 @@ public class TopicReplyActivity extends Activity implements OnClickListener {
                     Toast.makeText(TopicReplyActivity.this, R.string.progress_error, Toast.LENGTH_SHORT).show();
                 }
             }).execute();
+            break;
+        case R.id.topic_reply_page:
+            if(mReplyListData!= null){
+                PageSelectDialog.create(this, mReplyListData.getTopicPageCount(), new OnSelectedListener() {
+                    
+                    @Override
+                    public void onSelected(boolean isSelected, int page) {
+                        if(isSelected){
+                            refresh(mCurPage = page);
+                        }
+                    }
+                }).show();
+            }
             break;
         }
     }

@@ -125,6 +125,9 @@ public class UserCenterActivity extends Activity implements OnClickListener,
 
         mTopicFovLv = (ListView) findViewById(R.id.fav_topic_list);
         mTopicHistoryLv = (ListView) findViewById(R.id.history_topic_list);
+        
+        mTopicHistoryLv.setOnItemClickListener(historyListener);
+        
         mSMSLv = (ListView) findViewById(R.id.message_list);
         mSMSLv.setOnItemClickListener(smsItemClickListener);
         mTopicFovLv.setOnItemClickListener(this);
@@ -285,10 +288,12 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         case R.id.usercenter_menu_fav:
             showFavList();
             mTitleTv.setText(this.getResources().getString(R.string.favor));
+            mRightBt.setVisibility(View.GONE);
             break;
         case R.id.usercenter_menu_history:
             showHistoryList();
             mTitleTv.setText(this.getResources().getString(R.string.history));
+            mRightBt.setVisibility(View.GONE);
             break;
         case R.id.usercenter_menu_msg:
             showMessageList();
@@ -299,6 +304,7 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         case R.id.usercenter_menu_quite:
             showUserAccount();
             mTitleTv.setText(this.getResources().getString(R.string.quite));
+            mRightBt.setVisibility(View.GONE);
             break;
 
         }
@@ -329,6 +335,17 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         }).execute("1");
     }
 
+    
+    OnItemClickListener historyListener = new OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                long arg3) {
+            
+        }
+    };
+
+    
     public void showHistoryList() {
         new TopicHistoryTask(this, new IDataLoadedListener() {
 
@@ -462,6 +479,12 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         intent.setClass(this, TopicReplyActivity.class);
         intent.putExtra("topic", topic);
         this.startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCursor.close();
     }
 
 }

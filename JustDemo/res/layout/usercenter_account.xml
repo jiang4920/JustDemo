@@ -13,7 +13,7 @@
 	    android:layout_height="wrap_content"
 	    android:cacheColorHint="@color/transparent"
 	    android:id="@+id/usercenter_account_list"
-	    android:listSelector="@drawable/main_board_bg1_select_style"
+	    android:listSelector="@drawable/item_select_style_1"
 	    android:divider="@color/text_gray"
 	    android:dividerHeight="2px"
 	    android:background="@drawable/bg_user_list"

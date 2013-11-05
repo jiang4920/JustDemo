@@ -18,7 +18,7 @@
 	    android:id="@+id/plate_group_grid"
 	    android:numColumns="2"
 	    android:background="@color/transparent"
-	    android:listSelector="@drawable/main_board_bg1_select_style"
+	    android:listSelector="@drawable/item_select_style_1"
 	    android:stretchMode="columnWidth"
 	    />
 </LinearLayout>

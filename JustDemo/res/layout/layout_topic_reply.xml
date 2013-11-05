@@ -69,7 +69,7 @@
             android:layout_width="100dip"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:background="@drawable/main_board_bg1_select_style"
+            android:background="@drawable/item_select_style_1"
             android:gravity="center"
             android:text="1" />
     </RelativeLayout>

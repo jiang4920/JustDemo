@@ -15,6 +15,16 @@
             android:layout_centerInParent="true"
             android:text="@string/namespace"
             android:textColor="@color/text_title_color" />
+        <Button
+            android:layout_width="70dip"
+            android:layout_height="40dip"
+            android:layout_centerVertical="true"
+            android:id="@+id/plate_search"
+            android:textColor="@color/text_color"
+            android:text="@string/plate_search"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bt_selector" 
+            />
     </RelativeLayout>
 
 	<com.ngandroid.demo.widget.MenuItemView

@@ -21,10 +21,12 @@
     <string name="attach">附件</string>
     <string name="usercenter">用户中心</string>
     <string name="userinfo">个人信息</string>
+    <string name="settings">用户配置</string>
     <string name="favor">收藏</string>
     <string name="history">历史记录</string>
     <string name="message">短消息</string>
     <string name="quite">注销</string>
+    <string name="plate_search">搜索</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="jump_to_page">翻页(共<g id="part1">%1$s</g>页)</string>
@@ -39,9 +41,10 @@
     <string name="progress_success">操作成功！</string>
     <string name="toast_write_sms_error">格式不正确，收件人、标题、内容不能为空！</string>
     <string name="post_text_not_ok">格式不正确，标题和内容都不能少于4个字</string>
-    <string name="regist_protol"><a href="http://www.google.com">178游戏网站协议</a></string>
-	
-    
+    <string name="regist_protol"><a href="http://bbs.ngacn.cc/">178游戏网站协议</a></string>
+    <string name="settings_clear_cache">清除缓存(共<g id="part1">%1$s</g>MB)</string>
+    <string name="settings_visit_web"><a href="http://bbs.ngacn.cc/">访问178</a></string>
+    <string name="settings_about_us">关于我们</string>
     <string name="del_topic_favor">删除收藏？</string>
     <string name="topic_refresh">到头了，点击“上一页”刷新列表</string>
     <string name="request_timeout">网络超时</string>
@@ -50,4 +53,5 @@
     <string name="request_servererror">服务器错误</string>
     <string name="request_othererror">请求错误</string>
     <string name="request_forbiddenerror">没有权限访问</string>
+
 </resources>

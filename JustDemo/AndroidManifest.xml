@@ -29,6 +29,8 @@
         <activity android:name=".UserCenterActivity" />
         <activity android:name=".SMSReadActivity" />
         <activity android:name=".SMSWriteActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".TopicSearchActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" >

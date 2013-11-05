@@ -2,19 +2,13 @@ package com.ngandroid.demo.adapter;
 
 import java.io.Serializable;
 import java.lang.ref.SoftReference;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -60,7 +54,7 @@ public class ReplyListAdapter extends BaseAdapter {
 			.showImageForEmptyUri(R.drawable.nga_bg)
 			.displayer(new RoundedBitmapDisplayer(5)).build();
 
-	private final SparseArray<SoftReference<View>> mViewCache;
+	private SparseArray<SoftReference<View>> mViewCache;
 
 	public ReplyListAdapter(TopicReplyActivity context, ReplyListData replyListData) {
 		Configs.initImageLoader(context);
@@ -92,35 +86,34 @@ public class ReplyListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		SoftReference<View> srf = mViewCache.get(position);
-		View cacheView = null;
-		if (srf != null) {
-			cacheView = srf.get();
-		}
-		if (cacheView != null) {
-		    Log.v(TAG, "cacheView exist");
-			return cacheView;
-		}
+//		SoftReference<View> srf = mViewCache.get(position);
 		ViewHolder holder = null;
+//		View cacheView = null;
+//		if (srf != null) {
+//			cacheView = srf.get();
+//		}
+//		if (cacheView != null) {
+//		    holder = (ViewHolder) cacheView.getTag();
+//		    Log.v(TAG, "cacheView exist, position:"+position+" ["+holder.position+"]");
+//			return cacheView;
+//		}
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.item_replylist, null);
 			holder.setViewHolder(convertView);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
-			if (holder.position == position) {
-				return convertView;
-			}
 			holder.tvContent.stopLoading();
 			if (holder.tvContent.getHeight() > 300) {
-				mViewCache.put(holder.position, new SoftReference<View>(
-						convertView));
 				holder = new ViewHolder();
 				convertView = mInflater.inflate(R.layout.item_replylist, null);
+//				mViewCache.put(holder.position, new SoftReference<View>(
+//		                convertView));
+				Log.d(TAG, "put:"+position+" ["+holder.position+"]");
 				holder.setViewHolder(convertView);
 			}
 		}
-
+		
 		holder.position = position;
 
 		convertView.setBackgroundResource(position % 2 == 0 ? R.color.shit2_1
@@ -158,7 +151,7 @@ public class ReplyListAdapter extends BaseAdapter {
 		setting.setJavaScriptEnabled(false);
 		holder.tvContent.loadDataWithBaseURL(null, content, "text/html",
 				"utf-8", null);
-		// holder.tvContent.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//		 holder.tvContent.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 		holder.tvFloor.setText("#" + replyData.getLou());
 
