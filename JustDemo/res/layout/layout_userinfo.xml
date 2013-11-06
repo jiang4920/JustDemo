@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/guide_head" >
+
+        <ImageView
+            android:id="@+id/userinfo_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dip"
+            android:src="@drawable/but_regist_back_selector" />
+
+        <TextView
+            android:id="@+id/userinfo_head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/userinfo"
+            android:textColor="@color/text_title_color"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_color"
+            android:orientation="vertical"
+            android:paddingLeft="30dip"
+            android:paddingRight="30dip" >
+
+            <ImageView
+                android:id="@+id/userinfo_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_menu_handle" />
+
+            <TextView
+                android:id="@+id/userinfo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_title_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/topictile_orange" />
+
+            <TextView
+                android:id="@+id/userinfo_userid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:textColor="@color/text_title_color" />
+
+            <TextView
+                android:id="@+id/userinfo_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_title_color" />
+
+            <TextView
+                android:id="@+id/userinfo_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_title_color" />
+
+            <TextView
+                android:id="@+id/userinfo_regdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_title_color" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:text="@string/sign"
+                android:textColor="@color/text_dark_yellow_name"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/userinfo_sign"
+                android:layout_width="match_parent"
+                android:layout_height="130dip"
+                android:background="@drawable/bg_edit" />
+
+            <TextView
+                android:id="@+id/userinfo_shengwang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:textColor="@color/text_dark_yellow_name"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

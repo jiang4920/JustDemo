@@ -14,8 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textSize="20sp"
-            android:textColor="@color/text_title_color" />
+            android:textColor="@color/text_title_color"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/topic_post"
@@ -35,48 +35,6 @@
             android:layout_margin="5dip"
             android:src="@drawable/but_regist_back_selector" />
     </RelativeLayout>
-
-    <RadioGroup
-        android:id="@+id/topic_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_marginTop="50dip"
-        android:background="@drawable/bg_tab"
-        android:orientation="horizontal" >
-
-        <RadioButton
-            android:id="@+id/topic_new_topic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/topic_new_topic_selector"
-            android:button="@color/transparent"
-            android:checked="true" />
-
-        <RadioButton
-            android:id="@+id/topic_new_reply"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/topic_new_reply_selector"
-            android:button="@color/transparent" />
-
-        <RadioButton
-            android:id="@+id/topic_header"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/topic_header_selector"
-            android:button="@color/transparent" />
-
-        <RadioButton
-            android:id="@+id/topic_recommand"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/topic_recommand_selector"
-            android:button="@color/transparent" />
-    </RadioGroup>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -110,18 +68,59 @@
         <TextView
             android:id="@+id/topic_page"
             android:layout_width="100dip"
-            android:gravity="center"
-            android:background="@drawable/item_select_style_1"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:background="@drawable/item_select_style_1"
+            android:gravity="center"
             android:text="1" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dip"
+        android:layout_marginTop="50dip"
         android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/topic_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:background="@drawable/bg_tab"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/topic_new_topic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/topic_new_topic_selector"
+                android:button="@color/transparent"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/topic_new_reply"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/topic_new_reply_selector"
+                android:button="@color/transparent" />
+
+            <RadioButton
+                android:id="@+id/topic_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/topic_header_selector"
+                android:button="@color/transparent" />
+
+            <RadioButton
+                android:id="@+id/topic_recommand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/topic_recommand_selector"
+                android:button="@color/transparent" />
+        </RadioGroup>
 
         <ProgressBar
             android:id="@+id/topic_progress"

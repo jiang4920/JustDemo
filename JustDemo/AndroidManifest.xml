@@ -31,6 +31,7 @@
         <activity android:name=".SMSWriteActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".TopicSearchActivity" />
+        <activity android:name=".UserInfoActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" >

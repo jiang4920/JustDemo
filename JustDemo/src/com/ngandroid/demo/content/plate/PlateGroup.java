@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.ngandroid.demo.R;
 import com.ngandroid.demo.TopicActivity;
+import com.ngandroid.demo.util.NGAURL;
 
 /**
  * com.ngandroid.demo.content.plate.PlateGroup
@@ -66,7 +67,9 @@ public class PlateGroup extends ArrayList<Plate> implements OnItemClickListener 
 //		Log.v(TAG, "name:"+adapter.getItem(arg2).name);
 		Intent intent = new Intent();
 		intent.setClass(mContext, TopicActivity.class);
-		intent.putExtra("fid", ""+adapter.getItem(arg2).fid);
+		String base = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&fid=" + adapter.getItem(arg2).fid;
+		intent.putExtra("base_url", base);
+		intent.putExtra("type", "commom_topic");
 		intent.putExtra("plate", adapter.getItem(arg2).name);
 		mContext.startActivity(intent);
 	}

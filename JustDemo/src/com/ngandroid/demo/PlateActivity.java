@@ -1,6 +1,7 @@
 package com.ngandroid.demo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,7 +86,9 @@ public class PlateActivity extends Activity implements OnClickListener, OnItemCl
 			MyAnimations.startAnimations(this, mMenuGroup, 300);
 			break;
 		case R.id.plate_search:
-		    
+		    Intent intent = new Intent();
+		    intent.setClass(this, TopicSearchActivity.class);
+		    this.startActivity(intent);
 		    break;
 		}
 	}

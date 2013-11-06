@@ -32,6 +32,7 @@ import com.ngandroid.demo.adapter.SMSListAdapter;
 import com.ngandroid.demo.adapter.TopicListAdapter;
 import com.ngandroid.demo.content.LoginEntry;
 import com.ngandroid.demo.content.SMSMessageList;
+import com.ngandroid.demo.content.UserInfoEntity;
 import com.ngandroid.demo.content.UserResponse;
 import com.ngandroid.demo.task.LoginTask;
 import com.ngandroid.demo.task.MessageListTask;
@@ -44,6 +45,7 @@ import com.ngandroid.demo.topic.task.TopicListTask;
 import com.ngandroid.demo.util.NGAURL;
 import com.ngandroid.demo.util.SQLiteUtil;
 import com.ngandroid.demo.widget.TopicFavorDelDialog;
+import com.ngandroid.demo.widget.UserViewsManager;
 
 /**
  * com.ngandroid.demo.UserCenterActivity
@@ -144,7 +146,7 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         }
         mUid = "" + UserResponse.getUser(this).uid;
         Log.v(TAG, "uid:" + mUid);
-        new UserInfoTask(this).execute(mUid);
+        showUserInfo();
     }
 
     Cursor mCursor;
@@ -181,7 +183,7 @@ public class UserCenterActivity extends Activity implements OnClickListener,
                                 UserCenterActivity.this.finish();
                                 UserResponse userRsp = (UserResponse) obj;
                                 Toast.makeText(UserCenterActivity.this,
-                                        userRsp.nickname + "登陆成功！",
+                                        userRsp.nickname + UserCenterActivity.this.getString(R.string.login_success),
                                         Toast.LENGTH_SHORT).show();
                             }
 
@@ -281,7 +283,7 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         currentMenuId = view.getId();
         switch (currentMenuId) {
         case R.id.usercenter_menu_info:
-            new UserInfoTask(this).execute(mUid);
+            showUserInfo();
             mTitleTv.setText(this.getResources().getString(R.string.userinfo));
             mRightBt.setVisibility(View.GONE);
             break;
@@ -310,6 +312,24 @@ public class UserCenterActivity extends Activity implements OnClickListener,
         }
     }
 
+    public void showUserInfo(){
+        new UserInfoTask(this, new IDataLoadedListener() {
+            
+            @Override
+            public void onPostFinished(Object obj) {
+                View view = UserCenterActivity.this.findViewById(R.id.usercenter_userinfo);
+                bringToFront(view);
+                UserViewsManager views = new UserViewsManager(view);
+                views.setUserInfo((UserInfoEntity)obj);
+            }
+            
+            @Override
+            public void onPostError(Integer status) {
+                
+            }
+        }).execute(mUid);
+    }
+    
     public void showMessageList() {
         new MessageListTask(this, new IDataLoadedListener() {
 

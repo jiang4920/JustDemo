@@ -27,8 +27,11 @@
     <string name="message">短消息</string>
     <string name="quite">注销</string>
     <string name="plate_search">搜索</string>
+    <string name="plate_search_summary">搜索帖子，请输入关键字”</string>
+    <string name="plate_search_user_summary">搜索用户，请输入关键字”</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+    <string name="sign">签名:</string>
     <string name="jump_to_page">翻页(共<g id="part1">%1$s</g>页)</string>
     <string name="write_sms">写信息</string>
     <string name="write_sms_info">发起新的对话，收信人用户名或用户ID多个收信人用空格或英文逗号分隔。</string>
@@ -41,12 +44,17 @@
     <string name="progress_success">操作成功！</string>
     <string name="toast_write_sms_error">格式不正确，收件人、标题、内容不能为空！</string>
     <string name="post_text_not_ok">格式不正确，标题和内容都不能少于4个字</string>
+    <string name="text_too_short">关键字太少！</string>
     <string name="regist_protol"><a href="http://bbs.ngacn.cc/">178游戏网站协议</a></string>
     <string name="settings_clear_cache">清除缓存(共<g id="part1">%1$s</g>MB)</string>
     <string name="settings_visit_web"><a href="http://bbs.ngacn.cc/">访问178</a></string>
     <string name="settings_about_us">关于我们</string>
     <string name="del_topic_favor">删除收藏？</string>
     <string name="topic_refresh">到头了，点击“上一页”刷新列表</string>
+    
+    
+    
+    <string name="login_success">登陆成功!</string>
     <string name="request_timeout">网络超时</string>
     <string name="request_dataerror">请求数据错误</string>
     <string name="request_neterror">网络错误</string>

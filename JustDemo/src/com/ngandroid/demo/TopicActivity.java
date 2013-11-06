@@ -48,10 +48,10 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	
 	private RadioGroup tabGroup;
 	//http://bbs.ngacn.cc/thread.php?lite=js&order_by=postdatedesc&fid=320&page=1
-	protected static final String POST = "order_by=postdatedesc";
-	protected static final String REPLY = "order_by=lastpostdesc";
-	protected static final String HEADER = "order_by=postdatedesc";
-	protected static final String RECOMMAND = "recommend=1";
+	protected static final String POST = "&order_by=postdatedesc";
+	protected static final String REPLY = "&order_by=lastpostdesc";
+	protected static final String HEADER = "&order_by=postdatedesc";
+	protected static final String RECOMMAND = "&recommend=1";
 	
 	private String topicParam = POST;
 	
@@ -59,6 +59,8 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	
 	TopicListData data;
 	String mFid;
+	String mUrl_base;
+	String mType;
 	TextView mTitleTv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,9 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 		tabGroup = (RadioGroup)findViewById(R.id.topic_tabs);
 		progressBar = (ProgressBar)findViewById(R.id.topic_progress);
 		tabGroup.setOnCheckedChangeListener(this);
-		mFid = this.getIntent().getStringExtra("fid");
+		mUrl_base = this.getIntent().getStringExtra("base_url");
+		mType = this.getIntent().getStringExtra("type");
+		tabGroup.setVisibility("commom_topic".equals(mType)?View.VISIBLE:View.GONE);
 		mTitleTv.setText(this.getIntent().getStringExtra("plate"));
 		refresh();
 	}
@@ -87,11 +91,9 @@ public class TopicActivity extends Activity implements OnClickListener, OnChecke
 	
 	public void refresh(){
 		progressBar.setVisibility(View.VISIBLE);
-		String fid = mFid;
         String page = mCurPageIndex+"";
         String param = topicParam;
-		String url = NGAURL.URL_BASE + "/thread.php?lite=js&noprefix&"+param+"&fid=" + fid
-        + "&page=" + page;
+		String url = mUrl_base+param+ "&page=" + page;
 		new TopicListTask(this, new IDataLoadedListener() {
 
 			@Override
