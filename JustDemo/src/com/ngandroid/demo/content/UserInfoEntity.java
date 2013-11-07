@@ -5,6 +5,9 @@
  */
 package com.ngandroid.demo.content;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * com.ngandroid.demo.content.UserInfoEntry
@@ -42,5 +45,12 @@ public class UserInfoEntity {
     public String _super;//拥有超级版主权限 
     public String _greater;//拥有版主权限 
     public String _lesser;//拥有次级版主权限
-
+    public String getAvatar() {
+        Pattern pat = Pattern.compile("http:.*(jpg|png)");   
+        Matcher mat = pat.matcher("http"+avatar.split("http")[1]);   
+        if(mat.find()){
+            avatar = mat.group();
+        }
+        return avatar;
+    }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.ngandroid.demo.topic.task.UpdateCookieTask;
+import com.ngandroid.demo.util.Configs;
 
 public class GuideActivity extends Activity implements OnClickListener {
     private static final String TAG = "JustDemo GuideActivity.java";
@@ -14,6 +15,7 @@ public class GuideActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configs.initImageLoader(this);//初始化图片加载器
         setContentView(R.layout.layout_guide);
         findViewById(R.id.guide_plate).setOnClickListener(this);
         findViewById(R.id.guide_user_center).setOnClickListener(this);

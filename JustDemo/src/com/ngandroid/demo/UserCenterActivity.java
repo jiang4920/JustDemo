@@ -325,11 +325,15 @@ public class UserCenterActivity extends Activity implements OnClickListener,
             
             @Override
             public void onPostError(Integer status) {
-                
             }
         }).execute(mUid);
     }
     
+    
+    /**
+     * <p>Title: showMessageList</p>
+     * <p>Description: 显示短消息</p>
+     */
     public void showMessageList() {
         new MessageListTask(this, new IDataLoadedListener() {
 
@@ -366,6 +370,10 @@ public class UserCenterActivity extends Activity implements OnClickListener,
     };
 
     
+    /**
+     * <p>Title: showHistoryList</p>
+     * <p>Description: 显示历史记录</p>
+     */
     public void showHistoryList() {
         new TopicHistoryTask(this, new IDataLoadedListener() {
 
@@ -504,7 +512,9 @@ public class UserCenterActivity extends Activity implements OnClickListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mCursor.close();
+        if(mCursor!= null){//使用了cursor，记得关闭
+            mCursor.close();
+        }
     }
 
 }

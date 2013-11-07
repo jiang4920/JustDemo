@@ -79,27 +79,20 @@ public class TopicSearchActivity extends Activity implements OnClickListener {
                 Toast.makeText(this, R.string.text_too_short, Toast.LENGTH_SHORT).show();
                 return;
             }
-            showUserInfo();
+            searchUser(user);
             break;
         }
     }
 
-    
-    public void showUserInfo(){
-        new UserInfoTask(this, new IDataLoadedListener() {
-            
-            @Override
-            public void onPostFinished(Object obj) {
-                UserInfoEntity result = (UserInfoEntity)obj;
-            }
-            
-            @Override
-            public void onPostError(Integer status) {
-                // TODO Auto-generated method stub
-                
-            }
-        }).execute("");
+    public void searchUser(String key) {
+        Intent intent = new Intent();
+        intent.setClass(this, UserInfoActivity.class);
+        intent.putExtra("uid", key);
+        intent.putExtra("username", "");
+        this.startActivity(intent);
+        
     }
+    
     
     public boolean check(String msg, int minLength){
         if(msg!= null && msg.trim().length() > minLength){

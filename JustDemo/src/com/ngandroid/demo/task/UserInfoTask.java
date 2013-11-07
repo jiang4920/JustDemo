@@ -17,9 +17,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ngandroid.demo.UserCenterActivity;
+import com.ngandroid.demo.content.ErrorEntity;
 import com.ngandroid.demo.content.UserInfoEntity;
 import com.ngandroid.demo.topic.IDataLoadedListener;
 import com.ngandroid.demo.util.Configs;
@@ -32,7 +35,7 @@ import com.ngandroid.demo.util.NGAURL;
  *
  * create at 2013-10-25 下午2:55:39
  */
-public class UserInfoTask extends AsyncTask<String, String, UserInfoEntity> {
+public class UserInfoTask extends AsyncTask<String, String, Object> {
     private static final String TAG = "JustDemo UserInfoTask";
     Context mContext;
     IDataLoadedListener mListener;
@@ -49,7 +52,7 @@ public class UserInfoTask extends AsyncTask<String, String, UserInfoEntity> {
      * @see android.os.AsyncTask#doInBackground(Params[])
      */
     @Override
-    protected UserInfoEntity doInBackground(String... params) {
+    protected Object doInBackground(String... params) {
         String uid = params[0];
         String username = null;
         if(params.length>1){
@@ -70,9 +73,16 @@ public class UserInfoTask extends AsyncTask<String, String, UserInfoEntity> {
             Log.d(TAG, sb.substring(sb.indexOf("=")+1).toString());
             JSONObject obj = JSON.parseObject(sb.substring(sb.indexOf("=")+1).toString());
             JSONObject data = obj.getJSONObject("data");
-            UserInfoEntity userInfo = (UserInfoEntity)data.getObject("0", UserInfoEntity.class);
-            Log.d(TAG, "username:"+userInfo.username);
-            return userInfo;
+            if(data != null){
+                UserInfoEntity userInfo = (UserInfoEntity)data.getObject("0", UserInfoEntity.class);
+                Log.d(TAG, "username:"+userInfo.username);
+                return userInfo;
+            }
+            JSONObject error = obj.getJSONObject("error");
+            if(error != null){
+                ErrorEntity entity = new ErrorEntity(error.getString("0"));
+                return entity;
+            }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -83,13 +93,15 @@ public class UserInfoTask extends AsyncTask<String, String, UserInfoEntity> {
     }
 
     @Override
-    protected void onPostExecute(UserInfoEntity result) {
+    protected void onPostExecute(Object result) {
         super.onPostExecute(result);
-        if(result == null){
+        if(result instanceof ErrorEntity){
+            Toast.makeText(mContext, ((ErrorEntity)result).getReason(), Toast.LENGTH_SHORT).show();
             mListener.onPostError(0);
             return;
+        }else if(result instanceof UserInfoEntity){
+            mListener.onPostFinished(result);
         }
-        mListener.onPostFinished(result);
     }
     
 }

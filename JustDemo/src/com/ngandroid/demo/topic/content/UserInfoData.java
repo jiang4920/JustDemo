@@ -86,8 +86,8 @@ public class UserInfoData {
 	}
 
 	public String getAvatar() {
-        Pattern pat = Pattern.compile("http:.*jpg");   
-        Matcher mat = pat.matcher(avatar);   
+        Pattern pat = Pattern.compile("http:.*(jpg|png)");   
+        Matcher mat = pat.matcher("http"+avatar.split("http")[1]);   
         if(mat.find()){
             avatar = mat.group();
         }
